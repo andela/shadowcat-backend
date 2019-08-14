@@ -1,9 +1,10 @@
 {
-  "name": "express-authorshaven",
+  "name": "barefoot-nomad",
   "version": "1.0.0",
-  "description": "A Social platform for the creative at heart",
+  "description": "Make company global travel and accommodation easy and convenient for the strong workforce of savvy members of staff, by leveraging the modern web",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint src/ --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Andela Simulations Programme",
@@ -26,5 +27,10 @@
     "passport-local": "^1.0.0",
     "request": "^2.87.0",
     "underscore": "^1.9.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2"
   }
 }
