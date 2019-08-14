@@ -1,0 +1,30 @@
+swagger: '2.0'
+info:
+  version: "1.0.0"
+  title: BAREFOOT NOMAD
+  description: 'Making company tavel and accomodation easy and convinient'
+  
+# during dev, should point to your local machine
+securityDefinitions: 
+  Bearer: 
+    type: apiKey
+    name: x-auth-token
+    in: header
+host: "shadowcat-backend-staging.herokuapp.com"
+# basePath prefixes all resource paths 
+basePath: /api/v1
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+
+paths:
+   /auth/signup:
+    # our controller name
+    x-swagger-router-controller: 

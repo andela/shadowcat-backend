@@ -8,9 +8,15 @@ const fs = require("fs"),
     cors = require("cors"),
     passport = require("passport"),
     errorhandler = require("errorhandler"),
+    swaggerUI = require("swagger-ui-express"),
+    YAML = require("yamljs"),
     mongoose = require("mongoose");
 
 const isProduction = process.env.NODE_ENV === "production";
+
+// to load the swagger.yaml
+const swaggerDocument = YAML.load(`${__dirname}/../swagger.yaml`);
+
 
 // Create global app object
 const app = express();
@@ -46,6 +52,9 @@ if (isProduction) {
 }
 
 require("./models/User");
+
+// route for the api documentation to be viewed
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use(require("./routes"));
 
