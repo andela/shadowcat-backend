@@ -1,17 +1,22 @@
+import fs from 'fs';
+import http from 'http';
+import path from 'path';
+import methods from 'methods';
+import express from 'express';
+import bodyParser from 'body-parser';
+import session from 'express-session';
+import cors from 'cors';
+import passport from 'passport';
+import errorhandler from 'errorhandler';
+import mongoose from 'mongoose';
+import morgan from 'morgan';
+import methodOverride from 'method-override';
+import './models/User';
+import route from './routes';
 import envVariables from './config';
 
 const { port } = envVariables;
-const fs = require('fs'),
-  http = require('http'),
-  path = require('path'),
-  methods = require('methods'),
-  express = require('express'),
-  bodyParser = require('body-parser'),
-  session = require('express-session'),
-  cors = require('cors'),
-  passport = require('passport'),
-  errorhandler = require('errorhandler'),
-  mongoose = require('mongoose');
+
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -21,12 +26,12 @@ const app = express();
 app.use(cors());
 
 // Normal express config defaults
-app.use(require('morgan')('dev'));
+app.use('morgan')('dev');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(require('method-override')());
+app.use('methodOverride')();
 
 app.use(express.static(`${__dirname}/public`));
 
@@ -50,9 +55,7 @@ if (isProduction) {
   mongoose.set('debug', true);
 }
 
-require('./models/User');
-
-app.use(require('./routes'));
+app.use(route);
 
 // / catch 404 and forward to error handler
 app.use((req, res, next) => {
