@@ -1,8 +1,10 @@
+/* eslint linebreak-style: ["error", "windows"] */
+
 const presets = [
   [
-    "@babel/env",
+    '@babel/preset-env',
     {
-      useBuiltIns: "usage",
+      useBuiltIns: 'usage',
       corejs: 3,
     },
   ],
