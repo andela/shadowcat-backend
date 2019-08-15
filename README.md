@@ -1,9 +1,15 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 [![](https://img.shields.io/badge/Reviewed%20By-HoundCI-blueviolet)](https://houndci.com/repos)
 
 
 Barefoot Nomad - Making company travel and accomodation easy and convinient.
 =======
+=======
+# Barefoot Nomad - Making company travel and accommodation easy and convenient
+
+[![hound ci label](https://img.shields.io/badge/Reviewed%20By-HoundCI-blueviolet)](https://houndci.com/repos)
+>>>>>>> 6d4f360b6aaf8208be29a2705d4fdca9627cbb0e
 =======
 # Barefoot Nomad - Making company travel and accommodation easy and convenient
 
