@@ -1,0 +1,20 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "BAREFOOT NOMAD",
+    "description": "Making company tavel and accomodation easy and convinient"
+  },
+  "schemes": [
+    "https"
+  ],
+  "host": "(link: https://shadowcat-backend-staging.herokuapp.com/) shadowcat-backend-staging.herokuapp.com",
+  "basePath": "/api/v1",
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "bearer",
+      "name": "Authorization",
+  "in": "header"
+    }
+  }
+}

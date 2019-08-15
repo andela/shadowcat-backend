@@ -92,4 +92,10 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+# Package lock
+package-lock.json
+
+# Transpiled app
+dist
+
 # End of https://www.gitignore.io/api/node
