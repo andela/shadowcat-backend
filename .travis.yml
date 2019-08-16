@@ -19,7 +19,9 @@ env:
   - NODE_ENV=test
 
 before_script:
-  -
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - npm install -g sequelize-cli
+  - sequelize db:migrate
  
 
 after_success:
