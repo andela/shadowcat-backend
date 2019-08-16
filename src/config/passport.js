@@ -1,14 +1,7 @@
 import passport from 'passport';
-<<<<<<< HEAD
-import passportLocal from 'passport-local';
-import mongoose from 'mongoose';
-
-const LocalStrategy = passportLocal.Strategy;
-=======
 import mongoose from 'mongoose';
 import { Strategy as LocalStrategy } from 'passport-local';
 
->>>>>>> staging
 const User = mongoose.model('User');
 
 passport.use(

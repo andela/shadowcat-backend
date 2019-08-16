@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-
-import mongoose from 'mongoose';
-import { Router } from 'express';
-import passport from 'passport';
-
-const router = Router();
-
-const User = mongoose.model('User');
-
-router.get('/user', (req, res, next) => {
-=======
 import mongoose from 'mongoose';
 import express from 'express';
 import passport from 'passport';
@@ -19,7 +7,6 @@ const usersRouter = express.Router();
 const User = mongoose.model('User');
 
 usersRouter.get('/user', (req, res, next) => {
->>>>>>> staging
   User.findById(req.payload.id)
     .then((user) => {
       if (!user) {
@@ -30,11 +17,7 @@ usersRouter.get('/user', (req, res, next) => {
     .catch(next);
 });
 
-<<<<<<< HEAD
-router.put('/user', (req, res, next) => {
-=======
 usersRouter.put('/user', (req, res, next) => {
->>>>>>> staging
   User.findById(req.payload.id)
     .then((user) => {
       if (!user) {
@@ -63,11 +46,7 @@ usersRouter.put('/user', (req, res, next) => {
     .catch(next);
 });
 
-<<<<<<< HEAD
-router.post('/users/login', (req, res, next) => {
-=======
 usersRouter.post('/users/login', (req, res, next) => {
->>>>>>> staging
   if (!req.body.user.email) {
     return res.status(422).json({ errors: { email: "can't be blank" } });
   }
@@ -91,11 +70,7 @@ usersRouter.post('/users/login', (req, res, next) => {
   })(req, res, next);
 });
 
-<<<<<<< HEAD
-router.post('/users', (req, res, next) => {
-=======
 usersRouter.post('/users', (req, res, next) => {
->>>>>>> staging
   const user = new User();
 
   user.username = req.body.user.username;
