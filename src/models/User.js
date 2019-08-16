@@ -30,7 +30,14 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-UserSchema.plugin(uniqueValidator, { message: 'is already taken.' }).toString('hex');
+UserSchema.plugin(uniqueValidator, { message: 'is already taken.' });
+
+UserSchema.methods.validPassword = (password) => {
+  const hash = crypto
+    .pbkdf2Sync(password, this.salt, 10000, 512, 'sha512')
+    .toString('hex');
+  return this.hash === hash;
+};
 
 UserSchema.methods.setPassword = (password) => {
   this.salt = crypto.randomBytes(16).toString('hex');
@@ -39,3 +46,9 @@ UserSchema.methods.setPassword = (password) => {
     .toString('hex');
 };
 
+UserSchema.methods.toAuthJSON = () => ({
+  username: this.username,
+  email: this.email
+});
+
+mongoose.model('User', UserSchema);
