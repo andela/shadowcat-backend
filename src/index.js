@@ -1,3 +1,6 @@
+
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../swagger.json';
 import './models/User';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -21,6 +24,9 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(methodOverride());
 
