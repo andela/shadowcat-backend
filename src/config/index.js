@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -9,3 +10,11 @@ const envVariables = {
 };
 
 export default envVariables;
+=======
+const index = {
+  secret:
+        process.env.NODE_ENV === 'production' ? process.env.SECRET : 'secret'
+};
+
+export default index;
+>>>>>>> staging

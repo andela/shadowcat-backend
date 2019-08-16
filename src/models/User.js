@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const crypto = require('crypto');
 const { secret } = require('../config');
+=======
+import mongoose from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
+import crypto from 'crypto';
+>>>>>>> staging
 
 const UserSchema = new mongoose.Schema(
   {
@@ -33,25 +39,40 @@ const UserSchema = new mongoose.Schema(
 
 UserSchema.plugin(uniqueValidator, { message: 'is already taken.' });
 
+<<<<<<< HEAD
 UserSchema.methods.validPassword = function (password) {
+=======
+UserSchema.methods.validPassword = (password) => {
+>>>>>>> staging
   const hash = crypto
     .pbkdf2Sync(password, this.salt, 10000, 512, 'sha512')
     .toString('hex');
   return this.hash === hash;
 };
 
+<<<<<<< HEAD
 UserSchema.methods.setPassword = function (password) {
+=======
+UserSchema.methods.setPassword = (password) => {
+>>>>>>> staging
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto
     .pbkdf2Sync(password, this.salt, 10000, 512, 'sha512')
     .toString('hex');
 };
 
+<<<<<<< HEAD
 UserSchema.methods.toAuthJSON = function () {
   return {
     username: this.username,
     email: this.email
   };
 };
+=======
+UserSchema.methods.toAuthJSON = () => ({
+  username: this.username,
+  email: this.email
+});
+>>>>>>> staging
 
 mongoose.model('User', UserSchema);
