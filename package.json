@@ -4,18 +4,9 @@
   "description": "Make company global travel and accommodation easy and convenient for the strong workforce of savvy members of staff, by leveraging the modern web",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     "build": "npx babel src --out-dir dist",
     "start": "npm run build && node ./dist/index.js",
     "dev": "nodemon --exec babel-node src/index.js",
->>>>>>> 6d4f360b6aaf8208be29a2705d4fdca9627cbb0e
-=======
-    "build": "npx babel src --out-dir dist",
-    "start": "npm run build && node ./dist/index.js",
-    "dev": "nodemon --exec babel-node src/index.js",
->>>>>>> 6d4f360b6aaf8208be29a2705d4fdca9627cbb0e
     "lint": "eslint src/ --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -44,19 +35,10 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 6d4f360b6aaf8208be29a2705d4fdca9627cbb0e
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
-<<<<<<< HEAD
->>>>>>> 6d4f360b6aaf8208be29a2705d4fdca9627cbb0e
-=======
->>>>>>> 6d4f360b6aaf8208be29a2705d4fdca9627cbb0e
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2"
