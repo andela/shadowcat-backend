@@ -1,21 +1,18 @@
 
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger.json';
-
-const fs = require('fs'),
-  http = require('http'),
-  path = require('path'),
-  methods = require('methods'),
-  express = require('express'),
-  bodyParser = require('body-parser'),
-  session = require('express-session'),
-  cors = require('cors'),
-  passport = require('passport'),
-  errorhandler = require('errorhandler'),
-  mongoose = require('mongoose');
+import './models/User';
+import express from 'express';
+import bodyParser from 'body-parser';
+import session from 'express-session';
+import cors from 'cors';
+import errorhandler from 'errorhandler';
+import mongoose from 'mongoose';
+import morgan from 'morgan';
+import methodOverride from 'method-override';
+import apiRoutes from './routes';
 
 const isProduction = process.env.NODE_ENV === 'production';
-
 
 // Create global app object
 const app = express();
@@ -23,17 +20,17 @@ const app = express();
 app.use(cors());
 
 // Normal express config defaults
-app.use(require('morgan')('dev'));
+app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(require('method-override')());
-
-app.use(express.static(`${__dirname}/public`));
-
 // Documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use(methodOverride());
+
+app.use(express.static(`${__dirname}/public`));
 
 app.use(
   session({
@@ -55,9 +52,7 @@ if (isProduction) {
   mongoose.set('debug', true);
 }
 
-require('./models/User');
-
-app.use(require('./routes'));
+app.use(apiRoutes);
 
 // / catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -71,7 +66,7 @@ app.use((req, res, next) => {
 // development error handler
 // will print stacktrace
 if (!isProduction) {
-  app.use((err, req, res, next) => {
+  app.use((err, req, res) => {
     console.log(err.stack);
 
     res.status(err.status || 500);
@@ -87,7 +82,7 @@ if (!isProduction) {
 
 // production error handler
 // no stacktraces leaked to user
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   res.status(err.status || 500);
   res.json({
     errors: {
