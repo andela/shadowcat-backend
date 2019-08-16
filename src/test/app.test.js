@@ -5,8 +5,8 @@ import server from '../index';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('TESTING AUTHENTICATION ENDPOINTS', () => {
-  it("Welcome to Barefoot Nomad Endpoints' Page", (done) => {
+describe('TESTING ENDPOINTS', () => {
+  it('should return "Welcome to Barefoot Nomad Endpoints" Page', (done) => {
     chai.request(server)
       .get('/')
       .end((err, res) => {
