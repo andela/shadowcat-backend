@@ -1,6 +1,6 @@
 # Barefoot Nomad - Making company travel and accommodation easy and convenient
 
-[![hound ci label](https://img.shields.io/badge/Reviewed%20By-HoundCI-blueviolet)](https://houndci.com/repos)
+[![hound ci label](https://img.shields.io/badge/Reviewed%20By-HoundCI-blueviolet)](https://houndci.com/repos) [![Coverage Status](https://coveralls.io/repos/github/andela/shadowcat-backend/badge.svg?branch=staging)](https://coveralls.io/github/andela/shadowcat-backend?branch=staging)
 
 ## Vision
 
