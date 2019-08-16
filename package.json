@@ -8,7 +8,7 @@
     "start": "npm run build && node ./dist/index.js",
     "dev": "nodemon --exec babel-node src/index.js",
     "lint": "eslint src/ --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_ENV=test nyc _mocha src/test/*.test.js --reporter=spec --recursive --require @babel/register --timeout 10000 --exit"
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
@@ -16,6 +16,7 @@
     "body-parser": "^1.18.3",
     "core-js": "^3.2.1",
     "cors": "^2.8.4",
+    "cross-env": "^5.2.0",
     "dotenv": "^6.0.0",
     "ejs": "^2.6.1",
     "errorhandler": "^1.5.0",
@@ -39,8 +40,12 @@
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.18.2",
+    "mocha": "^6.2.0"
   }
 }
