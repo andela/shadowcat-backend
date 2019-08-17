@@ -33,3 +33,5 @@ Make company global travel and accommodation easy and convenient for the strong 
   ```shell
     npm run start
   ```
+
+- You need to get a .coveralls.yml file locally for code coverage to get started
