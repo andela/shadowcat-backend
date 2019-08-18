@@ -1,5 +1,4 @@
 import bcrypt from 'bcryptjs';
-
 export default  {
   up: (queryInterface, Sequelize) => queryInterface.bulkInsert(
     'Users',
