@@ -1,5 +1,4 @@
-
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.bulkInsert(
@@ -23,7 +22,7 @@ module.exports = {
       },
     ],
     {},
-    
+
   ),
 
   down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Users', null, {}),
