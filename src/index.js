@@ -1,5 +1,4 @@
 
-import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger.json';
 import './models/User';
 import express from 'express';
@@ -26,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(methodOverride());
 
@@ -45,12 +44,12 @@ if (!isProduction) {
   app.use(errorhandler());
 }
 
-if (isProduction) {
-  mongoose.connect(process.env.MONGODB_URI);
-} else {
-  mongoose.connect('mongodb://localhost/conduit');
-  mongoose.set('debug', true);
-}
+// if (isProduction) {
+//   mongoose.connect(process.env.MONGODB_URI);
+// } else {
+//   mongoose.connect('mongodb://localhost/conduit');
+//   mongoose.set('debug', true);
+// }
 
 app.use(apiRoutes);
 
