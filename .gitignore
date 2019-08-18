@@ -101,5 +101,4 @@ dist
 # coveralls repo token
 .coverals.yml
 
-
 # End of https://www.gitignore.io/api/node
