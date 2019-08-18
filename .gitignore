@@ -99,6 +99,6 @@ package-lock.json
 dist
 
 # coveralls repo token
-.coverals.yml
+.coveralls.yml
 
 # End of https://www.gitignore.io/api/node
