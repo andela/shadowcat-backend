@@ -1,5 +1,5 @@
 
-import fs from'fs';
+import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 import envConfigs from '../src/database/config/config';
