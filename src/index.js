@@ -1,5 +1,4 @@
 
-import swaggerDocument from '../swagger.json';
 import './models/User';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -9,6 +8,7 @@ import errorhandler from 'errorhandler';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import methodOverride from 'method-override';
+import swaggerDocument from '../swagger.json';
 import apiRoutes from './routes';
 
 const isProduction = process.env.NODE_ENV === 'production';

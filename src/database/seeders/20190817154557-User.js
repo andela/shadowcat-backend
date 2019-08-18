@@ -1,19 +1,20 @@
 import bcrypt from 'bcryptjs';
-export default  {
+
+export default {
   up: (queryInterface, Sequelize) => queryInterface.bulkInsert(
     'Users',
     [
       {
         firstname: 'Chima',
-        lastname:'Mark',
+        lastname: 'Mark',
         email: 'chimamark@example.com',
-        password:bcrypt.hashSync('Chibyke8%', 10),
+        password: bcrypt.hashSync('Chibyke8%', 10),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         firstname: 'frank',
-        lastname:'chidinma',
+        lastname: 'chidinma',
         email: 'frankchidinma@example.com',
         password: bcrypt.hashSync('Chibyke8%', 10),
         createdAt: new Date(),
