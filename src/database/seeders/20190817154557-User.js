@@ -1,6 +1,6 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
-module.exports = {
+export default  {
   up: (queryInterface, Sequelize) => queryInterface.bulkInsert(
     'Users',
     [
@@ -27,5 +27,3 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Users', null, {}),
 };
-
-// database/seeds/xxxx-User.js
