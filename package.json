@@ -42,43 +42,16 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
+  "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "eslint": "^6.1.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
-    "prettier-eslint": "^9.0.0",
-    "prettier-eslint-cli": "^5.0.0",
-    "prettier-stylelint": "^0.4.2"
-=======
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "mocha": "^6.2.0"
->>>>>>> 4d8ba4cea0ab5946b58a40bb891811b1174fb936
-=======
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
-    "eslint": "^6.1.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
-    "mocha": "^6.2.0"
->>>>>>> 4d8ba4cea0ab5946b58a40bb891811b1174fb936
-=======
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
-    "eslint": "^6.1.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
-    "mocha": "^6.2.0"
->>>>>>> 4d8ba4cea0ab5946b58a40bb891811b1174fb936
   }
 }
