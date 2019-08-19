@@ -1,8 +1,6 @@
 
 import swaggerUi from 'swagger-ui-express';
-import './models/User';
 import express from 'express';
-import debug from 'debug';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import cors from 'cors';
@@ -12,11 +10,8 @@ import methodOverride from 'method-override';
 import dotenv from 'dotenv';
 import swaggerDocument from '../swagger.json';
 import apiRoutes from './routes';
-import envConstants from './utils';
 
 dotenv.config();
-
-debug(envConstants.log);
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -52,8 +47,6 @@ if (!isProduction) {
 }
 
 app.use(apiRoutes);
-console.log(process.env.DEV_DATABASE_URL);
-
 
 // testing route
 app.get('/', (req, res) => {
@@ -73,7 +66,7 @@ app.use((req, res, next) => {
 // will print stacktrace
 if (!isProduction) {
   app.use((err, req, res) => {
-    debug(err.stack);
+    console.log(err.stack);
 
     res.status(err.status || 500);
 
@@ -100,7 +93,7 @@ app.use((err, req, res) => {
 
 // finally, let's start our server...
 const server = app.listen(process.env.PORT || 3000, () => {
-  debug(`Listening on port ${server.address().port}`);
+  console.log(`Listening on port ${server.address().port}`);
 });
 
 export default server;
