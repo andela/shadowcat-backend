@@ -1,0 +1,23 @@
+
+sudo: false
+
+language: node_js
+
+node_js:
+  - "stable"
+
+cache:
+  directories:
+    - "node_modules"
+
+addons:
+  apt:
+    packages:
+      - docker-ce
+
+
+before_install:
+  - docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
+script:
+    - docker-compose run --user='root' app npm run test

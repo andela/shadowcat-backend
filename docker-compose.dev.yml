@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres:11.2-alpine
+    container_name: dockerpostgress
+    env_file: .env
+    networks: 
+      - webnet
+    ports:
+      - "4201:5432"
+  app:
+    build:
+      context: .
+      target: development
+    command: npm run dev
+    volumes:
+      - .:/usr/src/app
+      - server_db:/var/lib/postgresql/data
+    env_file: .env
+    environment:
+      - DB_HOST=postgres
+    ports:
+      - "3000:${PORT}"
+      - "9229:9229"
+    depends_on:
+      - postgres
+    networks: 
+      - webnet
+networks: 
+  webnet:
+volumes:
+  server_db:
