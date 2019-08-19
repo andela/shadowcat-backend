@@ -1,5 +1,5 @@
 
-import bcrypt from 'bcryptjs';
+ import bcrypt from 'bcryptjs';
 
 export default {
   up: queryInterface => queryInterface.bulkInsert(

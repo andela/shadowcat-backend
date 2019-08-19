@@ -1,18 +1,85 @@
-const router = require("express").Router();
+import mongoose from 'mongoose';
+import express from 'express';
+import passport from 'passport';
 
-router.use("/", require("./users"));
+const usersRouter = express.Router();
 
-router.use(function(err, req, res, next) {
-    if (err.name === "ValidationError") {
-        return res.status(422).json({
-            errors: Object.keys(err.errors).reduce(function(errors, key) {
-                errors[key] = err.errors[key].message;
-                return errors;
-            }, {})
-        });
-    }
+const User = mongoose.model('User');
 
-    return next(err);
+usersRouter.get('/user', (req, res, next) => {
+  User.findById(req.payload.id)
+    .then((user) => {
+      if (!user) {
+        return res.sendStatus(401);
+      }
+      return res.json({ user: user.toAuthJSON() });
+    })
+    .catch(next);
 });
 
-module.exports = router;
+usersRouter.put('/user', (req, res, next) => {
+  User.findById(req.payload.id)
+    .then((user) => {
+      if (!user) {
+        return res.sendStatus(401);
+      }
+
+      // only update fields that were actually passed...
+      if (typeof req.body.user.username !== 'undefined') {
+        user.username = req.body.user.username;
+      }
+      if (typeof req.body.user.email !== 'undefined') {
+        user.email = req.body.user.email;
+      }
+      if (typeof req.body.user.bio !== 'undefined') {
+        user.bio = req.body.user.bio;
+      }
+      if (typeof req.body.user.image !== 'undefined') {
+        user.image = req.body.user.image;
+      }
+      if (typeof req.body.user.password !== 'undefined') {
+        user.setPassword(req.body.user.password);
+      }
+
+      return user.save().then(() => res.json({ user: user.toAuthJSON() }));
+    })
+    .catch(next);
+});
+
+usersRouter.post('/users/login', (req, res, next) => {
+  if (!req.body.user.email) {
+    return res.status(422).json({ errors: { email: "can't be blank" } });
+  }
+
+  if (!req.body.user.password) {
+    return res.status(422).json({ errors: { password: "can't be blank" } });
+  }
+  passport.authenticate('local', { session: false }, (
+    err,
+    user,
+    info
+  ) => {
+    if (err) {
+      return next(err);
+    }
+
+    if (user) {
+      return res.json({ user: user.toAuthJSON() });
+    }
+    return res.status(422).json(info);
+  })(req, res, next);
+});
+
+usersRouter.post('/users', (req, res, next) => {
+  const user = new User();
+
+  user.username = req.body.user.username;
+  user.email = req.body.user.email;
+  user.setPassword(req.body.user.password);
+
+  user.save()
+    .then(() => res.json({ user: user.toAuthJSON() }))
+    .catch(next);
+});
+
+export default usersRouter;
