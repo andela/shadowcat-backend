@@ -28,7 +28,7 @@ coverage
 *.lcov
 
 #coverage info
-.lcov.info
+lcov.info
 
 # nyc test coverage
 .nyc_output
