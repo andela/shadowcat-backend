@@ -1,8 +1,5 @@
 
-<<<<<<< HEAD
-=======
 import swaggerUi from 'swagger-ui-express';
->>>>>>> 4d8ba4cea0ab5946b58a40bb891811b1174fb936
 import './models/User';
 import express from 'express';
 import bodyParser from 'body-parser';

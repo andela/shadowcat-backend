@@ -8,12 +8,7 @@
     "start": "npm run build && node ./dist/index.js",
     "dev": "nodemon --exec babel-node src/index.js",
     "lint": "eslint src/ --fix",
-<<<<<<< HEAD
-    "fix-code": "prettier-eslint --write 'src/**/*.{js,jsx}' ",
-    "test": "echo \"Error: no test specified\" && exit 1"
-=======
     "test": "mocha src/test/*.test.js --require @babel/register --timeout 10000 --exit"
->>>>>>> 4d8ba4cea0ab5946b58a40bb891811b1174fb936
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
@@ -53,12 +48,21 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "prettier-eslint": "^9.0.0",
     "prettier-eslint-cli": "^5.0.0",
     "prettier-stylelint": "^0.4.2"
+=======
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "mocha": "^6.2.0"
+>>>>>>> 4d8ba4cea0ab5946b58a40bb891811b1174fb936
 =======
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
