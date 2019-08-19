@@ -1,6 +1,5 @@
 
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from '../swagger.json';
 import './models/User';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -10,6 +9,7 @@ import errorhandler from 'errorhandler';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import methodOverride from 'method-override';
+import swaggerDocument from '../swagger.json';
 import apiRoutes from './routes';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -54,6 +54,12 @@ if (isProduction) {
 
 app.use(apiRoutes);
 
+
+// testing route
+app.get('/', (req, res) => {
+  res.send("Welcome to Barefoot Nomad Endpoints' Page");
+});
+
 // / catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
@@ -96,3 +102,5 @@ app.use((err, req, res) => {
 const server = app.listen(process.env.PORT || 3000, () => {
   console.log(`Listening on port ${server.address().port}`);
 });
+
+export default server;

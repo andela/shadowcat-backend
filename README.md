@@ -34,4 +34,8 @@ Make company global travel and accommodation easy and convenient for the strong 
     npm run start
   ```
 
-- You need to get a .coveralls.yml file locally for code coverage to get started
+ Coveralls for code coverage
+- Clone the repo
+- create a file .coveralls.yml
+- Untrack the `repo_token` from .gitignore file
+
