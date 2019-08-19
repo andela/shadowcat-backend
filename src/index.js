@@ -1,4 +1,8 @@
 
+<<<<<<< HEAD
+=======
+import swaggerUi from 'swagger-ui-express';
+>>>>>>> 4d8ba4cea0ab5946b58a40bb891811b1174fb936
 import './models/User';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -47,6 +51,12 @@ if (!isProduction) {
 
 app.use(apiRoutes);
 
+
+// testing route
+app.get('/', (req, res) => {
+  res.send("Welcome to Barefoot Nomad Endpoints' Page");
+});
+
 // / catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
@@ -89,3 +99,5 @@ app.use((err, req, res) => {
 const server = app.listen(process.env.PORT || 3000, () => {
   console.log(`Listening on port ${server.address().port}`);
 });
+
+export default server;
