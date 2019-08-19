@@ -1,21 +1,8 @@
 import express from 'express';
-import usersRouter from './users';
+import authRouter from './auth';
 
 const index = express.Router();
 
-index.use('/', usersRouter);
-
-index.use((err, req, res, next) => {
-  if (err.name === 'ValidationError') {
-    return res.status(422).json({
-      errors: Object.keys(err.errors).reduce((errors, key) => {
-        errors[key] = err.errors[key].message;
-        return errors;
-      }, {})
-    });
-  }
-
-  return next(err);
-});
+index.use('/v1/auth', authRouter);
 
 export default index;
