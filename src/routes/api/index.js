@@ -38,7 +38,7 @@ usersRouter.put('/user', (req, res, next) => {
         user.image = req.body.user.image;
       }
       if (typeof req.body.user.password !== 'undefined') {
-        user.setPassword(req.body.user.password);  
+        user.setPassword(req.body.user.password);
       }
       return user.save().then(() => res.json({ user: user.toAuthJSON() }));
     })
