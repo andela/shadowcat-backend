@@ -8,6 +8,8 @@
     "start": "npm run build && node ./dist/index.js",
     "dev": "nodemon --exec babel-node src/index.js",
     "lint": "eslint src/ --fix",
+    "migration": "sequelize db:migrate",
+    "seed":"sequelize db:seed:all",
     "test": "mocha src/test/*.test.js --require @babel/register --timeout 10000 --exit"
   },
   "author": "Andela Simulations Programme",
