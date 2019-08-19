@@ -34,8 +34,8 @@ Make company global travel and accommodation easy and convenient for the strong 
     npm run start
   ```
 
- Coveralls for code coverage
+## Coveralls for code coverage
 - Clone the repo
 - create a file .coveralls.yml
-- Untrack the `repo_token` from .gitignore file
-
+- Contact the Project Owner/Team Lead for the repo token
+- Put the repo token in the .coveralls.yml file like so `repo_token:w893894892392023sdjsdsd`
