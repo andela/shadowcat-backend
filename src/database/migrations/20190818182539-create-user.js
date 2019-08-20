@@ -1,3 +1,4 @@
+
 export default {
   up: (queryInterface, Sequelize) =>  queryInterface.createTable('Users', {
       id: {
@@ -31,6 +32,5 @@ export default {
         type: Sequelize.DATE
       }
     }),
-
   down: queryInterface => queryInterface.dropTable('Users')
 };
