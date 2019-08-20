@@ -1,7 +1,7 @@
 
 export default {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Users', {
-   id: {
+    id: {
      allowNull: false,
      autoIncrement: true,
      primaryKey: true,
@@ -11,23 +11,23 @@ export default {
      type: Sequelize.STRING,
      allowNull: false,
       },
-   lastname: {
+    lastname: {
      type: Sequelize.STRING,
      allowNull: false,
       },
-   email: {
+    email: {
      type: Sequelize.STRING,
      allowNull: false,
       },
-   password: {
+    password: {
      type: Sequelize.STRING,
      allowNull: false,
       },
-   createdAt: {
+    createdAt: {
      allowNull: false,
      type: Sequelize.DATE
    },
-   updatedAt: {
+    updatedAt: {
      allowNull: false,
      type: Sequelize.DATE
    }
