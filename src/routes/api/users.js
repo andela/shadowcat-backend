@@ -1,12 +1,10 @@
-import mongoose from 'mongoose';
-import express from 'express';
-import passport from 'passport';
-
-const usersRouter = express.Router();
+const mongoose = require('mongoose');
+const router = require('express').Router();
+const passport = require('passport');
 
 const User = mongoose.model('User');
 
-usersRouter.get('/user', (req, res, next) => {
+router.get('/user', (req, res, next) => {
   User.findById(req.payload.id)
     .then((user) => {
       if (!user) {
@@ -17,7 +15,7 @@ usersRouter.get('/user', (req, res, next) => {
     .catch(next);
 });
 
-usersRouter.put('/user', (req, res, next) => {
+router.put('/user', (req, res, next) => {
   User.findById(req.payload.id)
     .then((user) => {
       if (!user) {
@@ -46,7 +44,7 @@ usersRouter.put('/user', (req, res, next) => {
     .catch(next);
 });
 
-usersRouter.post('/users/login', (req, res, next) => {
+router.post('/users/login', (req, res, next) => {
   if (!req.body.user.email) {
     return res.status(422).json({ errors: { email: "can't be blank" } });
   }
@@ -70,7 +68,7 @@ usersRouter.post('/users/login', (req, res, next) => {
   })(req, res, next);
 });
 
-usersRouter.post('/users', (req, res, next) => {
+router.post('/users', (req, res, next) => {
   const user = new User();
 
   user.username = req.body.user.username;
@@ -82,4 +80,4 @@ usersRouter.post('/users', (req, res, next) => {
     .catch(next);
 });
 
-export default usersRouter;
+module.exports = router;
