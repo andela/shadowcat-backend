@@ -26,11 +26,11 @@ FROM development as builder
 
 RUN npm run build
 
-RUN ls -d build/*
+RUN ls -d dist/*
 
 # release includes bare minimum required to run the app, copied from builder
 FROM base AS release
 COPY --from=builder /tmp/node_modules ./node_modules
-COPY --from=builder /usr/src/app/build ./build
+COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/package.json ./
 RUN ls

@@ -1,9 +1,11 @@
 version: '3.7'
 services:
-  postgres:
-    image: postgres:11.5-alpine
-    container_name: postgresproduction
+  postgres-prod:
+    image: postgres:9.6
+    container_name: docker-prod
     env_file: .env
+    environment:
+      - POSTGRES_DB=dockerprod
     networks: 
       - webnet
     ports:
@@ -12,11 +14,13 @@ services:
     build: .
     command: npm start
     restart: always
-    env_file: .env
     environment:
+      - POSSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
       - DB_HOST=postgres
+      - NODE_ENV=production
     depends_on:
-      - postgres
+      - postgres-prod
     networks: 
       - webnet
 networks: 
