@@ -27,16 +27,6 @@ usersRouter.post('/users/login', (req, res, next) => {
   })(req, res, next);
 });
 
-usersRouter.post('/users', (req, res, next) => {
-  const user = new User();
 
-  user.username = req.body.user.username;
-  user.email = req.body.user.email;
-  user.setPassword(req.body.user.password);
-
-  user.save()
-    .then(() => res.json({ user: user.toAuthJSON() }))
-    .catch(next);
-});
 
 export default usersRouter;
