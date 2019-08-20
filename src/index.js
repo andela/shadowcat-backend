@@ -6,7 +6,6 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import cors from 'cors';
 import errorhandler from 'errorhandler';
-import mongoose from 'mongoose';
 import morgan from 'morgan';
 import methodOverride from 'method-override';
 import swaggerDocument from '../swagger.json';

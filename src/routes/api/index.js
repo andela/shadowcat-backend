@@ -1,19 +1,7 @@
-import mongoose from 'mongoose';
 import express from 'express';
 import passport from 'passport';
 
 const usersRouter = express.Router();
-
-usersRouter.get('/user', (req, res, next) => {
-  User.findById(req.payload.id)
-    .then((user) => {
-      if (!user) {
-        return res.sendStatus(401);
-      }
-      return res.json({ user: user.toAuthJSON() });
-    })
-    .catch(next);
-});
 
 usersRouter.put('/user', (req, res, next) => {
   User.findById(req.payload.id)
