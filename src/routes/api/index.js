@@ -4,8 +4,6 @@ import passport from 'passport';
 
 const usersRouter = express.Router();
 
-const User = mongoose.model('User');
-
 usersRouter.get('/user', (req, res, next) => {
   User.findById(req.payload.id)
     .then((user) => {
