@@ -1,21 +1,32 @@
 import express from 'express';
-import usersRouter from './users';
+import passport from 'passport';
 
-const index = express.Router();
+const usersRouter = express.Router();
 
-index.use('/', usersRouter);
-
-index.use((err, req, res, next) => {
-  if (err.name === 'ValidationError') {
-    return res.status(422).json({
-      errors: Object.keys(err.errors).reduce((errors, key) => {
-        errors[key] = err.errors[key].message;
-        return errors;
-      }, {})
-    });
+usersRouter.post('/users/login', (req, res, next) => {
+  if (!req.body.user.email) {
+    return res.status(422).json({ errors: { email: "can't be blank" } });
   }
 
-  return next(err);
+  if (!req.body.user.password) {
+    return res.status(422).json({ errors: { password: "can't be blank" } });
+  }
+  passport.authenticate('local', { session: false }, (
+    err,
+    user,
+    info
+  ) => {
+    if (err) {
+      return next(err);
+    }
+
+    if (user) {
+      return res.json({ user: user.toAuthJSON() });
+    }
+    return res.status(422).json(info);
+  })(req, res, next);
 });
 
-export default index;
+
+
+export default usersRouter;
