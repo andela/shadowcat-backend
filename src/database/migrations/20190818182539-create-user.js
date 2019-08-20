@@ -7,7 +7,7 @@ export default {
      primaryKey: true,
      type: Sequelize.INTEGER
       },
-   firstname: {
+    firstname: {
      type: Sequelize.STRING,
      allowNull: false,
       },
