@@ -1,20 +1,197 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0",
+    "version": "1.0.0",
     "title": "BAREFOOT NOMAD",
-    "description": "Making company travel and accommodation easy and convenient"
+    "description": "Making company travel and accommodation easy and convenient",
+    "contact": {
+      "email": "barefootnomadmail@gmail.com"
+    }
   },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "x-auth-token",
+      "in": "header"
+    }
+  },
+  "host": "shadowcat-backend-staging.herokuapp.com",
+  "basePath": "/api/v1",
   "schemes": [
     "https"
   ],
-  "host": "(link: https://shadowcat-backend-staging.herokuapp.com/) shadowcat-backend-staging.herokuapp.com",
-  "basePath": "/api/v1",
-  "securityDefinitions": {
-    "Bearer": {
-      "type": "bearer",
-      "name": "Authorization",
-  "in": "header"
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "api route for all users"
+    }
+  ],
+  "paths": {
+    "/users/forgot_password": {
+      "x-swagger-router-controller": "UserController",
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "ResetPasswordPost",
+        "description": "Send a user and email with the reset link",
+        "summary": "shadowcat-backend-staging.herokuapp.com/api/v1/users/forgot_password",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SendEmailResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "The email is not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/forgot_password/:token": {
+      "x-swagger-router-controller": "UserController",
+      "patch": {
+        "description": "User can reset password as long as token is valid",
+        "summary": "shadowcat-backend-staging.herokuapp.com/api/v1/users/forgot_password/:token",
+        "tags": [
+          "Users"
+        ],
+        "operationId": "ResetPasswordPatch",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "newPassword",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "confirmPassword",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SendEmailResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "403": {
+            "description": "Unauthorized Access",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SendEmailResponse": {
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number"
+            },
+            "email": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ErrorResponse": {
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
     }
   }
 }

@@ -3,6 +3,6 @@ import apiRouter from './api';
 
 const index = express.Router();
 
-index.use('/api', apiRouter);
+index.use('/api/v1/users', apiRouter);
 
 export default index;
