@@ -36,7 +36,6 @@
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
     "request": "^2.87.0",
-    "sequelize": "^5.15.1",
     "swagger-ui-express": "^4.0.7",
     "underscore": "^1.9.1"
   },
