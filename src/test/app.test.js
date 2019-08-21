@@ -6,7 +6,7 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 describe('TESTING ENDPOINTS', () => {
-  it('should return "Welcome to Barefoot Nomad Endpoints" Page', (done) => {
+  it('should return "Welcome to Barefoot Nomad Endpoints" Page *TEST CASE*', (done) => {
     chai.request(server)
       .get('/')
       .end((err, res) => {
