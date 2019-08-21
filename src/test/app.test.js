@@ -15,4 +15,14 @@ describe('TESTING ENDPOINTS', () => {
         done();
       });
   });
+
+  it('Welcome to Travis', (done) => {
+    chai.request(server)
+      .get('/')
+      .end((err, res) => {
+        if (err) return done(err);
+        expect((res.text)).to.be.a('string');
+        done();
+      });
+  });
 });
