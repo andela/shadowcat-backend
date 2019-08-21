@@ -1,0 +1,53 @@
+version: '3.7'
+services:
+  postgres-dev:
+    image: postgres:11.2-alpine
+    container_name: docker-dev
+    environment:
+      - POSTGRES_DB=dockerdev
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    networks: 
+      - webnet
+    volumes:
+      - ./server_db:/var/lib/postgresql/data
+    ports:
+      - "4201:5432"
+  postgres-test:
+    image: postgres:11.2-alpine
+    container_name: docker-test
+    environment:
+      - POSTGRES_DB=dockertest
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    networks: 
+      - webnet
+    ports:
+      - "4202:5432"
+  app:
+    build:
+      context: .
+      target: development
+    command: npm run dev
+    volumes:
+      - .:/usr/src/app
+    env_file: .env
+    environment:
+      - DB_HOST=postgres
+    ports:
+      - "3000:${PORT}"
+      - "9229:9229"
+    depends_on:
+      - postgres-dev
+      - postgres-test
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - DB_HOST=postgres
+      - NODE_ENV=$NODE_ENV
+    networks: 
+      - webnet
+networks: 
+  webnet:
+volumes:
+  server_db:
