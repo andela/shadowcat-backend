@@ -105,4 +105,8 @@ dist
 # coveralls repo token
 .coveralls.yml
 
+# data dump for development
+
+server_db
+
 # End of https://www.gitignore.io/api/node
