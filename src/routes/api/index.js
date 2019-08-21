@@ -1,3 +1,4 @@
+import authRouter from './auth';
 import express from 'express';
 import passport from 'passport';
 
