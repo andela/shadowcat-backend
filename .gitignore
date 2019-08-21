@@ -27,6 +27,9 @@ lib-cov
 coverage
 *.lcov
 
+#coverage info
+lcov.info
+
 # nyc test coverage
 .nyc_output
 
@@ -91,11 +94,15 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
-
+#vscode
+.vscode
 # Package lock
 package-lock.json
 
 # Transpiled app
 dist
+
+# coveralls repo token
+.coveralls.yml
 
 # End of https://www.gitignore.io/api/node
