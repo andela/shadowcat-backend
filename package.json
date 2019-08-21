@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist && mkdir dist",
-    "build": "npm run clean && babel src -s -d dist",
+    "build": "npm run clean && babel src -s -d dist --copy-files",
     "dev": "concurrently -k \"npm run start:dev\"",
-    "start": "node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "start:dev": "nodemon --inspect=0.0.0.0:9229 --exec babel-node src/index.js",
+    "heroku-postbuild": "npm run reverse && npm run migration && npm run seed",
     "lint": "eslint src/ --fix",
     "migration": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
+    "reverse": "sequelize db:migrate:undo:all",
     "coveralls-coverage": "coveralls < lcov.info",
     "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
     "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
@@ -62,5 +64,8 @@
     "expect.js": "^0.3.1",
     "mocha": "^6.2.0",
     "nodemon": "^1.19.1"
+  },
+  "engines": {
+    "node": "10.0.0"
   }
 }
