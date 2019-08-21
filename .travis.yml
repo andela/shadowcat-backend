@@ -9,13 +9,7 @@ services:
 
 before_install:
  - npm install sequelize-cli -g
-
-env:
- global:
-   - TEST_DATABASE_URL=postgres://postgres:@127.0.0.1:5432/test_database
-   - SECRET_KEY=secretkey
-   - NODE_ENV=test
-   - SOCKET_PORT=3000
+   
 
 before-script:
  - npm add sequelize-cli
