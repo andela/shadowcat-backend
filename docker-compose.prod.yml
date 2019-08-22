@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  postgres-prod:
+    image: postgres:9.6
+    container_name: docker-prod
+    env_file: .env
+    environment:
+      - POSTGRES_DB=dockerprod
+    networks: 
+      - webnet
+    ports:
+      - "4242:5432"
+  app:
+    build: .
+    command: npm start
+    restart: always
+    environment:
+      - POSSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - DB_HOST=postgres
+      - NODE_ENV=production
+    depends_on:
+      - postgres-prod
+    networks: 
+      - webnet
+networks: 
+  webnet:
