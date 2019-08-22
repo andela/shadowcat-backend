@@ -1,8 +1,9 @@
 import express from 'express';
 import passport from 'passport';
+import userRoutes from './users';
 
 const usersRouter = express.Router();
-
+usersRouter.use('/', userRoutes);
 usersRouter.post('/users/login', (req, res, next) => {
   if (!req.body.user.email) {
     return res.status(422).json({ errors: { email: "can't be blank" } });
