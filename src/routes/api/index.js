@@ -2,10 +2,10 @@ import express from 'express';
 import passport from 'passport';
 import authRouter from './auth';
 
-const usersRouter = express.Router();
+const index = express.Router();
 
 index.use('/v1/auth', authRouter);
-usersRouter.post('/users/login', (req, res, next) => {
+index.post('/users/login', (req, res, next) => {
   if (!req.body.user.email) {
     return res.status(422).json({ errors: { email: "can't be blank" } });
   }
@@ -13,11 +13,7 @@ usersRouter.post('/users/login', (req, res, next) => {
   if (!req.body.user.password) {
     return res.status(422).json({ errors: { password: "can't be blank" } });
   }
-  passport.authenticate('local', { session: false }, (
-    err,
-    user,
-    info
-  ) => {
+  passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) {
       return next(err);
     }
@@ -29,5 +25,4 @@ usersRouter.post('/users/login', (req, res, next) => {
   })(req, res, next);
 });
 
-
-export default usersRouter;
+export default index;

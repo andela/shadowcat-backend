@@ -91,8 +91,10 @@ app.use((err, req, res) => {
   });
 });
 
+const port = process.env.NODE_ENV === 'test' ? 3001 : 3000;
+
 // finally, let's start our server...
-const server = app.listen(process.env.PORT || 3000, () => {
+const server = app.listen(process.env.PORT || port, () => {
   console.log(`Listening on port ${server.address().port}`);
 });
 
