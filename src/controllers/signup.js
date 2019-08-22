@@ -1,7 +1,6 @@
 import models from '../models';
-import hashPassword from '../utils/helpers/hashPassword';
-import sendVerification from '../utils/helpers/sendGrid';
-import generateVerificationToken from '../utils/helpers/generateVerificationToken';
+import { hashPassword, generateVerificationToken } from '../utils/helpers';
+import sendVerification from '../services';
 
 const { User, Validate } = models;
 
@@ -13,12 +12,12 @@ const { User, Validate } = models;
  */
 export const signup = async (req, res) => {
   let {
-    firstName, lastName, email, password, phone
+    firstname, lastname, email, password, phone
   } = req.body;
 
-  firstName = String(firstName).trim();
+  firstname = String(firstname).trim();
 
-  lastName = String(lastName).trim();
+  lastname = String(lastname).trim();
 
   email = String(email).trim();
 
@@ -29,8 +28,8 @@ export const signup = async (req, res) => {
   password = hashPassword(password);
 
   const userPayload = {
-    first_name: firstName,
-    last_name: lastName,
+    firstname,
+    lastname,
     email,
     phone,
     password
@@ -43,7 +42,7 @@ export const signup = async (req, res) => {
 
     user = user.dataValues;
     const validatePayload = {
-      user_id: user.user_id,
+      userId: user.userId,
       token: verificationToken
     };
     await Validate.create(validatePayload);
@@ -51,13 +50,13 @@ export const signup = async (req, res) => {
     res.status(201).json({
       status: 201,
       data: {
-        user_id: user.user_id,
-        first_name: user.first_name,
-        last_name: user.last_name,
+        userId: user.userId,
+        firstname: user.firstname,
+        lastname: user.lastname,
         email: user.email,
         phone: user.phone,
         active: user.active,
-        created_at: user.createdAt
+        createdAt: user.createdAt
       }
     });
   } catch (err) {

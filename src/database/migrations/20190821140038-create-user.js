@@ -7,16 +7,16 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    user_id: {
+    userId: {
       type: Sequelize.UUID,
       allowNull: false,
       defaultValue: Sequelize.UUIDV4
     },
-    first_name: {
+    firstname: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    last_name: {
+    lastname: {
       type: Sequelize.STRING,
       allowNull: false
     },
@@ -26,7 +26,11 @@ module.exports = {
     },
     password: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
+    },
+    isAdmin: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
     },
     phone: {
       type: Sequelize.STRING,

@@ -8,14 +8,14 @@ const { User, Validate } = models;
  * @param { object } res - The response object
  * @return { void }
  */
-export const verifyToken = async (req, res) => {
+export const validate = async (req, res) => {
   const { token } = req.params;
   const validateEntry = await Validate.findOne({ where: { token } });
 
   if (validateEntry) {
     await User.update(
       { active: true },
-      { returning: true, where: { user_id: validateEntry.user_id } }
+      { returning: true, where: { userId: validateEntry.userId } }
     );
     res.status(201).json({ status: 201, data: 'Registration complete' });
   } else {
@@ -23,4 +23,4 @@ export const verifyToken = async (req, res) => {
   }
 };
 
-export default verifyToken;
+export default validate;

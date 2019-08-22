@@ -1,5 +1,4 @@
 import { signup as signupController } from './signup';
-import { verifyToken as verifyTokenController } from './verifyToken';
+import { validate as validateController } from './validate';
 
-export default signupController;
-export { signupController, verifyTokenController };
+export { signupController, validateController };

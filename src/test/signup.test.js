@@ -14,13 +14,13 @@ describe('POST signup route', () => {
     const { User } = models;
     await User.destroy({
       where: {
-        user_id: createdUserId
+        userId: createdUserId
       }
     });
   });
   it('should return 400 with undefined first name', (done) => {
     const cloneUser = { ...user };
-    cloneUser.firstName = '';
+    cloneUser.firstname = '';
     try {
       chai
         .request(server)
@@ -46,7 +46,7 @@ describe('POST signup route', () => {
   });
   it('should return 400 with invalid first name', (done) => {
     const cloneUser = { ...user };
-    cloneUser.firstName = 'anny5';
+    cloneUser.firstname = 'anny5';
     try {
       chai
         .request(server)
@@ -73,7 +73,7 @@ describe('POST signup route', () => {
 
   it('should return 400 with undefined last name', (done) => {
     const cloneUser = { ...user };
-    cloneUser.lastName = '';
+    cloneUser.lastname = '';
     try {
       chai
         .request(server)
@@ -100,7 +100,7 @@ describe('POST signup route', () => {
 
   it('should return 400 with invalid last name', (done) => {
     const cloneUser = { ...user };
-    cloneUser.lastName = 'anny5';
+    cloneUser.lastname = 'anny5';
     try {
       chai
         .request(server)
@@ -279,23 +279,23 @@ describe('POST signup route', () => {
           expect(status).to.deep.equal(201);
 
           expect(data).to.be.an('object');
-          expect(data).to.have.property('user_id');
-          expect(data).to.have.property('first_name');
-          expect(data).to.have.property('last_name');
+          expect(data).to.have.property('userId');
+          expect(data).to.have.property('firstname');
+          expect(data).to.have.property('lastname');
           expect(data).to.have.property('email');
           expect(data).to.have.property('phone');
           expect(data).to.have.property('active');
-          expect(data).to.have.property('created_at');
+          expect(data).to.have.property('createdAt');
 
-          const firstName = data.first_name;
-          const lastName = data.last_name;
+          const { firstname } = data;
+          const { lastname } = data;
           const {
             email, phone, active
           } = data;
 
-          createdUserId = data.user_id;
-          expect(firstName).to.equal(user.firstName);
-          expect(lastName).to.equal(user.lastName);
+          createdUserId = data.userId;
+          expect(firstname).to.equal(user.firstname);
+          expect(lastname).to.equal(user.lastname);
           expect(email).to.equal(user.email);
           expect(phone).to.equal(user.phone);
           expect(active).to.equal(false);

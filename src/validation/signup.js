@@ -11,12 +11,12 @@ import models from '../models';
  * @return { void }
  */
 const signupValidator = [
-  check('firstName')
+  check('firstname')
     .exists({ checkFalsy: true })
     .withMessage(signupErrors.undefinedFirstName)
     .isAlpha()
     .withMessage(signupErrors.invalidFirstName),
-  check('lastName')
+  check('lastname')
     .exists({ checkFalsy: true })
     .withMessage(signupErrors.undefinedLastName)
     .isAlpha()
