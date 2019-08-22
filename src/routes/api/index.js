@@ -9,10 +9,10 @@ usersRouter.get('/', (request, response) => response.status(200).send('Welcome t
 
 usersRouter.use('/auth', authRouter);
 
-usersRouter.use((req, res, next) => {
+usersRouter.use((req, res) => {
   res.status(404).json({
-      message: 'not found'
+    message: 'not found'
   });
- });      
+});   
 
 export default usersRouter;
