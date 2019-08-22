@@ -25,17 +25,16 @@ describe('User login', () => {
 
 it('should return an invalid login', (done) => {
   chai.request(server)
-  .post('/api/auth/login')
-  .send({
-    email: 'chimamark@example.com',
-    password: '1234d567'
-  })
+      .post('/api/auth/login')
+      .send({
+        email: 'chimamark@example.com',
+        password: '1234d567'
+      })
   .end((err, res) => {
     expect(res.status).to.equal(400);
     expect(res.body).to.be.an('object');
     expect(res.body.message).to.equal('Invalid email or password');
     done();
   });
-})
-
+  })
 });
