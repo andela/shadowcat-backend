@@ -1,4 +1,4 @@
-import { check } from 'express-validator/check';
+import { check } from 'express-validator';
 
 const loginValidation = [
   check('email').isEmail().trim().withMessage('input a valid email address'),
@@ -6,4 +6,4 @@ const loginValidation = [
   check('password').not().isEmpty().withMessage('input password'),
 ];
 
-export default loginValidation;
+export {loginValidation } ;

@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import models from '../models';
 
 const { User } = models;
-
 /**
  * @exports UserController
  *
@@ -31,22 +30,27 @@ class UserController{
       }
     });
 
-    if (!user) return Response.error(res, 400, 'Invalid email or password');
+    if (!user) return res.status(400).json({
+      success: false,
+      message: 'Invalid email or password',
+    });
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return Response.error(res, 400, 'Invalid email or password');
-    const generate = {
+    if (!match) return  res.status(400).json({
+      success: false,
+      message: 'Invalid email or password',
+    });
+    const payload = {
       id: user.id,
       email: user.email
     };
-    const token = await Token.create(generate);
-    const { exp } = jwt.decode(token);
-      user.exp = exp;
-      return Response.success(res, 200, userExtractor(user, token), 'User successfully logged in');
+jwt.sign({  id: user.id,  email: user.email}, process.env.SECRET,(err, token)=>{
+  return res.status(201).json({
+    status: 'success', message: 'User successfully logged in', payload:payload,token
+  });
+})
+      
     } catch (error) {
-      return res.status(500).json({
-        status: 500,
-        errors: error.message
-      })
+      next(error)
     }
     
   }
