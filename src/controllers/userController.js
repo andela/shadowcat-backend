@@ -54,7 +54,7 @@ jwt.sign({  id: user.id,  email: user.email}, process.env.SECRET,(err, token)=>{
     }
     
   }
- 
+
 }
 
 export default UserController;
