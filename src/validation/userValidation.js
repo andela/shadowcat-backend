@@ -6,4 +6,4 @@ const loginValidation = [
   check('password').not().isEmpty().withMessage('input password'),
 ];
 
-export { loginValidation } ;
+export default { loginValidation };
