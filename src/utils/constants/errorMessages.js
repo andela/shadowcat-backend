@@ -7,7 +7,7 @@ export const signupErrors = {
   undefinedPhone: 'Phone number is required',
   undefinedPassword: 'Password is required',
   invalidPhone: 'Phone number not valid',
-  invalidPassword: 'Password cannot be less then 8 characters',
+  invalidPassword: 'Password cannot be less than 8 characters',
   invalidEmail: 'Email is not valid',
   nonAndelanEmail: 'Andela email not provided',
   existingUser: 'User already exists'

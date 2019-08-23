@@ -17,7 +17,7 @@ export const validate = async (req, res) => {
       { active: true },
       { returning: true, where: { userId: validateEntry.userId } }
     );
-    res.status(201).json({ status: 201, data: 'Registration complete' });
+    res.status(200).json({ status: 200, data: 'Registration complete' });
   } else {
     res.status(404).json({ status: 404, error: 'entry not found' });
   }

@@ -9,11 +9,11 @@ import sgMail from '@sendgrid/mail';
 const sendVerification = async (receiver, verificationToken) => {
   let verificationUrl = '';
   if (process.env.NODE_ENV === 'development') {
-    verificationUrl = 'http://localhost:3000/api/v1/auth/verify/';
+    verificationUrl = process.env.EMAIL_VERIFY_URL_DEV;
   } else if (process.env.NODE_ENV === 'test') {
-    verificationUrl = 'http://localhost:3001/api/v1/auth/verify/';
+    verificationUrl = process.env.EMAIL_VERIFY_URL_TEST;
   } else {
-    verificationUrl = 'https://shadowcat-backend-staging.herokuapp.com';
+    verificationUrl = process.env.EMAIL_VERIFY_URL_PROD;
   }
 
   verificationUrl += verificationToken;

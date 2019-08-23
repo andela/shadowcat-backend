@@ -26,7 +26,7 @@ const signupValidator = [
     .withMessage(signupErrors.undefinedEmail)
     .isEmail()
     .withMessage(signupErrors.invalidEmail)
-    .matches(/andela.com$/)
+    .matches(/@andela.com$/)
     .withMessage(signupErrors.nonAndelanEmail),
   check('password')
     .exists({ checkFalsy: true })
