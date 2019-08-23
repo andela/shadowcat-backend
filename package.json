@@ -12,6 +12,7 @@
     "heroku-postbuild": "npm run reverse && npm run migration && npm run seed",
     "lint": "eslint src/ --fix",
     "migration": "sequelize db:migrate",
+    "migration:reset": "sequelize db:migrate:undo:all",
     "seed": "sequelize db:seed:all",
     "reverse": "sequelize db:migrate:undo:all",
     "coveralls-coverage": "coveralls < lcov.info",

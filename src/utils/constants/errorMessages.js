@@ -13,4 +13,8 @@ export const signupErrors = {
   existingUser: 'User already exists'
 };
 
+export const signupVerifyErrors = {
+  notFound: 'No pending verification found'
+};
+
 export default signupErrors;

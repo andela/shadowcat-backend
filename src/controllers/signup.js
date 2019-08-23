@@ -8,7 +8,7 @@ const { User, Validate } = models;
  * The signup controller
  * @param { object } req - The request object
  * @param { object } res - The response object
- * @return { void }
+ * @returns { void }
  */
 export const signup = async (req, res) => {
   let {
@@ -41,11 +41,11 @@ export const signup = async (req, res) => {
     sendVerification(email, verificationToken);
 
     user = user.dataValues;
-    const validatePayload = {
+    const signupVerifyPayload = {
       userId: user.userId,
       token: verificationToken
     };
-    await Validate.create(validatePayload);
+    await Validate.create(signupVerifyPayload);
 
     res.status(201).json({
       status: 201,

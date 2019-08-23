@@ -8,7 +8,7 @@ import errorhandler from 'errorhandler';
 import morgan from 'morgan';
 import methodOverride from 'method-override';
 import dotenv from 'dotenv';
-import swaggerDocument from '../swagger.json';
+import swaggerDocument from '../public/api-docs/swagger.json';
 import apiRoutes from './routes';
 
 dotenv.config();
