@@ -30,15 +30,19 @@ class UserController{
       }
     });
 
-    if (!user) return res.status(400).json({
-      success: false,
-      message: 'Invalid email or password',
+    if (!user){
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid email or password',
+      });
+    }
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) { 
+        return  res.status(400).json({
+          success: false,
+          message: 'Invalid email or password',
     });
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return  res.status(400).json({
-      success: false,
-      message: 'Invalid email or password',
-    });
+  } 
     const payload = {
       id: user.id,
       email: user.email
