@@ -34,6 +34,9 @@ const sendVerification = async (receiver, verificationToken) => {
               <div style="padding-top:10px">
                 <a href="${verificationUrl}" style="padding: 7px; text-transform: capitalize; border-radius: 3px; background-color:#5C6BC0; color: white; text-decoration: none">Confirm Email address</a>
               </div>
+              <div style="padding-top:10px">
+                <a href="${verificationUrl}" style="text-decoration: none">${verificationUrl}</a>
+              </div>
             </div>
           </div>
         `
