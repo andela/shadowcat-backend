@@ -5,9 +5,9 @@ import models from '../models';
 const { User } = models;
 
 /**
-* @exports UserController
- * @class UserController
- * @description Handles Users
+ * @
+ * @ class UserController
+ * @ description Handles Users
  */
 class UserController {
   /**
