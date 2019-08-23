@@ -7,8 +7,8 @@ const { User } = models;
 /**
  * @exports UserController
  * @class UserController
- * description handles users
- */
+ * @description Handles  Users
+ * */
 class UserController {
   /**
    * @static
