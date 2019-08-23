@@ -5,10 +5,10 @@ import models from '../models';
 const { User } = models;
 
 /**
- * @exports UserController
+ *
+ *
  * @class UserController
- * @description Handles  Users
- * */
+ */
 class UserController {
   /**
    * @static
@@ -39,9 +39,9 @@ class UserController {
           message: 'Invalid email or password',
         });
       }
-    const payload = {
-      id: user.id,
-      email: user.email
+      const payload = {
+        id: user.id,
+        email: user.email
     };
       jwt.sign({ id: user.id, email: user.email }, process.env.SECRET,(err, token) => {
         return res.status(201).json({
