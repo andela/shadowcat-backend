@@ -35,5 +35,5 @@ describe('User login', () => {
         expect(res.body.message).to.equal('Invalid email or password');
         done();
       });
-      });
+  });
 });

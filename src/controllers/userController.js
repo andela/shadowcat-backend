@@ -31,7 +31,7 @@ class UserController {
           success: false,
           message: 'Invalid email or password',
         });
-    }
+      }
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
         return res.status(400).json({
@@ -50,7 +50,7 @@ jwt.sign({  id: user.id,  email: user.email}, process.env.SECRET,(err, token)=>{
       });  
     } catch (error) {
       next(error);
-    };   
-  };
-};
+    }  
+  }
+}
 export default UserController;
