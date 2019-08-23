@@ -10,6 +10,7 @@ import morgan from 'morgan';
 import methodOverride from 'method-override';
 import swaggerDocument from '../swagger.json';
 import apiRoutes from './routes';
+import Authentication from './middlewares/auth';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -52,7 +53,15 @@ app.use(apiRoutes);
 app.get('/', (req, res) => {
   res.send("Welcome to Barefoot Nomad Endpoints' Page");
 });
-
+app.post('/signup', (req, res) => {
+  const token = Authentication.signJwt({ user_id: 2345, is_admin: false });
+  res.status(200).send({
+    status: 200,
+    data: [
+      { token }
+    ]
+  });
+});
 // / catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
