@@ -1,7 +1,7 @@
 
 import express from 'express';
-import authRouter from './auth';
 import passport from 'passport';
+import authRouter from './auth';
 
 const usersRouter = express.Router();
 

@@ -1,6 +1,6 @@
 import express from 'express';
 import UserController from '../../controllers/userController';
-import { loginValidation } from '../../validation/userValidation';
+import  loginValidation  from '../../validation/userValidation';
 
 const authRouter = express.Router();
 
