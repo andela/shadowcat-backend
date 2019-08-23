@@ -5,9 +5,8 @@ import models from '../models';
 const { User } = models;
 
 /**
- * @
- * @ class UserController
- * @ description Handles Users
+ * @description Handles Users
+ * @class UserController
  */
 class UserController {
   /**
