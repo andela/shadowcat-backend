@@ -45,7 +45,7 @@ const signupValidator = [
       const pulledErrors = pullErrors(errors);
       return res.status(400).json({
         status: 400,
-        error: pulledErrors[0]
+        error: pulledErrors
       });
     }
     const { User } = models;

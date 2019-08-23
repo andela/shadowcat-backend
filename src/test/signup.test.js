@@ -37,7 +37,7 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
-          expect(error).to.equal(signupErrors.undefinedFirstName);
+          expect(error[0]).to.equal(signupErrors.undefinedFirstName);
           done();
         });
     } catch (err) {
@@ -63,7 +63,7 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
-          expect(error).to.equal(signupErrors.invalidFirstName);
+          expect(error[0]).to.equal(signupErrors.invalidFirstName);
           done();
         });
     } catch (err) {
@@ -90,7 +90,7 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
-          expect(error).to.equal(signupErrors.undefinedLastName);
+          expect(error[0]).to.equal(signupErrors.undefinedLastName);
           done();
         });
     } catch (err) {
@@ -117,7 +117,7 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
-          expect(error).to.equal(signupErrors.invalidLastName);
+          expect(error[0]).to.equal(signupErrors.invalidLastName);
           done();
         });
     } catch (err) {
@@ -144,7 +144,7 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
-          expect(error).to.equal(signupErrors.undefinedPhone);
+          expect(error[0]).to.equal(signupErrors.undefinedPhone);
           done();
         });
     } catch (err) {
@@ -170,7 +170,7 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
-          expect(error).to.equal(signupErrors.invalidPhone);
+          expect(error[0]).to.equal(signupErrors.invalidPhone);
           done();
         });
     } catch (err) {
@@ -197,7 +197,7 @@ describe('POST signup route', () => {
           const { status, error } = body;
           expect(status).to.deep.equal(400);
 
-          expect(error).to.equal(signupErrors.invalidPassword);
+          expect(error[0]).to.equal(signupErrors.invalidPassword);
           done();
         });
     } catch (err) {
@@ -224,7 +224,7 @@ describe('POST signup route', () => {
           const { status, error } = body;
           expect(status).to.deep.equal(400);
 
-          expect(error).to.equal(signupErrors.invalidEmail);
+          expect(error[0]).to.equal(signupErrors.invalidEmail);
           done();
         });
     } catch (err) {
@@ -251,7 +251,7 @@ describe('POST signup route', () => {
           const { status, error } = body;
           expect(status).to.deep.equal(400);
 
-          expect(error).to.equal(signupErrors.nonAndelanEmail);
+          expect(error[0]).to.equal(signupErrors.nonAndelanEmail);
           done();
         });
     } catch (err) {
