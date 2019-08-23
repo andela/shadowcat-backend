@@ -10,6 +10,7 @@ import morgan from 'morgan';
 import methodOverride from 'method-override';
 import swaggerDocument from '../swagger.json';
 import apiRoutes from './routes';
+import 'dotenv/config';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -47,6 +48,14 @@ if (!isProduction) {
 
 app.use(apiRoutes);
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    cookie: { maxAge: 60000 },
+    resave: false,
+    saveUninitialized: false
+  })
+);
 
 // testing route
 app.get('/', (req, res) => {

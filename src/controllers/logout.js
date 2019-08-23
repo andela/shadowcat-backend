@@ -31,7 +31,10 @@ class Logout {
 
             }
 
-            return res.redirect('/api/v1/auth/login');
+            //return res.redirect('/api/v1/auth/login');
+            return res.status(200).json({
+                message: 'you have logged out successfully',
+            });
 
         } catch (err) {
 
