@@ -42,7 +42,8 @@ class UserController {
         id: user.id,
         email: user.email
       };
-      jwt.sign({ id: user.id, email: user.email }, process.env.SECRET, (err, token) =>  res.status(201).json({
+      jwt.sign({ id: user.id, email: user.email },
+                 process.env.SECRET, (err, token) => res.status(201).json({
           status: 'success', message: 'User successfully logged in', payload, token
         }));
     } catch (error) {
