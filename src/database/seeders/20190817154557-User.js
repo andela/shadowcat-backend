@@ -2,7 +2,7 @@
 import bcrypt from 'bcryptjs';
 
 export default {
-  up: queryInterface => queryInterface.bulkInsert(
+  up: (queryInterface) => queryInterface.bulkInsert(
     'Users',
     [
       {
@@ -25,5 +25,5 @@ export default {
     {},
 
   ),
-  down: queryInterface => queryInterface.bulkDelete('Users', null, {}),
+  down: (queryInterface) => queryInterface.bulkDelete('Users', null, {}),
 };
