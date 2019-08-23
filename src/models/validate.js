@@ -1,5 +1,5 @@
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Validate = sequelize.define('Validate', {
     userId: DataTypes.INTEGER,
     token: DataTypes.STRING
