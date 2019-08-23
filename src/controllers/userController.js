@@ -3,12 +3,6 @@ import jwt from 'jsonwebtoken';
 import models from '../models';
 
 const { User } = models;
-
-/**
- *
- *
- * @class UserController
- */
 class UserController {
   /**
    * @static
@@ -49,7 +43,7 @@ class UserController {
         });
       });  
     } catch (error) {
-      next(error);
+        next(error);
     }  
   }
 }
