@@ -7,7 +7,7 @@
     "clean": "rm -rf dist && mkdir dist",
     "build": "npm run clean && babel src -s -d dist --copy-files",
     "dev": "concurrently -k \"npm run start:dev\"",
-    "start": "cross-env NODE_ENV=production node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "start:dev": "cross-env NODE_ENV=development nodemon --inspect=0.0.0.0:9229 --exec babel-node src/index.js",
     "heroku-postbuild": "npm run reverse && npm run migration && npm run seed",
     "lint": "eslint src/ --fix",
