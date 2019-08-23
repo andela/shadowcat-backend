@@ -6,9 +6,9 @@ export default {
     'Users',
     [
       {
-        firstname: 'Chima',
-        lastname: 'Mark',
-        email: 'chimamark@andela.com',
+        firstname: 'Sylvanus',
+        lastname: 'Elendu',
+        email: 'sylvanus.elendu@andela.com',
         password: bcrypt.hashSync('IamUser', 10),
         createdAt: new Date(),
         updatedAt: new Date(),

@@ -18,7 +18,7 @@ class auth {
    */
   static createToken(payload) {
     try {
-      const token = jwt.sign(payload, secretKey, { expiresIn: '24h' });
+      const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
       return token;
     } catch (error) {
       // console.log(error, 'error');

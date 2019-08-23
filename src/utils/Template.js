@@ -44,7 +44,7 @@ const getMailBody = (userDetails) => {
         <div class='m-3'>
           <h4>Dear ${FirstName} ${LastName}</h4>
           <p>
-            You have been directed here to reset your password and this should be done within 24hrs to avoid
+            You have been directed here to reset your password and this should be done within 1hour to avoid
             invalidity of the request
           </p>
           <p>
