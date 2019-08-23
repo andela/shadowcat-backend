@@ -1,9 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import models from '../models';
-
 const { User } = models;
-
 /**
  * @description Handles Users
  * @class UserController
@@ -44,7 +42,7 @@ class UserController {
       };
       jwt.sign(
         { id: user.id, email: user.email },
-        process.env.SECRET, (err, token) => res.status(201).json({
+        process.env.SECRET, (err, token) => res.status(200).json({
           status: 'success', message: 'User successfully logged in', payload, token
         })
       );

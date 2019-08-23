@@ -14,7 +14,7 @@ describe('User login', () => {
         password: 'Chibyke8%'
       })
       .end((err, res) => {
-        expect(res.status).to.equal(201);
+        expect(res.status).to.equal(200);
         expect(res.body.payload).to.be.an('object');
         expect(res.body).to.have.property('status');
         expect(res.body.message).to.equal('User successfully logged in');
@@ -22,7 +22,7 @@ describe('User login', () => {
       });
   });
 
-  it('should return an invalid login', (done) => {
+  it('should return an invalid login when the password or email is incorrect', (done) => {
     chai.request(server)
       .post('/api/auth/login')
       .send({
