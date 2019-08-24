@@ -1,10 +1,9 @@
 
 /**
- *@description A controller that destroys sessions and redirects users to the homepage
- *
- * @class Logout
- */
 
+@description class description
+@Class className
+*/
 class Logout {
   /**
    *
