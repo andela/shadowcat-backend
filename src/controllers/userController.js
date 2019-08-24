@@ -44,12 +44,12 @@ class UserController {
       jwt.sign(
         { id: user.id, email: user.email },
         process.env.SECRET, (err, token) => {
-          if(err){
-            throw new Error('something is wrong')
-          } else{
+          if (err) {
+            throw new Error('something is wrong');
+          } else {
             res.status(200).json({
               status: 'success', message: 'User successfully logged in', payload, token
-            })
+            });
           }
         }
       );
