@@ -14,11 +14,9 @@
     "migration": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
     "reverse": "sequelize db:migrate:undo:all",
-    "coveralls-coverage": "coveralls < lcov.info",
-    "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
-    "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
-    "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
-    "test": "cross-env NODE_ENV=test mocha --require @babel/register src/test/index.js --timeout 20000 --exit"
+    "coverage": "nyc npm run test",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "test": "cross-env NODE_ENV=test mocha --require @babel/register src/test/**.test.js --timeout 20000 --exit"
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
@@ -63,7 +61,8 @@
     "eslint-plugin-import": "^2.18.2",
     "expect.js": "^0.3.1",
     "mocha": "^6.2.0",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "nyc": "^14.1.1"
   },
   "engines": {
     "node": "10.0.0"

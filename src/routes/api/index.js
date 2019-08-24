@@ -32,7 +32,7 @@
 
 
 import { Router } from 'express';
-import logoutRoute from './logout.route';
+import logoutRoute from './logout';
 
 const usersRouter = Router();
 

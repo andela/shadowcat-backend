@@ -1,8 +1,7 @@
-
 import bcrypt from 'bcryptjs';
 
 export default {
-  up: (queryInterface) => queryInterface.bulkInsert(
+  up: queryInterface => queryInterface.bulkInsert(
     'Users',
     [
       {
@@ -11,7 +10,7 @@ export default {
         email: 'chimamark@example.com',
         password: bcrypt.hashSync('Chibyke8%', 10),
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       },
       {
         firstname: 'frank',
@@ -19,11 +18,10 @@ export default {
         email: 'frankchidinma@example.com',
         password: bcrypt.hashSync('Chibyke8%', 10),
         createdAt: new Date(),
-        updatedAt: new Date(),
-      },
+        updatedAt: new Date()
+      }
     ],
-    {},
-
+    {}
   ),
-  down: queryInterface => queryInterface.bulkDelete('Users', null, {}),
+  down: queryInterface => queryInterface.bulkDelete('Users', null, {})
 };
