@@ -1,4 +1,3 @@
-/**
 
 /**
  *@description A controller that destroys sessions and redirects users to the homepage
@@ -7,17 +6,6 @@
  */
 
 class Logout {
-  /**
-
- *
- *@description A logout controller
-* @static
-* @param {object} req
-* @param {object} res
-* @param {Object} next
-* @return {object} null
-* @memberof Logout
-*/
   /**
    *
    *
@@ -38,6 +26,7 @@ class Logout {
 
       // return res.redirect('/api/v1/auth/login');
       return res.status(200).json({
+        status: res.statusCode,
         message: 'you have logged out successfully',
       });
     } catch (err) {

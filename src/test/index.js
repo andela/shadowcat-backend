@@ -1,2 +1,2 @@
-import "./app.test";
-import "./logout";
+import './app.test';
+import './logout';
