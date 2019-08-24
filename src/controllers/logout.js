@@ -1,9 +1,8 @@
 
 /**
-
-@description class description
-@Class className
-*/
+ *@description class description
+ *@Class className
+ */
 class Logout {
   /**
    *
