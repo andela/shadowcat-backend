@@ -1,4 +1,5 @@
 import passport from 'passport';
+import uuidv4 from 'uuid/v4';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { googleCredentials, facebookCredentials } from './socialMediaCredentials';
@@ -16,63 +17,52 @@ passport.deserializeUser(async (id, done) => {
   });
   return done(null, user);
 });
-passport.use(new GoogleStrategy(
-  {
-    clientID: googleCredentials.clientID,
-    clientSecret: googleCredentials.clientSecret,
-    callbackURL: googleCredentials.callbackURL,
-    passReqToCallback: true
-  }, async (request, accessToken, refreshToken, profile, done) => {
-    try {
-      const { _json: userDetails } = profile;
-      const {
-        email, sub: userId, given_name: firstname, family_name: lastname
-      } = userDetails;
-      const result = await User.findOrCreate({
-        where: {
-          userId
-        },
-        defaults: {
-          firstname: firstname || 'noname',
-          lastname: lastname || 'noname',
-          email
-        }
-      });
-      const [userData, created] = result;
-      const user = userData.get({ plain: true });
-      user.newUser = created;
-      return done(null, user);
-    } catch (err) {
-      return done(err, null);
+passport.use(new GoogleStrategy({
+  clientID: googleCredentials.clientID,
+  clientSecret: googleCredentials.clientSecret,
+  callbackURL: googleCredentials.callbackURL,
+  passReqToCallback: true
+}, async (request, accessToken, refreshToken, profile, done) => {
+  try {
+    const { _json: userDetails } = profile;
+    const { email } = userDetails;
+    const userData = await User.findOne({
+      where: { gmail: email },
+      raw: true
+    });
+    let user = {};
+    if (!userData) {
+      user.notFound = 'user not found in database';
+      user.userId = uuidv4();
     }
+    if (userData) user = userData;
+    return done(null, user);
+  } catch (err) {
+    return done(err, null);
   }
-));
+}));
 
 passport.use(new FacebookStrategy(
   {
     clientID: facebookCredentials.clientID,
     clientSecret: facebookCredentials.clientSecret,
     callbackURL: facebookCredentials.callbackURL,
-    profileFields: ['id', 'displayName', 'gender', 'emails']
+    profileFields: ['id', 'displayName', 'gender', 'email']
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
       const { _json: userDetails } = profile;
-      const { id: userId, name, email } = userDetails;
-      const splittedNames = name.split(' ');
-      const result = await User.findOrCreate({
-        where: {
-          userId
-        },
-        defaults: {
-          firstname: splittedNames[0] || 'noname',
-          lastname: splittedNames[2] || 'noname',
-          email
-        }
+      const { email } = userDetails;
+      const userData = await User.findOne({
+        where: { facebook: email },
+        raw: true
       });
-      const [userData, created] = result;
-      const user = userData.get({ plain: true });
-      user.newUser = created;
+      let user = {};
+      if (!userData) {
+        user.notFound = 'user not found in database';
+        user.userId = uuidv4();
+      }
+      if (userData) user = userData;
       return done(null, user);
     } catch (err) {
       return done(err, null);

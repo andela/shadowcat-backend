@@ -14,11 +14,16 @@ class SocialMediaLogin {
  */
   static async googleLogin(req, res, next) {
     try {
+      if (req.user.notFound) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Your gmail is not linked. Visit your profile section to link your social media accounts. Thank you.'
+        });
+      }
       const {
         createdAt, userId, firstname, lastname, email
       } = req.user;
-      const status = req.user.newUser ? 201 : 200;
-      return res.status(status).json({
+      return res.status(200).json({
         status: 'success',
         data: {
           createdAt, userId, firstname, lastname, email
@@ -40,11 +45,16 @@ class SocialMediaLogin {
  */
   static async facebookLogin(req, res, next) {
     try {
+      if (req.user.notFound) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Your facebook is not linked. Visit your profile section to link your social media accounts. Thank you.'
+        });
+      }
       const {
         createdAt, userId, firstname, lastname, email
       } = req.user;
-      const status = req.user.newUser ? 201 : 200;
-      return res.status(status).json({
+      return res.status(200).json({
         status: 'success',
         data: {
           createdAt, userId, firstname, lastname, email

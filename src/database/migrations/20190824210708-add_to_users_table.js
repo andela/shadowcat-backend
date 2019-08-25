@@ -20,7 +20,7 @@ export default {
     })
   ]),
 
-  down: (queryInterface) => Promise.all([
+  down: queryInterface => Promise.all([
     queryInterface.removeColumn('Users', 'userId'),
     queryInterface.removeColumn('Users', 'facebook'),
     queryInterface.removeColumn('Users', 'gmail')

@@ -10,6 +10,8 @@
     "start": "npm run build && node dist/index.js",
     "start:dev": "nodemon --inspect=0.0.0.0:9229 --exec babel-node src/index.js",
     "heroku-postbuild": "npm run reverse && npm run migration && npm run seed",
+    "db-refresh": "npm run reverse && npm run migration && npm run seed",
+    "db-refresh:test": "cross-env NODE_ENV=test npm run db-refresh",
     "lint": "eslint src/ --fix . && echo 'Lint complete.'",
     "migration": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
@@ -18,7 +20,7 @@
     "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
     "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
     "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
-    "test": "cross-env NODE_ENV=test npm run heroku-postbuild && nyc mocha --require @babel/register src/test/**.test.js --timeout 20000 --exit"
+    "test": "npm run db-refresh:test&&cross-env NODE_ENV=test nyc mocha --require @babel/register src/test/**.test.js --timeout 20000 --exit"
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",

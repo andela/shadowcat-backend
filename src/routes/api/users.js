@@ -8,18 +8,18 @@ const { googleLogin, facebookLogin } = SocialMediaLogin;
 const router = Router();
 
 router.get(
-  '/users/google/login',
+  '/v1/auth/google/login',
   passport.authenticate('google', {
     scope: ['profile', 'email']
   })
 );
 router.get(
-  '/users/facebook/login',
-  passport.authenticate('facebook')
+  '/v1/auth/facebook/login',
+  passport.authenticate('facebook', { scope: 'email' })
 );
 
-router.get('/users/google/login/redirect', passport.authenticate('google'), googleLogin);
-router.get('/users/facebook/login/redirect', passport.authenticate('facebook'), facebookLogin);
+router.get('/v1/auth/google/login/redirect', passport.authenticate('google'), googleLogin);
+router.get('/v1/auth/facebook/login/redirect', passport.authenticate('facebook'), facebookLogin);
 
 
 export default router;
