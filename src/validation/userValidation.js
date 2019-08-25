@@ -1,5 +1,5 @@
 import { check } from 'express-validator';
-import Errs from './errorMessage';
+import Errors from './errorMessage';
 
 const loginValidation = [
   check('email')
@@ -14,7 +14,7 @@ const loginValidation = [
     .withMessage('Input password')
     .isLength({ min: 8 })
     .withMessage('Input longer password'),
-  Errs.displayErrs,
+  Errors.displayErrs,
 ];
 
 export default loginValidation;

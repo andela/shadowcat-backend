@@ -1,6 +1,6 @@
 import { validationResult } from 'express-validator/check';
 
-const Errs = {
+const Errors = {
   displayErrs(req, res, next) {
     const messages = [];
     const errors = validationResult(req);
@@ -18,4 +18,4 @@ const Errs = {
   },
 };
 
-export default Errs;
+export default Errors;
