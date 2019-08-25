@@ -10,7 +10,7 @@ describe('User login', () => {
     chai.request(server)
       .post('/api/auth/login')
       .send({
-        email: 'chimamark@example.com',
+        email: 'chimamark@andela.com',
         password: 'Chibyke8%'
       })
       .end((err, res) => {
@@ -26,7 +26,7 @@ describe('User login', () => {
     chai.request(server)
       .post('/api/auth/login')
       .send({
-        email: 'chimamark@example.com',
+        email: 'chimamark@andela.com',
         password: '1234d567'
       })
       .end((err, res) => {
