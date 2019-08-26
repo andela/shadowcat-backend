@@ -179,7 +179,7 @@ describe('POST signup route', () => {
   });
   it('should return 400 with invalid password', (done) => {
     const cloneUser = { ...user };
-    cloneUser.password = 'toshort';
+    cloneUser.password = 'toshor1';
     try {
       chai
         .request(server)
@@ -198,6 +198,33 @@ describe('POST signup route', () => {
           expect(status).to.deep.equal(400);
 
           expect(error[0]).to.equal(signupErrors.invalidPassword);
+          done();
+        });
+    } catch (err) {
+      expect(err).to.have.status(500);
+    }
+  });
+  it('should return 400 with non alphanumeric password', done => {
+    const cloneUser = { ...user };
+    cloneUser.password = 'nonalphanumeric';
+    try {
+      chai
+        .request(server)
+        .post(`${url}`)
+        .send(cloneUser)
+        .end((err, res) => {
+          expect(res).to.have.property('status');
+          expect(res).to.have.property('body');
+          expect(res.status).to.deep.equal(400);
+
+          const { body } = res;
+          expect(body).to.have.property('status');
+          expect(body).to.have.property('error');
+
+          const { status, error } = body;
+          expect(status).to.deep.equal(400);
+
+          expect(error[0]).to.equal(signupErrors.alphaNumericPassword);
           done();
         });
     } catch (err) {
@@ -299,6 +326,32 @@ describe('POST signup route', () => {
           expect(email).to.equal(user.email);
           expect(phone).to.equal(user.phone);
           expect(active).to.equal(false);
+          done();
+        });
+    } catch (err) {
+      expect(err).to.have.status(500);
+    }
+  });
+  it('should return 409 with existing user', done => {
+    const cloneUser = { ...user };
+    try {
+      chai
+        .request(server)
+        .post(`${url}`)
+        .send(cloneUser)
+        .end((err, res) => {
+          expect(res).to.have.property('status');
+          expect(res).to.have.property('body');
+          expect(res.status).to.deep.equal(409);
+
+          const { body } = res;
+          expect(body).to.have.property('status');
+          expect(body).to.have.property('error');
+
+          const { status, error } = body;
+          expect(status).to.deep.equal(409);
+
+          expect(error).to.equal(signupErrors.existingUser);
           done();
         });
     } catch (err) {

@@ -8,9 +8,10 @@ export const signupErrors = {
   undefinedPassword: 'Password is required',
   invalidPhone: 'Phone number not valid',
   invalidPassword: 'Password cannot be less than 8 characters',
-  invalidEmail: 'Email is not valid',
+  invalidEmail: 'Email provided is not valid',
   nonAndelanEmail: 'Andela email not provided',
-  existingUser: 'User already exists'
+  existingUser: 'User already exist',
+  alphaNumericPassword: 'Password should contain no special characters with at least one digit and one letter'
 };
 
 export const signupVerifyErrors = {
