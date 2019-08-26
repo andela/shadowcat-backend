@@ -1,6 +1,5 @@
 
 import swaggerUi from 'swagger-ui-express';
-import './models/User';
 import express from 'express';
 import bodyParser from 'body-parser';
 import session from 'express-session';
@@ -8,9 +7,10 @@ import cors from 'cors';
 import errorhandler from 'errorhandler';
 import morgan from 'morgan';
 import methodOverride from 'method-override';
+import 'dotenv/config';
+import './models/User';
 import swaggerDocument from '../swagger.json';
 import apiRoutes from './routes';
-import 'dotenv/config';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -32,30 +32,25 @@ app.use(methodOverride());
 
 app.use(express.static(`${__dirname}/public`));
 
-app.use(
-  session({
-    secret: 'authorshaven',
-    cookie: { maxAge: 60000 },
-    resave: false,
-    saveUninitialized: false
-  })
-);
+app.use(session({
+  secret: 'authorshaven',
+  cookie: { maxAge: 60000 },
+  resave: false,
+  saveUninitialized: false
+}));
 
 if (!isProduction) {
   app.use(errorhandler());
 }
 
-
 app.use(apiRoutes);
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: 60000 },
-    resave: false,
-    saveUninitialized: false
-  })
-);
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  cookie: { maxAge: 60000 },
+  resave: false,
+  saveUninitialized: false
+}));
 
 // testing route
 app.get('/', (req, res) => {

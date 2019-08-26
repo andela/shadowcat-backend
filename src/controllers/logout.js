@@ -28,3 +28,6 @@ class Logout {
     }
   }
 }
+
+
+export default Logout;

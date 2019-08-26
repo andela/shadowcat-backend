@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import Logout from '../../controllers/Logout';
+import Logout from '../../controllers/logout';
 
 const router = Router();
 const { logout } = Logout;
