@@ -1,5 +1,5 @@
 import express from 'express';
-import apiRouter from './api';
+import apiRouter from './api/passwordResetRoute';
 
 const index = express.Router();
 

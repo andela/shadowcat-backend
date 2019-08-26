@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
 
-import UserService from '../services';
+import UserService from '../services/passwordResetService';
 
-import Response from '../utils';
+import Response from '../utils/Response';
 
 import PasswordEmail from '../utils/Mailer';
 

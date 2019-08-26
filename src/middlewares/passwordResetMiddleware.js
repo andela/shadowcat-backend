@@ -1,6 +1,6 @@
 
 import Token from '../utils/Token';
-import Response from '../utils';
+import Response from '../utils/Response';
 
 const { verifyToken } = Token;
 const { errorResponse } = Response;
