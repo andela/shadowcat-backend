@@ -4,7 +4,7 @@ import Errors from './errorMessage';
 const loginValidation = [
   check('email')
     .exists({ checkFalsy: true })
-    .withMessage({ email: 'input email' })
+    .withMessage({ email: 'Input email' })
     .isEmail()
     .withMessage({ email: 'Input a valid email address' })
     .matches(/@andela.com$/)
