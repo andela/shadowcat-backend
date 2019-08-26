@@ -28,7 +28,7 @@ const userValidator = {
       .isEmail()
       .isLowercase()
       .withMessage('Email must be in lowercase')
-      // .matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(andela.com)$/)
+      .matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(andela.com)$/)
       .withMessage('Invalid email address'),
 
   ],
