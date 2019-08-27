@@ -34,8 +34,8 @@ const signupValidator = [
     .isLength({ min: 8 })
     .withMessage(`password ${signupErrors.invalidPassword}`)
     // https://stackoverflow.com/questions/4429847/check-if-string-contains-both-number-and-letter-at-least
-    // https://stackoverflow.com/questions/388996/regex-for-javascript-to-allow-only-alphanumeric
-    .matches(/^(?=.*[a-z])(?=.*[0-9])([a-z0-9]+$)/i)
+    // https://stackoverflow.com/questions/16334765/regular-expression-for-not-allowing-spaces-in-the-input-field
+    .matches(/^(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%^&+=])(\S+$)/i)
     .withMessage(`password ${signupErrors.alphaNumericPassword}`),
   check('phone')
     .exists({ checkFalsy: true })
