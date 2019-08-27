@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 describe('User login', () => {
   it('should login a user account on /login POST ', (done) => {
     chai.request(server)
-      .post('/api/auth/login')
+      .post('/api/v1/auth/login')
       .send({
         email: 'chimamark@andela.com',
         password: 'Chibyke8%'
@@ -24,7 +24,7 @@ describe('User login', () => {
 
   it('should return an invalid login when the password or email is incorrect', (done) => {
     chai.request(server)
-      .post('/api/auth/login')
+      .post('/api/v1/auth/login')
       .send({
         email: 'chimamark@andela.com',
         password: '1234d567'
