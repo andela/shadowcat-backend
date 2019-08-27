@@ -195,6 +195,35 @@ describe('POST signup route', () => {
       expect(err).to.have.status(500);
     }
   });
+  it('should return 400 with phone length not equal to 11', done => {
+    const cloneUser = { ...user };
+    cloneUser.phone = '081333622';
+    try {
+      chai
+        .request(server)
+        .post(`${url}`)
+        .send(cloneUser)
+        .end((err, res) => {
+          expect(res).to.have.property('status');
+          expect(res).to.have.property('body');
+          expect(res.status).to.deep.equal(400);
+
+          const { body } = res;
+          expect(body).to.have.property('status');
+          expect(body).to.have.property('error');
+
+          const { status, error } = body;
+          expect(status).to.deep.equal(400);
+          expect(error).to.have.property('phone');
+
+          const { phone } = error;
+          expect(phone[0]).to.equal(signupErrors.phoneLength);
+          done();
+        });
+    } catch (err) {
+      expect(err).to.have.status(500);
+    }
+  });
   it('should return 400 with invalid password', (done) => {
     const cloneUser = { ...user };
     cloneUser.password = 'toshor1';

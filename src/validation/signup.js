@@ -41,7 +41,9 @@ const signupValidator = [
     .exists({ checkFalsy: true })
     .withMessage(`phone ${signupErrors.undefinedPhone}`)
     .isNumeric()
-    .withMessage(`phone ${signupErrors.invalidPhone}`),
+    .withMessage(`phone ${signupErrors.invalidPhone}`)
+    .isLength({ min: 11, max: 11 })
+    .withMessage(`phone ${signupErrors.phoneLength}`),
 
   async (req, res, next) => {
     const { errors } = validationResult(req);

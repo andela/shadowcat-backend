@@ -11,7 +11,8 @@ export const signupErrors = {
   invalidEmail: 'Enter a valid email address',
   nonAndelanEmail: 'Email should be an andela email',
   existingUser: 'User already exist',
-  alphaNumericPassword: 'Password should contain no special characters with at least one digit and one letter'
+  alphaNumericPassword: 'Password should contain no special characters with at least one digit and one letter',
+  phoneLength: 'Phone number should be 11 digits'
 };
 
 export const signupVerifyErrors = {

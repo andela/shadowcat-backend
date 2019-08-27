@@ -8,18 +8,18 @@
     "build": "npm run clean && babel src -s -d dist --copy-files",
     "dev": "concurrently -k \"npm run start:dev\"",
     "start": "npm run build && node dist/index.js",
-    "start:dev": "cross-env NODE_ENV=development nodemon --inspect=0.0.0.0:9229 --exec babel-node src/index.js",
+    "start:dev": "nodemon --inspect=0.0.0.0:9229 --exec babel-node src/index.js",
     "heroku-postbuild": "npm run reverse && npm run migration && npm run seed",
     "lint": "eslint src/ --fix",
     "migration": "sequelize db:migrate",
-    "migration:reset": "sequelize db:migrate:undo:all",
     "seed": "sequelize db:seed:all",
     "reverse": "sequelize db:migrate:undo:all",
+    "refreshdb": "npm run reverse && npm run migration",
     "coveralls-coverage": "coveralls < lcov.info",
     "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
     "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
     "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
-    "test": "cross-env NODE_ENV=test mocha --require @babel/register src/test/**.test.js --timeout 20000 --exit"
+    "test": "cross-env NODE_ENV=test npm run refreshdb && nyc mocha --require @babel/register  src/test/**.test.js --timeout 20000 --exit"
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
@@ -42,6 +42,7 @@
     "mongoose": "^5.2.2",
     "mongoose-unique-validator": "^2.0.1",
     "morgan": "^1.9.1",
+    "nyc": "^14.1.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.12.1",
@@ -50,7 +51,8 @@
     "sequelize": "^5.15.0",
     "sequelize-cli": "^5.5.0",
     "swagger-ui-express": "^4.0.7",
-    "underscore": "^1.9.1"
+    "underscore": "^1.9.1",
+    "uuidv4": "^4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
