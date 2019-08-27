@@ -32,5 +32,5 @@ export default {
       type: Sequelize.DATE
     }
   }),
-  down: (queryInterface) => queryInterface.dropTable('Users')
+  down: queryInterface => queryInterface.dropTable('Users')
 };
