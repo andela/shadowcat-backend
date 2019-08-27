@@ -27,7 +27,7 @@ describe('User login', () => {
       .post('/api/v1/auth/login')
       .send({
         email: 'chimamark@andela.com',
-        password: '1234d567'
+        password: 'chibyke'
       })
       .end((err, res) => {
         expect(res.status).to.equal(400);
