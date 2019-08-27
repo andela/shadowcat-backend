@@ -13,35 +13,35 @@ import models from '../models';
 const signupValidator = [
   check('firstname')
     .exists({ checkFalsy: true })
-    .withMessage(signupErrors.undefinedFirstName)
+    .withMessage(`firstname ${signupErrors.undefinedFirstName}`)
     .isAlpha()
-    .withMessage(signupErrors.invalidFirstName),
+    .withMessage(`firstname ${signupErrors.invalidFirstName}`),
   check('lastname')
     .exists({ checkFalsy: true })
-    .withMessage(signupErrors.undefinedLastName)
+    .withMessage(`lastname ${signupErrors.undefinedLastName}`)
     .isAlpha()
-    .withMessage(signupErrors.invalidLastName),
+    .withMessage(`lastname ${signupErrors.invalidLastName}`),
   check('email')
     .exists({ checkFalsy: true })
-    .withMessage(signupErrors.undefinedEmail)
+    .withMessage(`email ${signupErrors.undefinedEmail}`)
     .isEmail()
-    .withMessage(signupErrors.invalidEmail)
+    .withMessage(`email ${signupErrors.invalidEmail}`)
     .matches(/@andela.com$/)
-    .withMessage(signupErrors.nonAndelanEmail),
+    .withMessage(`email ${signupErrors.nonAndelanEmail}`),
   check('password')
     .exists({ checkFalsy: true })
-    .withMessage(signupErrors.undefinedPassword)
+    .withMessage(`password ${signupErrors.undefinedPassword}`)
     .isLength({ min: 8 })
-    .withMessage(signupErrors.invalidPassword)
+    .withMessage(`password ${signupErrors.invalidPassword}`)
     // https://stackoverflow.com/questions/4429847/check-if-string-contains-both-number-and-letter-at-least
     // https://stackoverflow.com/questions/388996/regex-for-javascript-to-allow-only-alphanumeric
     .matches(/^(?=.*[a-z])(?=.*[0-9])([a-z0-9]+$)/i)
-    .withMessage(signupErrors.alphaNumericPassword),
+    .withMessage(`password ${signupErrors.alphaNumericPassword}`),
   check('phone')
     .exists({ checkFalsy: true })
-    .withMessage(signupErrors.undefinedPhone)
+    .withMessage(`phone ${signupErrors.undefinedPhone}`)
     .isNumeric()
-    .withMessage(signupErrors.invalidPhone),
+    .withMessage(`phone ${signupErrors.invalidPhone}`),
 
   async (req, res, next) => {
     const { errors } = validationResult(req);

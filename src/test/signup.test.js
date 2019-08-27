@@ -37,7 +37,10 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
-          expect(error[0]).to.equal(signupErrors.undefinedFirstName);
+          expect(error).to.have.property('firstname');
+
+          const { firstname } = error;
+          expect(firstname[0]).to.equal(signupErrors.undefinedFirstName);
           done();
         });
     } catch (err) {
@@ -63,7 +66,10 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
-          expect(error[0]).to.equal(signupErrors.invalidFirstName);
+          expect(error).to.have.property('firstname');
+
+          const { firstname } = error;
+          expect(firstname[0]).to.equal(signupErrors.invalidFirstName);
           done();
         });
     } catch (err) {
@@ -90,7 +96,10 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
-          expect(error[0]).to.equal(signupErrors.undefinedLastName);
+          expect(error).to.have.property('lastname');
+
+          const { lastname } = error;
+          expect(lastname[0]).to.equal(signupErrors.undefinedLastName);
           done();
         });
     } catch (err) {
@@ -117,7 +126,10 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
-          expect(error[0]).to.equal(signupErrors.invalidLastName);
+          expect(error).to.have.property('lastname');
+
+          const { lastname } = error;
+          expect(lastname[0]).to.equal(signupErrors.invalidLastName);
           done();
         });
     } catch (err) {
@@ -144,7 +156,10 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
-          expect(error[0]).to.equal(signupErrors.undefinedPhone);
+          expect(error).to.have.property('phone');
+
+          const { phone } = error;
+          expect(phone[0]).to.equal(signupErrors.undefinedPhone);
           done();
         });
     } catch (err) {
@@ -170,7 +185,10 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
-          expect(error[0]).to.equal(signupErrors.invalidPhone);
+          expect(error).to.have.property('phone');
+
+          const { phone } = error;
+          expect(phone[0]).to.equal(signupErrors.invalidPhone);
           done();
         });
     } catch (err) {
@@ -196,8 +214,10 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
+          expect(error).to.have.property('password');
 
-          expect(error[0]).to.equal(signupErrors.invalidPassword);
+          const { password } = error;
+          expect(password[0]).to.equal(signupErrors.invalidPassword);
           done();
         });
     } catch (err) {
@@ -218,13 +238,16 @@ describe('POST signup route', () => {
           expect(res.status).to.deep.equal(400);
 
           const { body } = res;
+          console.log(body);
           expect(body).to.have.property('status');
           expect(body).to.have.property('error');
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
+          expect(error).to.have.property('password');
 
-          expect(error[0]).to.equal(signupErrors.alphaNumericPassword);
+          const { password } = error;
+          expect(password[0]).to.equal(signupErrors.alphaNumericPassword);
           done();
         });
     } catch (err) {
@@ -250,8 +273,10 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
+          expect(error).to.have.property('email');
 
-          expect(error[0]).to.equal(signupErrors.invalidEmail);
+          const { email } = error;
+          expect(email[0]).to.equal(signupErrors.invalidEmail);
           done();
         });
     } catch (err) {
@@ -277,8 +302,11 @@ describe('POST signup route', () => {
 
           const { status, error } = body;
           expect(status).to.deep.equal(400);
+          expect(error).to.have.property('email');
 
-          expect(error[0]).to.equal(signupErrors.nonAndelanEmail);
+          const { email } = error;
+          expect(email[0]).to.equal(signupErrors.nonAndelanEmail);
+
           done();
         });
     } catch (err) {
