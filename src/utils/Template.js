@@ -3,15 +3,15 @@ import Token from './Token';
 import capitalize from './capitalise';
 
 const { createToken } = Token;
-const getMailBody = (userDetails) => {
+const getMailBody = (userDetails, fullUrl) => {
   const {
     id, email, firstname, lastname
   } = userDetails;
   const FirstName = capitalize(firstname);
   const LastName = capitalize(lastname);
   const token = createToken({ id, email });
-  const link = `http://localhost:3000/api/v1/users/reset_password/${token}`;
-  return `<!DOCTYPE html>
+  const link = `${fullUrl}/${token}`;
+  const htmlTemplate = `<!DOCTYPE html>
   <html>
     <head>
       <title>BareFoot Nomad | Reset Password</title>
@@ -55,12 +55,16 @@ const getMailBody = (userDetails) => {
           </div>
           <p>Or copy and Paste the Link Below In Your Browser</p>
           <p> ${link} </p>
+          <p>you this sweet girl</p>
         </div>
       </div>
     </body>
   </html>
-  
   `;
+  const TemplateArray = [];
+  TemplateArray.push(htmlTemplate);
+  TemplateArray.push(token);
+  return TemplateArray;
 };
 
 export default getMailBody;

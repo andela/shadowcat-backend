@@ -6,13 +6,24 @@ import app from '../index';
 import userDetails from '../testData/userDetail';
 
 const {
-  correctUserPassword, misMatchedUserPassword, lessUserPassword,
-  correctUserToken, invalidToken
+  correctUserPassword, misMatchedUserPassword, lessUserPassword, invalidToken, correctUserEmail
 } = userDetails;
 
+let correctUserToken;
 chai.use(chaiHttp);
 chai.should();
 describe('Reset Password Endpoints', () => {
+  before('Get request tokens', async () => {
+    try {
+      const url = '/api/v1/users/forgot_password';
+      const responseOne = await chai.request(app).post(url).send(correctUserEmail);
+      correctUserToken = responseOne.body.data.token;
+      console.log(correctUserToken, 'res');
+    } catch (error) {
+      console.log(error, 'error');
+      throw error;
+    }
+  });
   describe('PATCH /forgot_password:token', () => {
     it('should validate token', (done) => {
       chai.request(app)
