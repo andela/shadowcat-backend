@@ -18,10 +18,9 @@ describe('Reset Password Endpoints', () => {
       const url = '/api/v1/users/forgot_password';
       const responseOne = await chai.request(app).post(url).send(correctUserEmail);
       correctUserToken = responseOne.body.data.token;
-      console.log(correctUserToken, 'res');
     } catch (error) {
-      console.log(error, 'error');
-      throw error;
+      const errorTest = error;
+      return errorTest;
     }
   });
   describe('PATCH /forgot_password:token', () => {
