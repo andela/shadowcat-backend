@@ -238,7 +238,6 @@ describe('POST signup route', () => {
           expect(res.status).to.deep.equal(400);
 
           const { body } = res;
-          console.log(body);
           expect(body).to.have.property('status');
           expect(body).to.have.property('error');
 
