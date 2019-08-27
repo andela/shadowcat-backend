@@ -1,19 +1,20 @@
 import { check } from 'express-validator';
+import { loginErrors } from '../utils/errorMessage';
 import Errors from './errorMessage';
 
 const loginValidation = [
   check('email')
     .exists({ checkFalsy: true })
-    .withMessage({ email: 'Input email' })
+    .withMessage(`email: ${loginErrors.undefinedEmail}`)
     .isEmail()
-    .withMessage({ email: 'Input a valid email address' })
+    .withMessage(`email: ${loginErrors.invalidEmail}`)
     .matches(/@andela.com$/)
-    .withMessage({ email: 'Andela email required' }),
+    .withMessage(`email: ${loginErrors.nonAndelanEmail}`),
   check('password')
     .exists({ checkFalsy: true })
-    .withMessage({ password: 'Input password' })
+    .withMessage(`password: ${loginErrors.undefinedPassword}`)
     .isLength({ min: 8 })
-    .withMessage({ password: 'Input longer password' }),
+    .withMessage(`password: ${loginErrors.invalidPassword}`),
   Errors.displayErrs,
 ];
 
