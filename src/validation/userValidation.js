@@ -12,7 +12,7 @@ const loginValidation = [
     .withMessage(`email ${loginErrors.nonAndelanEmail}`),
   check('password')
     .exists({ checkFalsy: true })
-    .withMessage(`password ${loginErrors.undefinedPassword}`), 
+    .withMessage(`password ${loginErrors.undefinedPassword}`),
   async (req, res, next) => {
     const { errors } = validationResult(req);
     if (errors.length) {
