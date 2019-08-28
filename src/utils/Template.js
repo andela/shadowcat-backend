@@ -55,7 +55,6 @@ const getMailBody = (userDetails, fullUrl) => {
           </div>
           <p>Or copy and Paste the Link Below In Your Browser</p>
           <p> ${link} </p>
-          <p>you this sweet girl</p>
         </div>
       </div>
     </body>
