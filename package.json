@@ -14,6 +14,7 @@
     "migration": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
     "reverse": "sequelize db:migrate:undo:all",
+    "refreshdb": "npm run reverse && npm run migration && npm run seed",
     "coveralls-coverage": "coveralls < lcov.info",
     "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
     "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
@@ -21,6 +22,7 @@
     "refreshdb:test": "cross-env NODE_ENV=test npm run refreshdb",
     "test": "npm run refreshdb:test && cross-env NODE_ENV=test nyc mocha --require @babel/register  src/test/**.test.js --timeout 20000 --exit",
     "testdev": "cross-env NODE_ENV=test mocha --require @babel/register src/test/**.test.js --timeout 20000 --exit"
+   
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
@@ -35,6 +37,7 @@
     "express": "^4.16.3",
     "express-jwt": "^5.3.1",
     "express-session": "^1.15.6",
+    "express-validator": "^6.1.1",
     "jsonwebtoken": "^8.3.0",
     "method-override": "^2.3.10",
     "methods": "^1.1.2",
