@@ -1,5 +1,5 @@
 const correctUserEmail = {
-  email: 'stephen.aribaba@andela.com',
+  email: 'stephenibaba@andela.com',
 };
 
 const wrongUserEmail = {
