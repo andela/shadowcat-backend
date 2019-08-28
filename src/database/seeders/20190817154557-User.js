@@ -18,7 +18,7 @@ export default {
         userId: uuidv4(),
         firstname: 'frank',
         lastname: 'chidinma',
-        email: 'sebastinechima@gmail.com',
+        email: 'stephen.aribaba@andela.com',
         password: bcrypt.hashSync('Jennylove19', 10),
         createdAt: new Date(),
         updatedAt: new Date(),

@@ -1,9 +1,9 @@
 const correctUserEmail = {
-  email: 'chidimma.okafor.c@gmail.com',
+  email: 'stephen.aribaba@andela.com',
 };
 
 const wrongUserEmail = {
-  email: 'agentegwujii@gmail.com',
+  email: 'stephen.aba@andela.com',
 };
 
 const notAnEmail = {
