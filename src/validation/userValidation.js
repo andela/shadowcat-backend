@@ -8,7 +8,7 @@ const loginValidation = [
     .withMessage(`email ${loginErrors.undefinedEmail}`)
     .isEmail()
     .withMessage(`email ${loginErrors.invalidEmail}`)
-    // .matches(/@andela.com$/)
+    .matches(/@andela.com$/)
     .withMessage(`email ${loginErrors.nonAndelanEmail}`),
   check('password')
     .exists({ checkFalsy: true })

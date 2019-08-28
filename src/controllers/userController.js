@@ -43,7 +43,7 @@ class UserController {
       };
       jwt.sign(
         { id: user.id, email: user.email },
-        process.env.SECRET, (err, token) => {
+        process.env.JWTSECRET, (err, token) => {
           if (err) {
             throw new Error('something is wrong');
           } else {
