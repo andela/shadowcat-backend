@@ -2,9 +2,11 @@
 import express from 'express';
 import passport from 'passport';
 import authRouter from './auth';
-
-import { Router } from 'express';
 import logoutRoute from './logout.route';
+import { Router } from 'express';
+
+
+
 
 const usersRouter = Router();
 
