@@ -27,6 +27,7 @@ describe('TESTING LOGOUT', () => {
         expect((res.text)).to.be.a('string');
         done();
       });  
+    
   });
 
 });
