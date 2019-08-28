@@ -26,6 +26,7 @@ describe('TESTING LOGOUT', () => {
         expect(res.statusCode).to.equal(200);
         expect((res.text)).to.be.a('string');
         done();
-      });
+      });  
   });
+
 });
