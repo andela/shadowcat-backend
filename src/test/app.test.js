@@ -28,5 +28,4 @@ describe('TESTING LOGOUT', () => {
         done();
       });
   });
-
 });
