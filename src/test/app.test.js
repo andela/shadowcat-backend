@@ -29,14 +29,4 @@ describe('TESTING LOGOUT', () => {
       });
   });
 
-  it('should return "you have logged out successfully" Page', (done) => {
-    chai.request(server)
-      .get('/api/v1/auth/logout')
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.statusCode).to.equal(200);
-        expect((res.text)).to.be.a('string');
-        done();
-      });
-  });
 });
