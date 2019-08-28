@@ -8,7 +8,7 @@ module.exports = {
     host: process.env.DB_HOST || 'localhost'
   },
   test: {
-    url: process.env.DEV_DATABASE_URL,
+    url: process.env.TEST_DATABASE_URL,
     dialect: 'postgres',
     host: process.env.DB_HOST || 'localhost'
   },

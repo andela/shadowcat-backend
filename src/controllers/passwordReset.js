@@ -31,13 +31,11 @@ class UserController {
  */
   static async getAUser(req, res) {
     const { email } = req.body;
-    // console.log(email, 'from controller');
     try {
       const AUser = await getUser(email);
       if (!AUser) {
         return res.status(404).json(errorResponse(`Cannot Find User With Email: ${email}`));
       }
-      // console.log(AUser, 'chima from controller');
       const { id } = AUser;
       try {
         const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
@@ -46,13 +44,9 @@ class UserController {
         await sendEmail(email, template);
         return res.status(200).json(successResponse('Success, an email has been sent to you', { id, email, token }));
       } catch (error) {
-        // console.log(error, 'error sending mail');
         return res.status(500).json(errorResponse('Internal Server Error'));
       }
     } catch (error) {
-      // console.log('we made it thus fare', error);
-
-      // console.log(error, 'error with try block in controller');
       return res.status(500).json(errorResponse('Internal Server Error'));
     }
   }
@@ -73,12 +67,10 @@ class UserController {
     const newHashPassword = await bcrypt.hashSync(`${newPassword}`, 10);
     try {
       await updateUserPassword(id, { password: newHashPassword });
-      // console.log(updatePassword, 'updatePassword from controller');
       const theUser = await getUser(email);
       const { id: UserId, email: UserEmail } = theUser;
       return res.status(201).json(successResponse('Password Successfully Updated', { UserId, UserEmail }));
     } catch (error) {
-      // console.log(error, 'error from controller');
       return res.status(500).json(errorResponse('Internal Server Error'));
     }
   }

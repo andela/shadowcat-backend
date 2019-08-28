@@ -24,8 +24,6 @@ class Authenticator {
     const msg = 'Access denied.Unauthorized request.';
     try {
       const { token } = req.params;
-      // console.log(token, 'token');
-      // console.log(req.params, 'token from the params');
       if (!token) {
         return res.status(401).json(errorResponse(msg));
       }
@@ -33,11 +31,9 @@ class Authenticator {
       if (!verifiedToken) {
         return res.status(401).json(errorResponse(msg));
       }
-      // console.log(verifiedToken, 'verified token from authenticator');
       req.params.token = verifiedToken;
       return next();
     } catch (error) {
-      // console.log(error, 'token error');
       return res.status(401).json(errorResponse(msg));
     }
   }
