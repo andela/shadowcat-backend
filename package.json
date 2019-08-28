@@ -13,13 +13,14 @@
     "lint": "eslint src/ --fix",
     "migration": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
-    "reverse": "sequelize db:migrate:undo",
+    "reverse": "sequelize db:migrate:undo:all",
     "refreshdb": "npm run reverse && npm run migration && npm run seed",
+    "refreshdb:test": "cross-env NODE_ENV=test npm run refreshdb",
     "coveralls-coverage": "coveralls < lcov.info",
     "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
     "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
     "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
-    "test": "cross-env NODE_ENV=test npm run refreshdb && nyc mocha --require @babel/register  src/test/**.test.js --timeout 20000 --exit"
+    "test": "npm run refreshdb:test && cross-env NODE_ENV=test nyc mocha --require @babel/register  src/test/**.test.js --timeout 20000 --exit"
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
