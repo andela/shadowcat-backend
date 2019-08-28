@@ -1,4 +1,4 @@
-
+import 'dotenv/config';
 import swaggerUi from 'swagger-ui-express';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -8,7 +8,9 @@ import errorhandler from 'errorhandler';
 import morgan from 'morgan';
 import methodOverride from 'method-override';
 import dotenv from 'dotenv';
+import passport from 'passport';
 import swaggerDocument from '../public/api-docs/swagger.json';
+import './models/user';
 import apiRoutes from './routes';
 
 dotenv.config();
@@ -23,7 +25,7 @@ app.use(cors());
 // Normal express config defaults
 app.use(morgan('dev'));
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Documentation
@@ -32,10 +34,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(methodOverride());
 
 app.use(express.static(`${__dirname}/public`));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(
   session({
-    secret: 'authorshaven',
+    secret: process.env.SESSION_SECRET,
     cookie: { maxAge: 60000 },
     resave: false,
     saveUninitialized: false

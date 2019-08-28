@@ -1,7 +1,7 @@
 import models from '../models';
 import constants from '../utils/constants/constants';
 
-const { User, Validate } = models;
+const { Users, Validate } = models;
 
 /**
  * Verify signup token controller
@@ -12,7 +12,7 @@ const { User, Validate } = models;
 export const signupVerify = async (req, res) => {
   const { userId } = req.body;
 
-  await User.update(
+  await Users.update(
     { active: true },
     { returning: true, where: { userId } }
   );

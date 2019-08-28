@@ -54,9 +54,9 @@ const signupValidator = [
         error: pulledErrors
       });
     }
-    const { User } = models;
+    const { Users } = models;
     const { email } = req.body;
-    const users = await User.findOne({ where: { email } });
+    const users = await Users.findOne({ where: { email } });
 
     // User already exists
     if (users !== null) {

@@ -3,7 +3,6 @@ export default {
     id: {
       allowNull: false,
       autoIncrement: true,
-      primaryKey: true,
       type: Sequelize.INTEGER
     },
     firstname: {
@@ -16,11 +15,12 @@ export default {
     },
     email: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     password: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true,
     },
     createdAt: {
       allowNull: false,
@@ -31,5 +31,6 @@ export default {
       type: Sequelize.DATE
     }
   }),
+
   down: queryInterface => queryInterface.dropTable('Users')
 };

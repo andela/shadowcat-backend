@@ -12,8 +12,8 @@ let createdUserId = null;
 
 describe('POST signup route', () => {
   after(async () => {
-    const { User } = models;
-    await User.destroy({
+    const { Users } = models;
+    await Users.destroy({
       where: {
         userId: createdUserId
       }

@@ -3,7 +3,7 @@ import { hashPassword, generateVerificationToken } from '../utils/helpers';
 import sendVerification from '../services';
 import constants from '../utils/constants/constants';
 
-const { User, Validate } = models;
+const { Users, Validate } = models;
 
 /**
  * The signup controller
@@ -37,7 +37,7 @@ export const signup = async (req, res) => {
   };
   const verificationToken = generateVerificationToken();
   try {
-    let user = await User.create(userPayload);
+    let user = await Users.create(userPayload);
 
     sendVerification(email, verificationToken);
 
