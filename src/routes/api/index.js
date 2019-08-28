@@ -1,31 +1,18 @@
+
 import express from 'express';
 import passport from 'passport';
+import authRouter from './auth';
 
 const usersRouter = express.Router();
 
-usersRouter.post('/users/login', (req, res, next) => {
-  if (!req.body.user.email) {
-    return res.status(422).json({ errors: { email: "can't be blank" } });
-  }
+usersRouter.get('/', (request, response) => response.status(200).send('Welcome to  Shadowcat API'));
 
-  if (!req.body.user.password) {
-    return res.status(422).json({ errors: { password: "can't be blank" } });
-  }
-  passport.authenticate('local', { session: false }, (
-    err,
-    user,
-    info
-  ) => {
-    if (err) {
-      return next(err);
-    }
+usersRouter.use('/v1/auth', authRouter);
 
-    if (user) {
-      return res.json({ user: user.toAuthJSON() });
-    }
-    return res.status(422).json(info);
-  })(req, res, next);
+usersRouter.use((req, res) => {
+  res.status(404).json({
+    message: 'not found'
+  });
 });
-
 
 export default usersRouter;
