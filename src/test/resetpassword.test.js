@@ -6,7 +6,8 @@ import app from '../index';
 import userDetails from '../testData/userDetail';
 
 const {
-  correctUserPassword, misMatchedUserPassword, lessUserPassword, invalidToken, correctUserEmail
+  correctUserPassword, misMatchedUserPassword, lessUserPassword,
+  invalidToken, correctUserEmail, noAlphaNumericPassword
 } = userDetails;
 
 let correctUserToken;
@@ -45,6 +46,17 @@ describe('Reset Password Endpoints', () => {
           done();
         });
     });
+    it('should validate user password with correct token for special characters', (done) => {
+      chai.request(app)
+        .patch(`/api/v1/users/forgot_password/${correctUserToken}`)
+        .send(noAlphaNumericPassword)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('status').eql('error');
+          res.body.should.have.property('error').eql('Password must be contain at least one number, one special character and one alphabet');
+          done();
+        });
+    });
     it('should validate user password for length with correct token', (done) => {
       chai.request(app)
         .patch(`/api/v1/users/forgot_password/${correctUserToken}`)
@@ -52,7 +64,7 @@ describe('Reset Password Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('status').eql('error');
-          res.body.should.have.property('error').eql('Password must be between 6 to 20 characters long.');
+          res.body.should.have.property('error').eql('Password must be between 8 to 20 characters long.');
           done();
         });
     });
