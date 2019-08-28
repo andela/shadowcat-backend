@@ -1,15 +1,15 @@
 
-import Token from '../utils/Token';
-import Response from '../utils/Response';
+import tokenFile from '../utils/Token';
+import response from '../utils/Response';
 
-const { verifyToken } = Token;
-const { errorResponse } = Response;
+const { verifyToken } = tokenFile;
+const { errorResponse } = response;
 /**
  *
  *
  * @class Authenticator
  */
-class Authenticator {
+class authenticator {
   /**
    *
    *
@@ -64,4 +64,4 @@ class Authenticator {
   }
 }
 
-export default Authenticator;
+export default authenticator;

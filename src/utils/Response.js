@@ -3,7 +3,7 @@
  *
  * @class Response
  */
-class Response {
+class response {
   /**
    *
    *
@@ -50,4 +50,4 @@ class Response {
   }
 }
 
-export default Response;
+export default response;

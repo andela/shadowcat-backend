@@ -1,25 +1,25 @@
 import bcrypt from 'bcryptjs';
 
-import UserService from '../services/passwordResetService';
+import userService from '../services/passwordResetService';
 
-import Response from '../utils/Response';
+import response from '../utils/Response';
 
-import PasswordEmail from '../utils/Mailer';
+import passwordEmail from '../utils/Mailer';
 
-import Template from '../utils/Template';
+import template from '../utils/Template';
 
 
-const { successResponse, errorResponse } = Response;
+const { successResponse, errorResponse } = response;
 
-const { getUser, updateUserPassword } = UserService;
+const { getUser, updateUserPassword } = userService;
 
-const { sendEmail } = PasswordEmail;
+const { sendEmail } = passwordEmail;
 /**
  *
  *
- * @class UserController
+ * @class passwordResetController
  */
-class PasswordResetController {
+class passwordResetController {
 /**
  *
  *
@@ -27,20 +27,20 @@ class PasswordResetController {
  * @param {object} req
  * @param {object} res
  * @returns{object} User
- * @memberof UserController
+ * @memberof passwordResetController
  */
   static async getAUser(req, res) {
     const { email } = req.body;
     try {
-      const AUser = await getUser(email);
-      if (!AUser) {
+      const aUser = await getUser(email);
+      if (!aUser) {
         return res.status(404).json(errorResponse(`Cannot Find User With Email: ${email}`));
       }
-      const { id } = AUser;
+      const { id } = aUser;
       const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
-      const templateArray = Template(AUser, fullUrl);
-      const [template, token] = templateArray;
-      await sendEmail(email, template);
+      const templateArray = template(aUser, fullUrl);
+      const [templateFile, token] = templateArray;
+      await sendEmail(email, templateFile);
       return res.status(200).json(successResponse('Success, an email has been sent to you', { id, email, token }));
     } catch (error) {
       return res.status(500).json(errorResponse('Internal Server Error'));
@@ -54,7 +54,7 @@ class PasswordResetController {
  * @param {object} req
  * @param {object} res
  * @returns{object} Success Message
- * @memberof UserController
+ * @memberof passwordResetController
  */
   static async updatePassword(req, res) {
     const { newPassword } = req.body;
@@ -67,8 +67,8 @@ class PasswordResetController {
       if (!theUser) {
         return res.status(404).json(errorResponse(`Cannot Find User With Email: ${email}`));
       }
-      const { id: UserId, email: UserEmail } = theUser;
-      return res.status(200).json(successResponse('Password Successfully Updated', { UserId, UserEmail }));
+      const { id: userId, email: userEmail } = theUser;
+      return res.status(200).json(successResponse('Password Successfully Updated', { userId, userEmail }));
     } catch (error) {
       return res.status(500).json(errorResponse('Internal Server Error'));
     }
@@ -76,4 +76,4 @@ class PasswordResetController {
 }
 
 
-export default PasswordResetController;
+export default passwordResetController;

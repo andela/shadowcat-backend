@@ -4,9 +4,9 @@ const { Users } = Model;
 /**
  *
  *
- * @class UserService
+ * @class userService
  */
-class UserService {
+class userService {
   /**
    *
    *
@@ -33,7 +33,7 @@ class UserService {
  * @param {Integer} id
  * @param {String} updatePassword
  * @returns {Object} User
- * @memberof UserService
+ * @memberof userService
  */
   static async updateUserPassword(id, updatePassword) {
     try {
@@ -46,4 +46,4 @@ class UserService {
 }
 
 
-export default UserService;
+export default userService;

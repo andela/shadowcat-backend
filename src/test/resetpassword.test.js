@@ -77,10 +77,10 @@ describe('Reset Password Endpoints', () => {
           res.body.should.have.property('status').eql('Password Successfully Updated');
           res.body.should.have.property('data');
           res.body.data.should.be.an('object');
-          res.body.data.should.have.property('UserId');
-          res.body.data.UserId.should.be.a('number');
-          res.body.data.should.have.property('UserEmail');
-          res.body.data.UserEmail.should.be.a('string');
+          res.body.data.should.have.property('userId');
+          res.body.data.userId.should.be.a('number');
+          res.body.data.should.have.property('userEmail');
+          res.body.data.userEmail.should.be.a('string');
           done();
         });
     });

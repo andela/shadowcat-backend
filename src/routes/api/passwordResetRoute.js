@@ -1,16 +1,16 @@
 import express from 'express';
-import PasswordResetController from '../../controllers/passwordReset';
-import Authenticator from '../../middlewares/passwordResetMiddleware';
+import passwordResetController from '../../controllers/passwordReset';
+import authenticator from '../../middlewares/passwordResetMiddleware';
 import validate from '../../validation/validateResetPassword';
-import UserValidator from '../../validation/passwordResetValidate';
+import userValidator from '../../validation/passwordResetValidate';
 
 const passwordResetRouter = express.Router();
 
-const { getAUser, updatePassword } = PasswordResetController;
-const { isTokenValid, doesPasswordMatch } = Authenticator;
+const { getAUser, updatePassword } = passwordResetController;
+const { isTokenValid, doesPasswordMatch } = authenticator;
 
 
-const { emailValidator, passwordUpdateValidator } = UserValidator;
+const { emailValidator, passwordUpdateValidator } = userValidator;
 
 // to get email
 passwordResetRouter.post('/forgot_password', emailValidator, validate, getAUser);

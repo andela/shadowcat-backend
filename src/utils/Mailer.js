@@ -8,7 +8,7 @@ dotenv.config();
  *
  * @class PasswordEmail
  */
-class PasswordEmail {
+class passwordEmail {
   /** @static
    *
    *
@@ -38,4 +38,4 @@ class PasswordEmail {
   }
 }
 
-export default PasswordEmail;
+export default passwordEmail;

@@ -1,16 +1,16 @@
 
-import Token from './Token';
+import token from './Token';
 import capitalize from './capitalise';
 
-const { createToken } = Token;
+const { createToken } = token;
 const getMailBody = (userDetails, fullUrl) => {
   const {
     id, email, firstname, lastname
   } = userDetails;
   const FirstName = capitalize(firstname);
   const LastName = capitalize(lastname);
-  const token = createToken({ id, email });
-  const link = `${fullUrl}/${token}`;
+  const tokenUser = createToken({ id, email });
+  const link = `${fullUrl}/${tokenUser}`;
   const htmlTemplate = `<!DOCTYPE html>
   <html>
     <head>
@@ -62,7 +62,7 @@ const getMailBody = (userDetails, fullUrl) => {
   `;
   const TemplateArray = [];
   TemplateArray.push(htmlTemplate);
-  TemplateArray.push(token);
+  TemplateArray.push(tokenUser);
   return TemplateArray;
 };
 
