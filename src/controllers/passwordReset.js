@@ -19,7 +19,7 @@ const { sendEmail } = PasswordEmail;
  *
  * @class UserController
  */
-class UserController {
+class PasswordResetController {
 /**
  *
  *
@@ -37,15 +37,11 @@ class UserController {
         return res.status(404).json(errorResponse(`Cannot Find User With Email: ${email}`));
       }
       const { id } = AUser;
-      try {
-        const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
-        const templateArray = Template(AUser, fullUrl);
-        const [template, token] = templateArray;
-        await sendEmail(email, template);
-        return res.status(200).json(successResponse('Success, an email has been sent to you', { id, email, token }));
-      } catch (error) {
-        return res.status(500).json(errorResponse('Internal Server Error'));
-      }
+      const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+      const templateArray = Template(AUser, fullUrl);
+      const [template, token] = templateArray;
+      await sendEmail(email, template);
+      return res.status(200).json(successResponse('Success, an email has been sent to you', { id, email, token }));
     } catch (error) {
       return res.status(500).json(errorResponse('Internal Server Error'));
     }
@@ -68,8 +64,11 @@ class UserController {
     try {
       await updateUserPassword(id, { password: newHashPassword });
       const theUser = await getUser(email);
+      if (!theUser) {
+        return res.status(404).json(errorResponse(`Cannot Find User With Email: ${email}`));
+      }
       const { id: UserId, email: UserEmail } = theUser;
-      return res.status(201).json(successResponse('Password Successfully Updated', { UserId, UserEmail }));
+      return res.status(200).json(successResponse('Password Successfully Updated', { UserId, UserEmail }));
     } catch (error) {
       return res.status(500).json(errorResponse('Internal Server Error'));
     }
@@ -77,4 +76,4 @@ class UserController {
 }
 
 
-export default UserController;
+export default PasswordResetController;

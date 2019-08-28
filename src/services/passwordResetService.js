@@ -1,6 +1,6 @@
 import Model from '../models';
 
-const { User } = Model;
+const { Users } = Model;
 /**
  *
  *
@@ -17,10 +17,9 @@ class UserService {
    */
   static async getUser(email) {
     try {
-      const theUser = await User.findOne({
+      const theUser = await Users.findOne({
         where: { email: String(email) }
       });
-
       return theUser;
     } catch (error) {
       return false;
@@ -38,7 +37,7 @@ class UserService {
  */
   static async updateUserPassword(id, updatePassword) {
     try {
-      const passwordUpdate = await User.update(updatePassword, { where: { id: Number(id) } });
+      const passwordUpdate = await Users.update(updatePassword, { where: { id: Number(id) } });
       return passwordUpdate;
     } catch (error) {
       return false;

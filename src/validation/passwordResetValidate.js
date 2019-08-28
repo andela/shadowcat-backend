@@ -8,7 +8,7 @@ const userValidator = {
       .exists({ checkFalsy: true })
       .withMessage('New password is required.')
       .isLength({ min: 8, max: 20 })
-      .withMessage('Password must be between 6 to 20 characters long.')
+      .withMessage('Password must be between 8 to 20 characters long.')
     // https://stackoverflow.com/questions/4429847/check-if-string-contains-both-number-and-letter-at-least
     // https://stackoverflow.com/questions/16334765/regular-expression-for-not-allowing-spaces-in-the-input-field
       .matches(/^(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%^&+=])(\S+$)/i)
@@ -32,7 +32,7 @@ const userValidator = {
       .isEmail()
       .isLowercase()
       .withMessage('Email must be in lowercase')
-      .matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(andela.com)$/)
+      // .matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(andela.com)$/)
       .withMessage('Email must be andela email'),
 
   ],

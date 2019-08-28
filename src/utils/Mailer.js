@@ -33,7 +33,6 @@ class PasswordEmail {
       await emailer.send(detail);
       return true;
     } catch (error) {
-      // console.log(error, 'error from mailer');
       return false;
     }
   }

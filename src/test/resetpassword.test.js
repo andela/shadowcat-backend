@@ -73,7 +73,7 @@ describe('Reset Password Endpoints', () => {
         .patch(`/api/v1/users/forgot_password/${correctUserToken}`)
         .send(correctUserPassword)
         .end((err, res) => {
-          res.should.have.status(201);
+          res.should.have.status(200);
           res.body.should.have.property('status').eql('Password Successfully Updated');
           res.body.should.have.property('data');
           res.body.data.should.be.an('object');

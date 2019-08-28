@@ -1,13 +1,13 @@
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('Users', {
+  const Users = sequelize.define('Users', {
     firstname: DataTypes.STRING,
     lastname: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING
   }, {});
-  User.associate = () => {
+  Users.associate = () => {
     // associations can be defined here
   };
-  return User;
+  return Users;
 };

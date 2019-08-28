@@ -21,7 +21,6 @@ class auth {
       const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
       return token;
     } catch (error) {
-      // console.log(error, 'error');
       return false;
     }
   }
@@ -39,7 +38,6 @@ class auth {
       const verifyToken = jwt.verify(token, secretKey);
       return verifyToken;
     } catch (error) {
-      // console.log(error, 'error');
       return false;
     }
   }

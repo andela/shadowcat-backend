@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-/* eslint-env mocha */
+
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../index';
@@ -10,8 +9,6 @@ const { correctUserEmail, wrongUserEmail, notAnEmail } = userEmail;
 chai.use(chaiHttp);
 chai.should();
 
-/* eslint-disable no-unused-vars */
-const { email } = correctUserEmail;
 describe('Send Mail Endpoints', () => {
   describe('POST /forgot_password', () => {
     it('should send email', (done) => {

@@ -1,12 +1,12 @@
 import express from 'express';
-import UserController from '../../controllers/passwordReset';
+import PasswordResetController from '../../controllers/passwordReset';
 import Authenticator from '../../middlewares/passwordResetMiddleware';
 import validate from '../../validation/validateResetPassword';
 import UserValidator from '../../validation/passwordResetValidate';
 
 const passwordResetRouter = express.Router();
 
-const { getAUser, updatePassword } = UserController;
+const { getAUser, updatePassword } = PasswordResetController;
 const { isTokenValid, doesPasswordMatch } = Authenticator;
 
 
