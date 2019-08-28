@@ -20,6 +20,7 @@
     "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
     "test": "cross-env NODE_ENV=test npm run heroku-postbuild && nyc _mocha --require @babel/register src/test/**.test.js --timeout 20000 --exit"
   },
+  
   "author": "Andela Simulations Programme",
   "license": "MIT",
   "dependencies": {

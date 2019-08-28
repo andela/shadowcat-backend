@@ -8,7 +8,7 @@ export default {
       {
         firstname: 'Sylvanus',
         lastname: 'Elendu',
-        email: 'sylvanus.elendu@andela.com',
+        email: 'chidimma.okafor.c@gmail.com',
         password: bcrypt.hashSync('IamUser', 10),
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -16,7 +16,7 @@ export default {
       {
         firstname: 'frank',
         lastname: 'chidinma',
-        email: 'okaforchidimma.c@gmail.com',
+        email: 'sebastinechima@gmail.com',
         password: bcrypt.hashSync('Jennylove19', 10),
         createdAt: new Date(),
         updatedAt: new Date(),

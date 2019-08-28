@@ -37,6 +37,7 @@ class UserController {
       if (!AUser) {
         return res.status(404).json(errorResponse(`Cannot Find User With Email: ${email}`));
       }
+      // console.log(AUser, 'chima from controller');
       const { id } = AUser;
       try {
         const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;

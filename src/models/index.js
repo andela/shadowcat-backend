@@ -4,8 +4,18 @@ import path from 'path';
 import Sequelize from 'sequelize';
 import envConfigs from '../database/config';
 
+// process.env.NODE_ENV = NODE_ENV;
+// console.log(process.env.NODE_ENV, 'from models index.js q1');
+
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
+// // console.log(env, 'from models index.js');
+// // console.log(process.env.NODE_ENV, 'from models index.js');
+// if (env === '') {
+//   env = 'test';
+// }
+// // console.log(env, 'from models index.js after');
+
 const config = envConfigs[env];
 const db = {};
 

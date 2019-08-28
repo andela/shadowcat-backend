@@ -11,7 +11,8 @@ chai.use(chaiHttp);
 chai.should();
 
 /* eslint-disable no-unused-vars */
-
+// console.log(correctUserEmail, 'hello chima before');
+const { email } = correctUserEmail;
 describe('Send Mail Endpoints', () => {
   describe('POST /forgot_password', () => {
     it('should send email', (done) => {
@@ -19,6 +20,7 @@ describe('Send Mail Endpoints', () => {
         .post('/api/v1/users/forgot_password')
         .send(correctUserEmail)
         .end((err, res) => {
+          // console.log(correctUserEmail, 'hello chima after');
           res.should.have.status(200);
           res.body.should.have.property('status').eql('Success, an email has been sent to you');
           res.body.should.have.property('data');
