@@ -23,10 +23,10 @@ describe('Reset Password Endpoints', () => {
       return error;
     }
   });
-  describe('PATCH /forgot_password:token', () => {
+  describe('PUT /forgot_password:token', () => {
     it('should validate token', (done) => {
       chai.request(app)
-        .patch(`/api/v1/users/forgot_password/${invalidToken}`)
+        .put(`/api/v1/users/forgot_password/${invalidToken}`)
         .send()
         .end((err, res) => {
           res.should.have.status(401);
@@ -37,7 +37,7 @@ describe('Reset Password Endpoints', () => {
     });
     it('should validate user password with correct token', (done) => {
       chai.request(app)
-        .patch(`/api/v1/users/forgot_password/${correctUserToken}`)
+        .put(`/api/v1/users/forgot_password/${correctUserToken}`)
         .send(misMatchedUserPassword)
         .end((err, res) => {
           res.should.have.status(400);
@@ -48,7 +48,7 @@ describe('Reset Password Endpoints', () => {
     });
     it('should validate user password with correct token for special characters', (done) => {
       chai.request(app)
-        .patch(`/api/v1/users/forgot_password/${correctUserToken}`)
+        .put(`/api/v1/users/forgot_password/${correctUserToken}`)
         .send(noAlphaNumericPassword)
         .end((err, res) => {
           res.should.have.status(400);
@@ -59,7 +59,7 @@ describe('Reset Password Endpoints', () => {
     });
     it('should validate user password for length with correct token', (done) => {
       chai.request(app)
-        .patch(`/api/v1/users/forgot_password/${correctUserToken}`)
+        .put(`/api/v1/users/forgot_password/${correctUserToken}`)
         .send(lessUserPassword)
         .end((err, res) => {
           res.should.have.status(400);
@@ -70,7 +70,7 @@ describe('Reset Password Endpoints', () => {
     });
     it('Should reset user password', (done) => {
       chai.request(app)
-        .patch(`/api/v1/users/forgot_password/${correctUserToken}`)
+        .put(`/api/v1/users/forgot_password/${correctUserToken}`)
         .send(correctUserPassword)
         .end((err, res) => {
           res.should.have.status(200);
