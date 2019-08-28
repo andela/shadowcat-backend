@@ -4,6 +4,7 @@ import user from './__MOCK__/user';
 import server from '../index';
 import { signupErrors } from '../utils/constants/errorMessages';
 import models from '../models';
+import constants from '../utils/constants/constants';
 
 chai.use(chaiHttp);
 const url = '/api/v1/auth/signup';
@@ -357,10 +358,11 @@ describe('POST signup route', () => {
 
           expect(body).to.have.property('status');
           expect(body).to.have.property('data');
+          expect(body).to.have.property('message');
 
-          const { status, data } = body;
+          const { status, message, data } = body;
           expect(status).to.deep.equal(201);
-
+          expect(message).to.equal(constants.signupSuccess);
           expect(data).to.be.an('object');
           expect(data).to.have.property('userId');
           expect(data).to.have.property('firstname');

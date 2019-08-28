@@ -1,6 +1,7 @@
 import models from '../models';
 import { hashPassword, generateVerificationToken } from '../utils/helpers';
 import sendVerification from '../services';
+import constants from '../utils/constants/constants';
 
 const { User, Validate } = models;
 
@@ -49,6 +50,7 @@ export const signup = async (req, res) => {
 
     res.status(201).json({
       status: 201,
+      message: constants.signupSuccess,
       data: {
         userId: user.userId,
         firstname: user.firstname,
