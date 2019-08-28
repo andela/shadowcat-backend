@@ -14,7 +14,7 @@ const { emailValidator, passwordUpdateValidator } = userValidator;
 
 // to get email
 passwordResetRouter.post('/forgot_password', emailValidator, validate, getAUser);
-passwordResetRouter.patch('/forgot_password/:token', isTokenValid, passwordUpdateValidator, validate, doesPasswordMatch, updatePassword);
+passwordResetRouter.put('/forgot_password/:token', isTokenValid, passwordUpdateValidator, validate, doesPasswordMatch, updatePassword);
 
 
 export default passwordResetRouter;
