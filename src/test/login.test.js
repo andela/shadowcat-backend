@@ -14,6 +14,7 @@ describe('User login', () => {
         password: 'Chibyke8%'
       })
       .end((err, res) => {
+        if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.payload).to.be.an('object');
         expect(res.body).to.have.property('status');
@@ -30,6 +31,7 @@ describe('User login', () => {
         password: 'chibyke'
       })
       .end((err, res) => {
+        if (err) return done(err);
         expect(res.status).to.equal(400);
         expect(res.body).to.be.an('object');
         expect(res.body.message).to.equal('Invalid email or password');
