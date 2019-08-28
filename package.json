@@ -22,7 +22,6 @@
     "refreshdb:test": "cross-env NODE_ENV=test npm run refreshdb",
     "test": "npm run refreshdb:test && cross-env NODE_ENV=test nyc mocha --require @babel/register  src/test/**.test.js --timeout 20000 --exit",
     "testdev": "cross-env NODE_ENV=test mocha --require @babel/register src/test/**.test.js --timeout 20000 --exit"
-   
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
