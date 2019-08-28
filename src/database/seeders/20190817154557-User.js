@@ -23,7 +23,6 @@ export default {
       },
     ],
     {},
-
   ),
   down: queryInterface => queryInterface.bulkDelete('Users', null, {}),
 };
