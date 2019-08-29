@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import models from '../models';
 
-const { User } = models;
+const { Users } = models;
 /**
  * @description Handles Users
  * @class UserController
@@ -19,7 +19,7 @@ class UserController {
   static async login(req, res, next) {
     try {
       const { email, password } = req.body;
-      const user = await User.findOne({
+      const user = await Users.findOne({
         where: {
           email
         }

@@ -15,16 +15,18 @@
     "seed": "sequelize db:seed:all",
     "reverse": "sequelize db:migrate:undo:all",
     "refreshdb": "npm run reverse && npm run migration && npm run seed",
-    "refreshdb:test": "cross-env NODE_ENV=test npm run refreshdb",
     "coveralls-coverage": "coveralls < lcov.info",
     "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
     "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
     "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
-    "test": "npm run refreshdb:test && cross-env NODE_ENV=test nyc mocha --require @babel/register  src/test/**.test.js --timeout 20000 --exit"
+    "refreshdb:test": "cross-env NODE_ENV=test npm run refreshdb",
+    "test": "npm run refreshdb:test && cross-env NODE_ENV=test nyc mocha --require @babel/register  src/test/**.test.js --timeout 20000 --exit",
+    "testdev": "cross-env NODE_ENV=test mocha --require @babel/register src/test/**.test.js --timeout 20000 --exit"
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "core-js": "^3.2.1",
@@ -43,6 +45,7 @@
     "mongoose": "^5.2.2",
     "mongoose-unique-validator": "^2.0.1",
     "morgan": "^1.9.1",
+    "nyc": "^14.1.1",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth2": "^0.2.0",
@@ -54,6 +57,7 @@
     "sequelize-cli": "^5.5.0",
     "swagger-ui-express": "^4.0.7",
     "underscore": "^1.9.1",
+    "uuidv4": "^4.0.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
