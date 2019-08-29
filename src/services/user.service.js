@@ -3,7 +3,7 @@ import models from '../models';
 import GeneralUtils from '../utils/index';
 import Auth from '../middlewares/auth';
 
-const { User } = models;
+const { Users } = models;
 
 /** Signs in user
  * @description Operate on a user and his account
@@ -19,7 +19,7 @@ class Userservice {
   static async login(req) {
     try {
       const { email, password } = req.body;
-      const user = await User.findOne({
+      const user = await Users.findOne({
         where: {
           email
         }

@@ -1,4 +1,5 @@
 import models from '../models';
+import Auth from '../middlewares/auth';
 import { hashPassword, generateVerificationToken } from '../utils/helpers';
 import sendVerification from '../services';
 import constants from '../utils/constants/constants';
@@ -13,9 +14,9 @@ const { Users, Validate } = models;
  */
 export const signup = async (req, res) => {
   let {
-    firstname, lastname, email, password, phone
+    firstname, lastname, email, password, phone,
   } = req.body;
-
+  const { isAdmin } = req.body;
   firstname = String(firstname).trim();
 
   lastname = String(lastname).trim();
@@ -47,11 +48,12 @@ export const signup = async (req, res) => {
       token: verificationToken
     };
     await Validate.create(signupVerifyPayload);
-
+    const jwtToken = await Auth.signJwt({ id: user.userId, isAdmin });
     res.status(201).json({
       status: 201,
       message: constants.signupSuccess,
       data: {
+        token: jwtToken,
         userId: user.userId,
         firstname: user.firstname,
         lastname: user.lastname,
