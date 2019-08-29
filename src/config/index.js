@@ -1,6 +1,5 @@
-const index = {
+
+export default {
   secret:
         process.env.NODE_ENV === 'production' ? process.env.SECRET : 'secret'
 };
-
-export default index;
