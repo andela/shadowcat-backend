@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import models from '../models';
 
-const { Users } = models;
+const { User } = models;
 /**
  * @description Handles Users
  * @class UserController
@@ -19,7 +19,7 @@ class UserController {
   static async login(req, res, next) {
     try {
       const { email, password } = req.body;
-      const user = await Users.findOne({
+      const user = await User.findOne({
         where: {
           email
         }
@@ -43,7 +43,7 @@ class UserController {
       };
       jwt.sign(
         { id: user.id, email: user.email },
-        process.env.SECRET, (err, token) => {
+        process.env.JWTSECRET, (err, token) => {
           if (err) {
             throw new Error('something is wrong');
           } else {

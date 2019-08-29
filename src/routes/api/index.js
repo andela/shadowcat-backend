@@ -1,11 +1,13 @@
-
-import { Router } from 'express';
-import passport from 'passport';
+// import { Router } from 'express';
+import express from 'express';
+import socialMediaRoutes from './socialmedia';
 import authRouter from './auth';
 import logoutRoute from './logout.route';
 
+const usersRouter = express.Router();
+usersRouter.use('/', socialMediaRoutes);
 
-const usersRouter = Router();
+// const usersRouter = Router();
 
 usersRouter.use('/', logoutRoute);
 usersRouter.get('/', (request, response) => response.status(200).send('Welcome to  Shadowcat API'));
