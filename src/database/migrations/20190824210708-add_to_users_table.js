@@ -17,12 +17,43 @@ export default {
     }),
     queryInterface.addColumn('Users', 'gmail', {
       type: Sequelize.STRING
-    })
+    }),
+    queryInterface.addColumn('Users', 'gender', {
+      type: Sequelize.STRING
+    }),
+    queryInterface.addColumn('Users', 'birthday', {
+      type: Sequelize.STRING
+    }),
+    queryInterface.addColumn('Users', 'preferredlanguage', {
+      type: Sequelize.STRING
+    }),
+    queryInterface.addColumn('Users', 'currency', {
+      type: Sequelize.STRING
+    }),
+    queryInterface.addColumn('Users', 'residentialaddress', {
+      type: Sequelize.STRING
+    }),
+    queryInterface.addColumn('Users', 'role', {
+      type: Sequelize.STRING
+    }),
+    queryInterface.addColumn('Users', 'department', {
+      type: Sequelize.STRING
+    }),
+    queryInterface.addColumn('Users', 'linemanager', {
+      type: Sequelize.STRING
+    }),
   ]),
 
   down: queryInterface => Promise.all([
     queryInterface.removeColumn('Users', 'userId'),
     queryInterface.removeColumn('Users', 'facebook'),
-    queryInterface.removeColumn('Users', 'gmail')
+    queryInterface.removeColumn('Users', 'gender'),
+    queryInterface.removeColumn('Users', 'birthday'),
+    queryInterface.removeColumn('Users', 'preferredlanguage'),
+    queryInterface.removeColumn('Users', 'currency'),
+    queryInterface.removeColumn('Users', 'residentialaddress'),
+    queryInterface.removeColumn('Users', 'role'),
+    queryInterface.removeColumn('Users', 'department'),
+    queryInterface.removeColumn('Users', 'linemanager'),
   ])
 };
