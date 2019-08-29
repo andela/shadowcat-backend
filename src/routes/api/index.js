@@ -2,7 +2,7 @@
 import express from 'express';
 import socialMediaRoutes from './socialmedia';
 import authRouter from './auth';
-import logoutRoute from './logout.route';
+import logoutRoute from './logout';
 
 const usersRouter = express.Router();
 usersRouter.use('/', socialMediaRoutes);
