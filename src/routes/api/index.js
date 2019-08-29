@@ -1,16 +1,14 @@
-
 import express from 'express';
 import authRouter from './auth';
-import socialMediaRoutes from './socialmedia';
 import passwordRouter from './passwordResetRoute';
 
 const usersRouter = express.Router();
 
 usersRouter.use('/v1/auth', authRouter);
 
-usersRouter.use('/', socialMediaRoutes);
+usersRouter.use('/v1/users', passwordRouter);
 
-usersRouter.get('/', (request, response) => response.status(200).send('Welcome to  Shadowcat API'));
+usersRouter.get('/', (req, res) => res.status(200).send('Welcome to  Shadowcat API'));
 
 usersRouter.use('/v1/users', passwordRouter);
 
