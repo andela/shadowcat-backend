@@ -23,12 +23,14 @@ class ResponseGenerator {
    * @param {object} res The first arrgv.
    * @param {number} statusCode The second number.
    * @param {object} data The data received.
+   * @param {string} message The message received.
    * @returns {object} The sum of the two numbers.
    */
-  sendSuccess(res, statusCode, data) {
+  sendSuccess(res, statusCode, data, message) {
     this.status = statusCode;
     this.data = data;
     this.type = 'success';
+    this.message = message;
     return this.send(res);
   }
 
@@ -55,6 +57,7 @@ class ResponseGenerator {
   send(res) {
     const filteredResponse = General.stripNull({
       status: this.status,
+      message: this.message,
       data: this.data
     });
 

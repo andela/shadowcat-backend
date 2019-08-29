@@ -1,8 +1,12 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import models from '../models';
+import UserService from '../services/user.service';
+import ResponseGenerator from '../utils/response.util';
 
+const response = new ResponseGenerator();
+
+<<<<<<< Updated upstream
 const { Users } = models;
+=======
+>>>>>>> Stashed changes
 /**
  * @description Handles Users
  * @class UserController
@@ -16,8 +20,9 @@ class UserController {
    * @return {json} Returns json object
    * @memberof UserController
    */
-  static async login(req, res, next) {
+  static async login(req, res) {
     try {
+<<<<<<< Updated upstream
       const { email, password } = req.body;
       const user = await Users.findOne({
         where: {
@@ -36,25 +41,20 @@ class UserController {
           success: false,
           message: 'Invalid email or password',
         });
+=======
+      const user = await UserService.login(req);
+      if (user) {
+        return response.sendSuccess(
+          res,
+          200,
+          user,
+          'User successfully logged in'
+        );
+>>>>>>> Stashed changes
       }
-      const payload = {
-        id: user.id,
-        email: user.email
-      };
-      jwt.sign(
-        { id: user.id, email: user.email },
-        process.env.JWTSECRET, (err, token) => {
-          if (err) {
-            throw new Error('something is wrong');
-          } else {
-            res.status(200).json({
-              status: 'success', message: 'User successfully logged in', payload, token
-            });
-          }
-        }
-      );
-    } catch (error) {
-      next(error);
+      return response.sendError(res, 500, 'Something went wrong');
+    } catch (err) {
+      return response.sendError(res, 400, err.message);
     }
   }
 }

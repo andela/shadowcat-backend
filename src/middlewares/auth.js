@@ -21,8 +21,8 @@ class Authentication {
     if (payload.status && payload.status !== 200) {
       return response.sendError(res, payload.status, payload.message);
     }
-    req.user_id = payload.user_id;
-    req.is_admin = payload.is_admin;
+    req.id = payload.id;
+    req.isAdmin = payload.isAdmin;
     return next();
   }
 
@@ -35,7 +35,7 @@ class Authentication {
    * @returns {Object} Object
    */
   static async isAdmin(req, res, next) {
-    if (req.is_admin !== true) {
+    if (req.isAdmin !== true) {
       return response.sendError(res, 401, 'Authorized for only admins');
     }
     return next();
@@ -49,8 +49,8 @@ class Authentication {
    */
   static signJwt(user) {
     const payload = {
-      user_id: user.user_id,
-      is_admin: user.is_admin,
+      id: user.id,
+      isAdmin: user.isAdmin,
       iat: moment().unix(),
       exp: moment()
         .add(1, 'days')
