@@ -14,7 +14,6 @@ describe('User login', () => {
         password: 'Jennylove19'
       })
       .end((err, res) => {
-        console.log(res.body);
         if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.data).to.be.an('object');

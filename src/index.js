@@ -12,7 +12,7 @@ import passport from 'passport';
 import swaggerDocument from '../public/api-docs/swagger.json';
 import './models/user';
 import apiRoutes from './routes';
-import Authentication from './middlewares/auth';
+
 
 dotenv.config();
 
