@@ -34,6 +34,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -46,8 +47,6 @@ app.use(
 if (!isProduction) {
   app.use(errorhandler());
 }
-
-
 app.use(apiRoutes);
 
 
