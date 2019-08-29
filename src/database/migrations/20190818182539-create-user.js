@@ -1,4 +1,3 @@
-
 export default {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Users', {
     id: {
@@ -8,11 +7,11 @@ export default {
     },
     firstname: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: false
     },
     lastname: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: false
     },
     email: {
       type: Sequelize.STRING,
