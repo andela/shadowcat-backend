@@ -7,7 +7,6 @@ import cors from 'cors';
 import errorhandler from 'errorhandler';
 import morgan from 'morgan';
 import methodOverride from 'method-override';
-
 import passport from 'passport';
 import './models/User';
 import swaggerDocument from '../swagger.json';
@@ -48,7 +47,6 @@ app.use(
 if (!isProduction) {
   app.use(errorhandler());
 }
-
 app.use(apiRoutes);
 
 
