@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import bcrypt from 'bcryptjs';
 
 const General = {

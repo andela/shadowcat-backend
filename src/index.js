@@ -13,7 +13,6 @@ import swaggerDocument from '../public/api-docs/swagger.json';
 import './models/user';
 import apiRoutes from './routes';
 
-
 dotenv.config();
 
 const isProduction = process.env.NODE_ENV === 'production';
