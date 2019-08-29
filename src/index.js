@@ -56,7 +56,6 @@ app.use(apiRoutes);
 app.get('/', (req, res) => {
   res.send("Welcome to Barefoot Nomad Endpoints' Page");
 });
-
 // / catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
