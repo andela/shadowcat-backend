@@ -1,5 +1,4 @@
 import express from 'express';
-
 import socialMediaRoutes from './socialmedia';
 import authRouter from './auth';
 import logoutRoute from './logout';
@@ -7,7 +6,6 @@ import passwordRouter from './passwordResetRoute';
 
 const usersRouter = express.Router();
 usersRouter.use('/', socialMediaRoutes);
-
 
 usersRouter.use('/', logoutRoute);
 usersRouter.get('/', (request, response) => response.status(200).send('Welcome to  Shadowcat API'));
