@@ -3,6 +3,7 @@ export default {
     id: {
       allowNull: false,
       autoIncrement: true,
+      unique: true,
       type: Sequelize.INTEGER
     },
     firstname: {
