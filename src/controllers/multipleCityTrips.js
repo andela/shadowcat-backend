@@ -2,6 +2,9 @@ import uuidv4 from 'uuid/v4';
 import { Op } from 'sequelize';
 import datecheck from '../utils/dateCheck';
 import models from '../models';
+import response from '../utils/Response';
+
+const { serverResponse } = response;
 
 const { Trips, Locations } = models;
 /**
@@ -25,32 +28,18 @@ class MultiCityTrips {
         departureDate, returnDate, currentOfficeLocation, reason, tripType, ...destinations
       } = req.body;
       const duration = datecheck(departureDate, returnDate);
-      if (!duration) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'Departure date can not be above or thesame as the return date'
-        });
-      }
+      if (!duration) return serverResponse(res, 400, ...['error', 'message', 'Departure date can not be above or thesame as the return date']);
       const travelLocations = Object.values(destinations);
       const locationsData = await Locations.findAll({
         attributes: ['id', 'locationName'],
-        where: {
-          locationName: {
-            [Op.or]: [currentOfficeLocation, ...travelLocations]
-          }
-        },
+        where: { locationName: { [Op.or]: [currentOfficeLocation, ...travelLocations] } },
         raw: true
       });
       const locationId = locationsData.map((data) => data.id);
       const locationNames = locationsData.map((data) => data.locationName);
-      if (locationsData.length !== travelLocations.length + 1) {
-        return res.status(422).json({
-          status: 'error',
-          message: 'Enter a valid Andela office location'
-        });
-      }
+      if (locationsData.length !== travelLocations.length + 1) return serverResponse(res, 422, ...['error', 'message', 'Enter a valid Andela office location']);
       const destinationId = locationId.slice(1);
-      const tripsResult = await Trips.create({
+      const tripsData = {
         currentOfficeLocation: locationNames[0],
         tripId: uuidv4(),
         user_id: userId,
@@ -59,23 +48,22 @@ class MultiCityTrips {
         reason,
         tripType,
         requestStatus: 'pending',
-        destinations: [...destinationId]
-      });
+        destinations: destinationId
+      };
+      const tripsResult = await Trips.create(tripsData);
       if (tripsResult) {
-        return res.status(201).json({
-          status: 'success',
-          data: {
-            user_id: userId,
-            destinationIDs: destinationId,
-            current_office_location: currentOfficeLocation,
-            destinations: travelLocations,
-            departure_date: new Date(departureDate).toUTCString(),
-            return_date: new Date(returnDate).toUTCString(),
-            reason,
-            tripType,
-            requestStatus: 'pending'
-          }
-        });
+        const resultObject = {
+          user_id: userId,
+          destinationIDs: destinationId,
+          current_office_location: currentOfficeLocation,
+          destinations: travelLocations,
+          departure_date: new Date(departureDate).toUTCString(),
+          return_date: new Date(returnDate).toUTCString(),
+          reason,
+          tripType,
+          requestStatus: 'pending'
+        };
+        return serverResponse(res, 201, ...['success', 'data', resultObject]);
       }
     } catch (error) {
       return next(error);

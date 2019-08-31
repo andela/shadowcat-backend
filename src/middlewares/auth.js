@@ -16,8 +16,8 @@ class Authentication {
    *
    * @returns {Object} Object
    */
-  static async authenticate(req, res, next) {
-    const payload = await Authentication.consumeToken(req);
+  static authenticate(req, res, next) {
+    const payload = Authentication.consumeToken(req);
     if (payload.status && payload.status !== 200) {
       return response.sendError(res, payload.status, payload.message);
     }
@@ -34,7 +34,7 @@ class Authentication {
    *
    * @returns {Object} Object
    */
-  static async isAdmin(req, res, next) {
+  static isAdmin(req, res, next) {
     if (req.isAdmin !== true) {
       return response.sendError(res, 401, 'Authorized for only admins');
     }
@@ -67,7 +67,10 @@ class Authentication {
    */
   static decodeJwt(token) {
     let payload = null;
-    payload = jwt.decode(token, index.secret);
+    payload = jwt.verify(token, index.secret, (err, decoded) => {
+      if (err) return false;
+      return decoded;
+    });
     return payload;
   }
 
@@ -88,7 +91,7 @@ class Authentication {
    * @param {object} payload
    * @returns {Object} Object
    */
-  static async consumeToken(req) {
+  static consumeToken(req) {
     const result = {};
     if (!req.headers.authorization) {
       result.status = 401;
@@ -102,7 +105,7 @@ class Authentication {
       result.message = 'Invalid token type. Must be type Bearer';
       return result;
     }
-    const payload = await Authentication.bearer(token);
+    const payload = Authentication.bearer(token);
     if (!payload) {
       result.status = 401;
       result.message = 'Authorization Denied.';

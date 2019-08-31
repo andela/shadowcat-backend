@@ -30,10 +30,10 @@ class UserController {
         const bycrptResponse = GeneralUtils.validate(password, user.password);
         if (bycrptResponse) {
           const {
-            id, isAdmin, firstname, lastname
+            id, userId, isAdmin, firstname, lastname
           } = user;
           const token = await Auth.signJwt({
-            id,
+            id: userId,
             isAdmin
           });
           const data = {
