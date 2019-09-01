@@ -5,7 +5,6 @@
  */
 const pullErrors = (errors) => {
   const combinedErrors = {};
-
   const firstname = [];
   const lastname = [];
   const email = [];
