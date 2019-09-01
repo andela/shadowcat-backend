@@ -66,9 +66,10 @@ class Authentication {
    * @returns {Object} Object
    */
   static decodeJwt(token) {
-    let payload = null;
-    payload = jwt.decode(token, index.secret);
-    return payload;
+    jwt.verify(token, index.secret, (err, decoded) => {
+      if (err) return null;
+      return decoded;
+    });
   }
 
   /**
@@ -97,12 +98,16 @@ class Authentication {
     }
     const token = req.headers.authorization.split(' ')[1];
     const type = req.headers.authorization.split(' ')[0];
-    if (type !== 'Bearer') {
-      result.status = 401;
-      result.message = 'Invalid token type. Must be type Bearer';
-      return result;
+    let payload;
+    switch (type) {
+      case 'Bearer':
+        payload = Authentication.bearer(token);
+        break;
+      default:
+        result.status = 401;
+        result.message = 'Invalid token type. Must be type Bearer';
+        return result;
     }
-    const payload = await Authentication.bearer(token);
     if (!payload) {
       result.status = 401;
       result.message = 'Authorization Denied.';
