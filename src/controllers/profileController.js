@@ -1,7 +1,8 @@
+import ResponseGenerator from '../utils/response.util';
 import models from '../models';
 
-const { User } = models;
-
+const { Users } = models;
+const response = new ResponseGenerator();
 /**
  * @exports ProfileController
  * @class ProfileController
@@ -17,20 +18,17 @@ class ProfileController {
    */
   static async getProfile(req, res, next) {
     try {
-      const { id } = req.params;
-      const user = await User.findOne({
-        where: { id }
+      const { id } = req;
+      const user = await Users.findOne({
+        where: { userId: id }
       });
-      if (!user) {
-        return res.status(404).json({
-          message: 'User does not exist',
-        });
-      }
       const profile = await user;
-      return res.status(200).json({
-        status: 'success',
+      return response.sendSuccess(
+        res,
+        200,
         profile,
-      });
+        'success',  
+      );
     } catch (error) {
       next(error);
     }
@@ -47,14 +45,14 @@ class ProfileController {
   */
   static async updateProfile(req, res, next) {
     try {
-      const { id } = req.params;
+      const { id } = req;
       const profileDetails = await (req.body);
       const {
         firstname, lastname, email, gmail, facebook, gender, birthday,
         preferredlanguage, currency, residentialaddress, role, department, linemanager
       } = profileDetails;
-      const user = await User.findOne({
-        where: { id }
+      const user = await Users.findOne({
+        where: { userId: id }
       });
       if (user !== undefined) {
         const updatedDetails = await user.update({
@@ -72,11 +70,13 @@ class ProfileController {
           department,
           linemanager
         });
-        return res.status(200).json({
-          status: 'success',
-          message: 'profile sucessfully updated',
+        return response.sendSuccess(
+          res,
+          200,
           updatedDetails,
-        });
+          'profile sucessfully updated',
+         
+        );
       }
     } catch (error) {
       next(error);

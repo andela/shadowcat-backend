@@ -67,7 +67,10 @@ class Authentication {
    */
   static decodeJwt(token) {
     let payload = null;
-    payload = jwt.decode(token, index.secret);
+    payload = jwt.verify(token, index.secret, (err, decoded) =>{
+      if (err) return false;
+      return decoded;
+    });
     return payload;
   }
 
