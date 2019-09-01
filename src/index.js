@@ -7,10 +7,13 @@ import cors from 'cors';
 import errorhandler from 'errorhandler';
 import morgan from 'morgan';
 import methodOverride from 'method-override';
+import dotenv from 'dotenv';
 import passport from 'passport';
-import './models/User';
-import swaggerDocument from '../swagger.json';
+import swaggerDocument from '../public/api-docs/swagger.json';
+import './models/user';
 import apiRoutes from './routes';
+
+dotenv.config();
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -34,6 +37,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -46,16 +50,12 @@ app.use(
 if (!isProduction) {
   app.use(errorhandler());
 }
-
-
 app.use(apiRoutes);
-
 
 // testing route
 app.get('/', (req, res) => {
   res.send("Welcome to Barefoot Nomad Endpoints' Page");
 });
-
 // / catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
@@ -94,8 +94,10 @@ app.use((err, req, res) => {
   });
 });
 
+const port = process.env.NODE_ENV === 'test' ? 3001 : 3000;
+
 // finally, let's start our server...
-const server = app.listen(process.env.PORT || 3000, () => {
+const server = app.listen(process.env.PORT || port, () => {
   console.log(`Listening on port ${server.address().port}`);
 });
 
