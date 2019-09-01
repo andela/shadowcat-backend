@@ -22,12 +22,11 @@ class ProfileController {
       const user = await Users.findOne({
         where: { userId: id }
       });
-      const profile = await user;
       return response.sendSuccess(
         res,
         200,
-        profile,
-        'success',  
+        user,
+        'success',
       );
     } catch (error) {
       next(error);
@@ -75,7 +74,6 @@ class ProfileController {
           200,
           updatedDetails,
           'profile sucessfully updated',
-         
         );
       }
     } catch (error) {
