@@ -5,7 +5,7 @@ import profileValidation from '../../validation/profilevalidation';
 
 const profileRoute = Router();
 
-profileRoute.get('/', profileValidation, Authentication.authenticate, ProfileController.getProfile);
-profileRoute.put('/', profileValidation, Authentication.authenticate, ProfileController.updateProfile);
+profileRoute.get('/', Authentication.authenticate, profileValidation, ProfileController.getProfile);
+profileRoute.put('/', Authentication.authenticate, profileValidation, ProfileController.updateProfile);
 
 export default profileRoute;
