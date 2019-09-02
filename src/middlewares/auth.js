@@ -47,7 +47,7 @@ class Authentication {
    *
    * @returns {Object} Object
    */
-  static signJwt(user) {
+  static async signJwt(user) {
     const payload = {
       id: user.id,
       isAdmin: user.isAdmin,
@@ -65,21 +65,11 @@ class Authentication {
    * @param {object} payload
    * @returns {Object} Object
    */
-  static decodeJwt(token) {
-    jwt.verify(token, index.secret, (err, decoded) => {
+  static async decodeJwt(token) {
+    const payload = await jwt.verify(token, index.secret, (err, decoded) => {
       if (err) return null;
       return decoded;
     });
-  }
-
-  /**
-   * @description - Check bearer token
-   * @param {string} token
-   * @param {object} payload
-   * @returns {Object} Object
-   */
-  static bearer(token) {
-    const payload = this.decodeJwt(token);
     return payload;
   }
 
@@ -101,7 +91,7 @@ class Authentication {
     let payload;
     switch (type) {
       case 'Bearer':
-        payload = Authentication.bearer(token);
+        payload = await Authentication.decodeJwt(token);
         break;
       default:
         result.status = 401;
