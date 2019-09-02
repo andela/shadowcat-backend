@@ -19,7 +19,7 @@ export const signupVerifyErrors = {
   notFound: 'No pending verification found'
 };
 
-export const Errors = {
+export const loginProfileErrors = {
   undefinedFirstName: 'Firstname is required',
   invalidFirstName: 'Firstname should be an Alphabet',
   undefinedLastName: 'Lastname is required',
