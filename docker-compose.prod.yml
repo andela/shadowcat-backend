@@ -3,9 +3,10 @@ services:
   postgres-prod:
     image: postgres:9.6
     container_name: docker-prod
-    env_file: .env
     environment:
       - POSTGRES_DB=dockerprod
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
     networks: 
       - webnet
     ports:
@@ -15,10 +16,10 @@ services:
     command: npm start
     restart: always
     environment:
-      - POSSTGRES_USER=$POSTGRES_USER
-      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-      - DB_HOST=postgres
-      - NODE_ENV=production
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_HOST=postgres-prod
+      - NODE_ENV=${NODE_ENV}
     depends_on:
       - postgres-prod
     networks: 

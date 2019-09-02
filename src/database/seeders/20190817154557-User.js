@@ -6,25 +6,25 @@ export default {
     'Users',
     [
       {
+        firstname: 'Sylvanus',
+        lastname: 'Elendu',
+        email: 'chidimma.okafor.c@gmail.com',
+        password: bcrypt.hashSync('IamUser', 10),
         userId: uuidv4(),
-        firstname: 'Chima',
-        lastname: 'Mark',
-        email: 'chimamark@andela.com',
-        password: bcrypt.hashSync('Chibyke8%', 10),
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       },
       {
         userId: uuidv4(),
         firstname: 'frank',
         lastname: 'chidinma',
-        email: 'frankchidinma@andela.com',
-        password: bcrypt.hashSync('Chibyke8%', 10),
+        email: 'stephenibaba@andela.com',
+        password: bcrypt.hashSync('Jennylove19', 10),
         createdAt: new Date(),
-        updatedAt: new Date(),
-      },
+        updatedAt: new Date()
+      }
     ],
     {},
   ),
-  down: queryInterface => queryInterface.bulkDelete('Users', null, {}),
+  down: queryInterface => queryInterface.bulkDelete('Users', null, {})
 };

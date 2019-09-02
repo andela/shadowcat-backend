@@ -10,13 +10,13 @@ describe('User login', () => {
     chai.request(server)
       .post('/api/v1/auth/login')
       .send({
-        email: 'chimamark@andela.com',
-        password: 'Chibyke8%'
+        email: 'stephenibaba@andela.com',
+        password: 'Jennylove19'
       })
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.equal(200);
-        expect(res.body.payload).to.be.an('object');
+        expect(res.body.data).to.be.an('object');
         expect(res.body).to.have.property('status');
         expect(res.body.message).to.equal('User successfully logged in');
         done();
@@ -27,14 +27,14 @@ describe('User login', () => {
     chai.request(server)
       .post('/api/v1/auth/login')
       .send({
-        email: 'chimamark@andela.com',
-        password: 'chibyke'
+        email: 'stephenibaba@andela.com',
+        password: 'Jennylove22'
       })
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.equal(400);
         expect(res.body).to.be.an('object');
-        expect(res.body.message).to.equal('Invalid email or password');
+        expect(res.body.error).to.equal('Invalid email or password');
         done();
       });
   });
