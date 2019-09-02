@@ -11,7 +11,7 @@ export default {
       type: Sequelize.STRING,
       unique: true
     },
-    user_id: {
+    userId: {
       type: Sequelize.STRING,
       references: {
         model: 'Users',

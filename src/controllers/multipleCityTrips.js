@@ -43,7 +43,7 @@ class MultiCityTrips {
       const tripsData = {
         currentOfficeLocation: locationNames[0],
         tripId: uuidv4(),
-        user_id: userId,
+        userId,
         departureDate: new Date(departureDate).toUTCString(),
         returnDate: new Date(returnDate).toUTCString(),
         reason,
@@ -54,12 +54,12 @@ class MultiCityTrips {
       const tripsResult = await Trips.create(tripsData);
       if (tripsResult) {
         const resultObject = {
-          user_id: userId,
+          userId,
           destinationIDs: destinationId,
-          current_office_location: currentOfficeLocation,
+          currentOfficeLocation,
           destinations: travelLocations,
-          departure_date: new Date(departureDate).toUTCString(),
-          return_date: new Date(returnDate).toUTCString(),
+          departureDate: new Date(departureDate).toUTCString(),
+          returnDate: new Date(returnDate).toUTCString(),
           reason,
           tripType,
           requestStatus: 'pending'

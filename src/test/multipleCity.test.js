@@ -49,13 +49,12 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         expect((res.body)).to.haveOwnProperty('status').that.is.a('string');
         expect((res.body)).to.haveOwnProperty('data').that.is.an('object');
         expect((res.body.data)).to.be.an('object');
-        expect((res.body.data.user_id)).to.be.a('string');
+        expect((res.body.data.userId)).to.be.a('string');
         expect((res.body.data.destinationIDs)).to.be.an('array');
-        expect((res.body.data.current_office_location)).to.be.a('string');
+        expect((res.body.data.currentOfficeLocation)).to.be.a('string');
         expect((res.body.data.destinations)).to.be.an('array');
-        expect((res.body.data.departure_date)).to.be.a('string');
-        expect((res.body.data.return_date)).to.be.a('string');
-        expect((res.body.data.return_date)).to.be.a('string');
+        expect((res.body.data.departureDate)).to.be.a('string');
+        expect((res.body.data.returnDate)).to.be.a('string');
         expect((res.body.data.reason)).to.be.a('string');
         expect((res.body.data.tripType)).to.be.a('string');
         expect((res.body.data.requestStatus)).to.be.a('string');

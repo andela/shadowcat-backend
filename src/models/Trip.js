@@ -5,7 +5,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       required: true
     },
-    user_id: {
+    userId: {
       type: DataTypes.INTEGER,
       required: true
     },
