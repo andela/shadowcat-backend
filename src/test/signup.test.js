@@ -350,6 +350,7 @@ describe('POST signup route', () => {
         .post(`${url}`)
         .send(cloneUser)
         .end((err, res) => {
+          console.log(err, 'from test');
           expect(res).to.have.property('status');
           expect(res).to.have.property('body');
           expect(res.status).to.deep.equal(201);
@@ -387,6 +388,7 @@ describe('POST signup route', () => {
           done();
         });
     } catch (err) {
+      console.log(err, 'error from test');
       expect(err).to.have.status(500);
     }
   });
@@ -413,6 +415,7 @@ describe('POST signup route', () => {
           done();
         });
     } catch (err) {
+      console.log(err, 'error from test');
       expect(err).to.have.status(500);
     }
   });

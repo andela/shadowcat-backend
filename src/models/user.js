@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         required: true
       },
+      managerId: {
+        type: DataTypes.STRING,
+        required: false
+      },
       firstname: {
         type: DataTypes.STRING,
         required: true
@@ -18,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         required: true
+      },
+      role: {
+        type: DataTypes.STRING,
       },
       password: {
         type: DataTypes.STRING,
@@ -35,6 +42,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         required: false
       },
+      notifyMeEmail: {
+        type: DataTypes.BOOLEAN,
+        required: true
+      },
       gmail: {
         type: DataTypes.STRING,
         required: false
@@ -46,8 +57,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  Users.associate = () => {
-    // associations can be defined here
+  Users.associate = models => {
+    Users.hasMany(models.Trips, {
+      as: 'userdetail', foreignKey: 'userId', onUpdate: 'CASCADE', onDelete: 'CASCADE'
+    });
   };
+
   return Users;
 };

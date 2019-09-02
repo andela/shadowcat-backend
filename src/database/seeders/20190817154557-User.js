@@ -11,6 +11,8 @@ export default {
         email: 'chidimma.okafor.c@gmail.com',
         password: bcrypt.hashSync('IamUser', 10),
         userId: uuidv4(),
+        managerId: '377c8663-3cb1-451a-af2d-df8eca3ebc6c',
+        role: 'User',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -20,6 +22,8 @@ export default {
         lastname: 'chidinma',
         email: 'stephenibaba@andela.com',
         password: bcrypt.hashSync('Jennylove19', 10),
+        role: 'Manager',
+        managerId: uuidv4(),
         createdAt: new Date(),
         updatedAt: new Date()
       }

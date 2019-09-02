@@ -62,6 +62,37 @@ class authenticator {
       return res.status(500).json(errorResponse(msg));
     }
   }
+
+  /**
+ *
+ *
+ * @static
+ * @param {object} req
+ * @param {object} res
+ * @param {method} next
+ * @returns {Method} Calls next method on success
+ * @memberof authenticator
+ */
+  static async isLoggedIn(req, res, next) {
+    let msg;
+    try {
+      const requestToken = req.headers['x-auth-token'];
+      if (!requestToken) {
+        msg = 'Access denied.Unauthorized request. Please Log In';
+        return res.status(401).json(errorResponse(msg));
+      }
+      const verifiedToken = await verifyToken(requestToken);
+      if (!verifiedToken) {
+        msg = 'Access denied.Unauthorized request. Please Log In';
+        return res.status(401).json(errorResponse(msg));
+      }
+      req.body.token = verifiedToken;
+      return next();
+    } catch (error) {
+      msg = 'Access denied.Unauthorized request. Please Log In';
+      return res.status(401).json(errorResponse(msg));
+    }
+  }
 }
 
 export default authenticator;
