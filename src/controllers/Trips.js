@@ -29,7 +29,7 @@ class Trips {
       } = req.body;
       const duration = datecheck(departureDate, returnDate);
       if (duration === 'negative value') return serverResponse(res, 400, ...['error', 'message', 'Departure date can not be less than Today\'s date']);
-      if (!duration) return serverResponse(res, 400, ...['error', 'message', 'Departure date can not be above or thesame as the return date']);
+      if (!duration) return serverResponse(res, 400, ...['error', 'message', 'Departure date can not be above or the same as the return date']);
       const travelLocations = Object.values(destinations);
       const locationsData = await Locations.findAll({
         attributes: ['id', 'locationName'],
