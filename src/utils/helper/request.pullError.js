@@ -5,33 +5,33 @@
  */
 const pullErrors = errors => {
   const combinedErrors = {};
-  const origin = [];
+  const currentOfficeLocation = [];
   const destination = [];
-  const type = [];
-  const departuredate = [];
-  const travelreasons = [];
+  const tripType = [];
+  const departureDate = [];
+  const travelReasons = [];
   const accommodation = [];
   errors.forEach(error => {
     const { msg } = error;
     const msgArray = msg.split(' ');
-    const msgType = msgArray[0];
+    const msgtripType = msgArray[0];
     msgArray.splice(0, 1);
     const extractedError = msgArray.join(' ');
-    switch (msgType) {
-      case 'origin':
-        origin.push(extractedError);
+    switch (msgtripType) {
+      case 'currentOfficeLocation':
+        currentOfficeLocation.push(extractedError);
         break;
       case 'destination':
         destination.push(extractedError);
         break;
-      case 'type':
+      case 'tripType':
         destination.push(extractedError);
         break;
-      case 'departuredate':
-        departuredate.push(extractedError);
+      case 'departureDate':
+        departureDate.push(extractedError);
         break;
-      case 'travelreasons':
-        travelreasons.push(extractedError);
+      case 'travelReasons':
+        travelReasons.push(extractedError);
         break;
       case 'accommodation':
         accommodation.push(extractedError);
@@ -39,20 +39,20 @@ const pullErrors = errors => {
       default:
     }
   });
-  if (origin.length > 0) {
-    combinedErrors.origin = origin;
+  if (currentOfficeLocation.length > 0) {
+    combinedErrors.currentOfficeLocation = currentOfficeLocation;
   }
   if (destination.length > 0) {
     combinedErrors.destination = destination;
   }
-  if (type.length > 0) {
+  if (tripType.length > 0) {
     combinedErrors.destination = destination;
   }
-  if (departuredate.length > 0) {
-    combinedErrors.departuredate = departuredate;
+  if (departureDate.length > 0) {
+    combinedErrors.departureDate = departureDate;
   }
-  if (travelreasons.length > 0) {
-    combinedErrors.travelreasons = travelreasons;
+  if (travelReasons.length > 0) {
+    combinedErrors.travelReasons = travelReasons;
   }
   if (accommodation.length > 0) {
     combinedErrors.accommodation = accommodation;
