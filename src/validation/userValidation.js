@@ -1,5 +1,5 @@
 import { check, validationResult } from 'express-validator';
-import pullErrors from '../utils/helper/pulledError';
+import pullErrors from '../utils/helpers/pullErrors';
 import { Errors } from '../utils/constants/errorMessages';
 
 const loginValidation = [
