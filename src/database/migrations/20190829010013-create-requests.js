@@ -1,6 +1,6 @@
 
 export default {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Trips', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Requests', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -19,10 +19,10 @@ export default {
       }
     },
     departureDate: {
-      type: Sequelize.STRING,
+      type: Sequelize.DATE,
     },
     returnDate: {
-      type: Sequelize.STRING,
+      type: Sequelize.DATE,
     },
     tripType: {
       type: Sequelize.STRING,
@@ -31,7 +31,7 @@ export default {
       type: Sequelize.TEXT,
     },
     currentOfficeLocation: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
     },
     destinations: {
       type: Sequelize.ARRAY(Sequelize.INTEGER),
@@ -49,5 +49,5 @@ export default {
       type: Sequelize.DATE
     }
   }),
-  down: (queryInterface) => queryInterface.dropTable('Trips')
+  down: (queryInterface) => queryInterface.dropTable('Requests')
 };

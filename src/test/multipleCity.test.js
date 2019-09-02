@@ -35,7 +35,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         returnDate: '2019-12-10',
         currentOfficeLocation: 'Lagos Office',
         reason: 'official',
-        tripType: 'Multiple stops',
+        tripType: 'Multi-city',
         value1: 'Abuja Office',
         value2: 'Lagos Office 2'
       })
@@ -62,7 +62,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         done();
       });
   });
-  it('should send an error 422 when an invalid date format is entered', (done) => {
+  it('should send an error 400 when an invalid date format is entered', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')
       .set('Authorization', `Bearer ${testToken}`)
@@ -78,7 +78,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
-        expect(res.status).to.equal(422);
+        expect(res.status).to.equal(400);
         expect((res.body)).to.have.all.keys('status', 'message');
         expect((res.body.message)).to.be.an('array');
         expect((res.body.status)).to.equals('error');
@@ -86,7 +86,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         done();
       });
   });
-  it('should send an error 422 when an invalid destination is entered', (done) => {
+  it('should send an error 400 when an invalid destination is entered', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')
       .set('Authorization', `Bearer ${testToken}`)
@@ -102,7 +102,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
-        expect(res.status).to.equal(422);
+        expect(res.status).to.equal(400);
         expect((res.body)).to.have.all.keys('status', 'message');
         expect((res.body.message)).to.be.a('array');
         expect((res.body.status)).to.equals('error');
@@ -110,7 +110,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         done();
       });
   });
-  it('should send an error 422 when current location is left empty', (done) => {
+  it('should send an error 400 when current location is left empty', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')
       .set('Authorization', `Bearer ${testToken}`)
@@ -126,7 +126,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
-        expect(res.status).to.equal(422);
+        expect(res.status).to.equal(400);
         expect((res.body)).to.have.all.keys('status', 'message');
         expect((res.body.message)).to.be.an('array');
         expect((res.body.status)).to.equals('error');
@@ -134,7 +134,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         done();
       });
   });
-  it('should send an error 422 when the trip reason is left empty', (done) => {
+  it('should send an error 400 when the trip reason is left empty', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')
       .set('Authorization', `Bearer ${testToken}`)
@@ -150,7 +150,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
-        expect(res.status).to.equal(422);
+        expect(res.status).to.equal(400);
         expect((res.body)).to.have.all.keys('status', 'message');
         expect((res.body.message)).to.be.an('array');
         expect((res.body.status)).to.equals('error');
@@ -158,7 +158,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         done();
       });
   });
-  it('should send an error 422 when the trip type is empty', (done) => {
+  it('should send an error 400 when the trip type is empty', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')
       .set('Authorization', `Bearer ${testToken}`)
@@ -174,7 +174,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
-        expect(res.status).to.equal(422);
+        expect(res.status).to.equal(400);
         expect((res.body)).to.have.all.keys('status', 'message');
         expect((res.body.message)).to.be.an('array');
         expect((res.body.status)).to.equals('error');

@@ -6,12 +6,12 @@ import response from '../utils/Response';
 
 const { serverResponse } = response;
 
-const { Trips, Locations } = models;
+const { Requests, Locations } = models;
 /**
  *@description A class that handles multicity travel request by a user
- * @class MultiCityTrips
+ * @class Trips
  */
-class MultiCityTrips {
+class Trips {
 /**
  *@description A function that handles multicity travel request by a user
  * @static
@@ -19,7 +19,7 @@ class MultiCityTrips {
  * @param {Object} res
  * @param {Object} next
  * @returns {object} Details of booked trips
- * @memberof MultiCityTrips
+ * @memberof Trips
  */
   static async multiCityRequest(req, res, next) {
     try {
@@ -37,11 +37,10 @@ class MultiCityTrips {
         raw: true
       });
       const locationId = locationsData.map((data) => data.id);
-      const locationNames = locationsData.map((data) => data.locationName);
-      if (locationsData.length !== travelLocations.length + 1) return serverResponse(res, 422, ...['error', 'message', 'Enter a valid Andela office location']);
+      if (locationsData.length !== travelLocations.length + 1) return serverResponse(res, 400, ...['error', 'message', 'Enter a valid Andela office location']);
       const destinationId = locationId.slice(1);
       const tripsData = {
-        currentOfficeLocation: locationNames[0],
+        currentOfficeLocation: locationId[0],
         tripId: uuidv4(),
         userId,
         departureDate: new Date(departureDate).toUTCString(),
@@ -51,7 +50,7 @@ class MultiCityTrips {
         requestStatus: 'pending',
         destinations: destinationId
       };
-      const tripsResult = await Trips.create(tripsData);
+      const tripsResult = await Requests.create(tripsData);
       if (tripsResult) {
         const resultObject = {
           userId,
@@ -71,4 +70,4 @@ class MultiCityTrips {
     }
   }
 }
-export default MultiCityTrips;
+export default Trips;

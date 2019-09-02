@@ -1,6 +1,6 @@
 
 export default (sequelize, DataTypes) => {
-  const Trips = sequelize.define('Trips', {
+  const Requests = sequelize.define('Requests', {
     tripId: {
       type: DataTypes.STRING,
       required: true
@@ -10,11 +10,11 @@ export default (sequelize, DataTypes) => {
       required: true
     },
     departureDate: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
       required: true
     },
     returnDate: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
       required: true
     },
     tripType: {
@@ -26,7 +26,7 @@ export default (sequelize, DataTypes) => {
       required: true
     },
     currentOfficeLocation: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       required: true
     },
     requestStatus: {
@@ -35,12 +35,12 @@ export default (sequelize, DataTypes) => {
     },
     destinations: DataTypes.ARRAY(DataTypes.INTEGER)
   }, {});
-  Trips.associate = (models) => {
+  Requests.associate = (models) => {
     // associations can be defined here
-    Trips.belongsTo(models.Users, {
+    Requests.belongsTo(models.Users, {
       foreignKey: 'userId'
     });
   };
 
-  return Trips;
+  return Requests;
 };

@@ -1,9 +1,9 @@
 import express from 'express';
-import { MultiCityTripsController } from '../../controllers';
+import { Trips } from '../../controllers';
 import { Authentication } from '../../middlewares';
 import { multicityCheck, validateInput } from '../../validation';
 
-const { multiCityRequest } = MultiCityTripsController;
+const { multiCityRequest } = Trips;
 const { authenticate } = Authentication;
 
 
