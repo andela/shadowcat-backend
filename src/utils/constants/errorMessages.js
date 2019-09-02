@@ -48,4 +48,4 @@ export const Errors = {
   invalidLineManager: 'Line manager should be an Alphabet',
 };
 
-export default { signupErrors, Errors };
+export default signupErrors;
