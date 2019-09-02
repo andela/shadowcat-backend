@@ -5,7 +5,7 @@ export default {
       allowNull: true
     });
     await queryInterface.addColumn('Users', 'birthday', {
-      type: Sequelize.STRING,
+      type: Sequelize.DATE,
       allowNull: true
     });
     await queryInterface.addColumn('Users', 'preferredlanguage', {
@@ -22,6 +22,11 @@ export default {
     });
     await queryInterface.addColumn('Users', 'role', {
       type: Sequelize.STRING,
+      values: [
+        'Developer',
+        'QA',
+        'Maintenance',
+      ],
       allowNull: true
     });
     await queryInterface.addColumn('Users', 'department', {
@@ -29,7 +34,7 @@ export default {
       allowNull: true
     });
     await queryInterface.addColumn('Users', 'linemanager', {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       allowNull: true
     });
   },

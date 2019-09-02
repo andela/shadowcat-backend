@@ -41,11 +41,11 @@ export const loginProfileErrors = {
   undefinedResidentialAddress: 'Residential address  is required',
   invalidResidentialAddress: 'Residential address should be an Alphabet',
   undefinedRole: 'role  is required',
-  invalidRole: 'role should be an Alphabet',
+  invalidRole: 'role can be developer,qa or maintenance',
   undefinedDepartment: 'Department  is required',
   invalidDepartment: 'Department should be an Alphabet',
   undefinedLineManager: 'Line manager  is required',
-  invalidLineManager: 'Line manager should be an Alphabet',
+  invalidLineManager: 'Line manager should be an integer',
 };
 
 export default signupErrors;

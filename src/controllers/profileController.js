@@ -83,6 +83,11 @@ class ProfileController {
           'profile sucessfully updated',
         );
       }
+      return response.sendError(
+        res,
+        404,
+        'user does not exist'
+      );
     } catch (error) {
       next(error);
     }

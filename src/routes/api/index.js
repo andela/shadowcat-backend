@@ -6,7 +6,7 @@ import passwordRouter from './passwordResetRoute';
 const usersRouter = express.Router();
 
 usersRouter.use('/v1/auth', authRouter);
-usersRouter.use('/v1/profiles', profileRoute);
+usersRouter.use('/v1/users/profiles', profileRoute);
 usersRouter.use('/v1/users', passwordRouter);
 
 usersRouter.use((req, res) => {

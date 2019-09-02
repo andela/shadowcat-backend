@@ -61,7 +61,7 @@ const profileValidation = [
     .optional()
     .exists({ checkFalsy: true })
     .withMessage(`role ${loginProfileErrors.undefinedRole}`)
-    .isAlpha()
+    .matches(/^.*(develop|qa|maintenance).*$$/)
     .withMessage(`role ${loginProfileErrors.invalidRole}`),
   check('department')
     .optional()
@@ -73,7 +73,7 @@ const profileValidation = [
     .optional()
     .exists({ checkFalsy: true })
     .withMessage(`linemanager ${loginProfileErrors.undefinedLineManager}`)
-    .isAlpha()
+    .isNumeric()
     .withMessage(`linemanager ${loginProfileErrors.invalidLineManager}`),
   async (req, res, next) => {
     const { errors } = validationResult(req);

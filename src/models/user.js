@@ -48,7 +48,7 @@ export default (sequelize, DataTypes) => {
         required: false
       },
       birthday: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         required: false
       },
       preferredlanguage: {
@@ -64,7 +64,12 @@ export default (sequelize, DataTypes) => {
         required: false
       },
       role: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM,
+        values: [
+          'Developer',
+          'QA',
+          'Maintenance',
+        ],
         required: false
       },
       department: {
@@ -72,7 +77,7 @@ export default (sequelize, DataTypes) => {
         required: false
       },
       linemanager: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         required: false
       },
     },
