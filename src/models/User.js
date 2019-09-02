@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Users.associate = () => {
     // associations can be defined here
+    Users.associate = (models) => Users.hasMany(models.ReturnTrip, { foreignKey: 'user_id', onUpdate: 'CASCADE' });
   };
   return Users;
 };
