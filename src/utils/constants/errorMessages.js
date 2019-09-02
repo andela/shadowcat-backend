@@ -19,4 +19,33 @@ export const signupVerifyErrors = {
   notFound: 'No pending verification found'
 };
 
-export default signupErrors;
+export const Errors = {
+  undefinedFirstName: 'Firstname is required',
+  invalidFirstName: 'Firstname should be an Alphabet',
+  undefinedLastName: 'Lastname is required',
+  invalidLastName: 'Lastname should be an Alphabet',
+  undefinedEmail: 'Email is required',
+  undefinedPassword: 'Password is required',
+  invalidPassword: 'Password cannot be less than 8 characters',
+  invalidEmail: 'Enter a valid email address',
+  nonAndelanEmail: 'Email should be an andela email',
+  alphaNumericPassword: 'Password should be alphanumeric',
+  undefinedGender: 'Gender is required',
+  invalidGender: 'Gender should be an Alphabet',
+  undefinedBirthday: 'Birthday is required',
+  invalidBirthday: 'Birthday should be  Alphanumeric',
+  undefinedPreferredLanguage: 'Preferred Language  is required',
+  invalidPreferredLanguage: 'Preferred Language should be an Alphabet',
+  undefinedCurrency: 'Currency  is required',
+  invalidCurrency: 'Currency  should be an Alphabet',
+  undefinedResidentialAddress: 'Residential address  is required',
+  invalidResidentialAddress: 'Residential address should be an Alphabet',
+  undefinedRole: 'role  is required',
+  invalidRole: 'role should be an Alphabet',
+  undefinedDepartment: 'Department  is required',
+  invalidDepartment: 'Department should be an Alphabet',
+  undefinedLineManager: 'Line manager  is required',
+  invalidLineManager: 'Line manager should be an Alphabet',
+};
+
+export default { signupErrors, Errors };

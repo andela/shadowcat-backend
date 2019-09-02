@@ -1,6 +1,6 @@
 import { check, validationResult } from 'express-validator';
 import pullErrors from '../utils/helper/pulledError';
-import { Errors } from '../utils/errorMessage';
+import { Errors } from '../utils/constants/errorMessages';
 
 const profileValidation = [
   check('firstname')
