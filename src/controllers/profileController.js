@@ -22,6 +22,13 @@ class ProfileController {
       const user = await Users.findOne({
         where: { userId: id }
       });
+      if (!user) {
+        return response.sendError(
+          res,
+          404,
+          'user not found'
+        );
+      }
       return response.sendSuccess(
         res,
         200,
