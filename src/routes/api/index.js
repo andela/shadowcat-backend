@@ -10,7 +10,7 @@ usersRouter.use('/v1/auth', authRouter);
 usersRouter.use('/v1/users', passwordRouter);
 usersRouter.use('/v1/trips', multiCityTripsRouter);
 
-usersRouter.get('/', (req, res) => res.status(200).send('Welcome to  Shadowcat API'));
+usersRouter.get('/', (req, res) => res.status(200).send('Welcome to Shadowcat API'));
 
 usersRouter.use('/v1/users', passwordRouter);
 
