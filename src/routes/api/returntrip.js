@@ -1,12 +1,12 @@
 import express from 'express';
 import ReturnTrip from '../../controllers/returnTrip';
-import Authorization from '../../middlewares/Authorization'
 import returntripvalidate from '../../validation/returntripvalidate';
 import ValidationHandler from '../../utils/ValidationHandler';
+import Auth from '../../middlewares/auth';
+
 
 const router = express.Router();
 
-router.post('/request',
-    returntripvalidate.returnTrip, ValidationHandler.validate, Authorization.authenticate, ReturnTrip.returnTripRequest );
+router.post('/request', Auth.authenticate, returntripvalidate.returnTrip, ValidationHandler.validate,  ReturnTrip.returnTripRequest );
 
 export default router; 

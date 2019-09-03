@@ -12,7 +12,7 @@ export default {
         password: bcrypt.hashSync('IamUser', 10),
         userId: uuidv4(),
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       },
       {
         userId: uuidv4(),
@@ -21,10 +21,10 @@ export default {
         email: 'stephenibaba@andela.com',
         password: bcrypt.hashSync('Jennylove19', 10),
         createdAt: new Date(),
-        updatedAt: new Date(),
-      },
+        updatedAt: new Date()
+      }
     ],
     {},
   ),
-  down: queryInterface => queryInterface.bulkDelete('Users', null, {}),
+  down: queryInterface => queryInterface.bulkDelete('Users', null, {})
 };

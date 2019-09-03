@@ -1,5 +1,4 @@
 import uuidv4 from 'uuid/v4';
-import { Op } from 'sequelize';
 import validatedate  from '../utils/helper/date';
 import models from '../models';
 
