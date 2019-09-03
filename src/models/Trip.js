@@ -29,14 +29,16 @@ export default (sequelize, DataTypes) => {
             required: true
         },
         accomodation: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             required: true
         },
         requestStatus: {
             type: DataTypes.STRING,
             required: true
         },
-        destinations: DataTypes.ARRAY(DataTypes.INTEGER)
+        destination: {
+            type: DataTypes.STRING,
+        },
     }, {});
     Trips.associate = (models) => {
         // associations can be defined here

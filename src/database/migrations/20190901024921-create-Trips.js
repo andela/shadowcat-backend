@@ -33,10 +33,10 @@ export default {
       type: Sequelize.STRING,
     },
     accomodation: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
     },
-    destinations: {
-      type: Sequelize.ARRAY(Sequelize.INTEGER),
+    destination: {
+      type: Sequelize.STRING,
     },
     requestStatus: {
       type: Sequelize.STRING,

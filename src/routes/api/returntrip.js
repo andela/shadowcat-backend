@@ -1,15 +1,12 @@
 import express from 'express';
 import ReturnTrip from '../../controllers/returnTrip';
-import { Authorization } from '../../middlewares';
-// import { multicityCheck, validateInput } from '../../validation';
-
-// const { multiCityRequest } = MultiCityTripsController;
-//const { authenticate } = Authentication;
-
+import Authorization from '../../middlewares/Authorization'
+import returntripvalidate from '../../validation/returntripvalidate';
+import ValidationHandler from '../../utils/ValidationHandler';
 
 const router = express.Router();
 
-router.post('/request', Authorization.authenticate, //multicityCheck, validateInput, 
-    ReturnTrip.returnTripRequest);
+router.post('/request',
+    returntripvalidate.returnTrip, ValidationHandler.validate, Authorization.authenticate, ReturnTrip.returnTripRequest );
 
 export default router; 
