@@ -68,7 +68,7 @@ const pullErrors = (errors) => {
     }
   });
   if (firstName.length > 0) {
-    combinedErrors.firstName = firstName;
+    combinedErrors.firstname = firstName;
   }
   if (lastName.length > 0) {
     combinedErrors.lastname = lastName;
