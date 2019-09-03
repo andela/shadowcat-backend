@@ -1,18 +1,18 @@
 import { check, validationResult } from 'express-validator';
 import pullErrors from '../utils/helpers/pullErrors';
-import { loginProfileErrors } from '../utils/constants/errorMessages';
+import { userProfileErrors } from '../utils/constants/errorMessages';
 
 const loginValidation = [
   check('email')
     .exists({ checkFalsy: true })
-    .withMessage(`email ${loginProfileErrors.undefinedEmail}`)
+    .withMessage(`email ${userProfileErrors.undefinedEmail}`)
     .isEmail()
-    .withMessage(`email ${loginProfileErrors.invalidEmail}`)
+    .withMessage(`email ${userProfileErrors.invalidEmail}`)
     .matches(/@andela.com$/)
-    .withMessage(`email ${loginProfileErrors.nonAndelanEmail}`),
+    .withMessage(`email ${userProfileErrors.nonAndelanEmail}`),
   check('password')
     .exists({ checkFalsy: true })
-    .withMessage(`password ${loginProfileErrors.undefinedPassword}`),
+    .withMessage(`password ${userProfileErrors.undefinedPassword}`),
   async (req, res, next) => {
     const { errors } = validationResult(req);
     if (errors.length) {

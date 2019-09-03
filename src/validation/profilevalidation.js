@@ -1,80 +1,80 @@
 import { check, validationResult } from 'express-validator';
 import pullErrors from '../utils/helpers/pullErrors';
-import { loginProfileErrors } from '../utils/constants/errorMessages';
+import { userProfileErrors } from '../utils/constants/errorMessages';
 
 const profileValidation = [
   check('firstname')
     .optional()
     .exists({ checkFalsy: true })
-    .withMessage(`firstname ${loginProfileErrors.undefinedFirstName}`)
+    .withMessage(`firstname ${userProfileErrors.undefinedFirstName}`)
     .isAlpha()
-    .withMessage(`firstname ${loginProfileErrors.invalidFirstName}`),
+    .withMessage(`firstname ${userProfileErrors.invalidFirstName}`),
   check('lastname')
     .optional()
     .exists({ checkFalsy: true })
-    .withMessage(`lastname ${loginProfileErrors.undefinedLastName}`)
+    .withMessage(`lastname ${userProfileErrors.undefinedLastName}`)
     .isAlpha()
-    .withMessage(`lastname ${loginProfileErrors.invalidLastName}`),
+    .withMessage(`lastname ${userProfileErrors.invalidLastName}`),
   check('email')
     .optional()
     .exists({ checkFalsy: true })
-    .withMessage(`email ${loginProfileErrors.undefinedEmail}`)
+    .withMessage(`email ${userProfileErrors.undefinedEmail}`)
     .isEmail()
-    .withMessage(`email ${loginProfileErrors.invalidEmail}`)
+    .withMessage(`email ${userProfileErrors.invalidEmail}`)
     .matches(/@andela.com$/)
-    .withMessage(`email ${loginProfileErrors.nonAndelanEmail}`),
+    .withMessage(`email ${userProfileErrors.nonAndelanEmail}`),
   check('password')
     .optional()
     .exists({ checkFalsy: true })
-    .withMessage(`password ${loginProfileErrors.undefinedPassword}`),
+    .withMessage(`password ${userProfileErrors.undefinedPassword}`),
   check('gender')
     .optional()
     .exists({ checkFalsy: true })
-    .withMessage(`gender ${loginProfileErrors.undefinedGender}`)
+    .withMessage(`gender ${userProfileErrors.undefinedGender}`)
     .isAlpha()
-    .withMessage(`gender ${loginProfileErrors.invalidGender}`),
+    .withMessage(`gender ${userProfileErrors.invalidGender}`),
   check('birthday')
     .optional()
     .exists({ checkFalsy: true })
-    .withMessage(`birthday ${loginProfileErrors.undefinedBirthday}`)
+    .withMessage(`birthday ${userProfileErrors.undefinedBirthday}`)
     .isAscii()
-    .withMessage(`birthday ${loginProfileErrors.invalidBirthday}`),
+    .withMessage(`birthday ${userProfileErrors.invalidBirthday}`),
   check('preferredlanguage')
     .optional()
     .exists({ checkFalsy: true })
-    .withMessage(`preferredlanguage ${loginProfileErrors.undefinedPreferredLanguage}`)
+    .withMessage(`preferredlanguage ${userProfileErrors.undefinedPreferredLanguage}`)
     .isAlpha()
-    .withMessage(`preferredlanguage ${loginProfileErrors.invalidPreferredLanguage}`),
+    .withMessage(`preferredlanguage ${userProfileErrors.invalidPreferredLanguage}`),
   check('currency')
     .optional()
     .exists({ checkFalsy: true })
-    .withMessage(`currency ${loginProfileErrors.undefinedCurrency}`)
+    .withMessage(`currency ${userProfileErrors.undefinedCurrency}`)
     .isAlpha()
-    .withMessage(`currency ${loginProfileErrors.invalidCurrency}`),
+    .withMessage(`currency ${userProfileErrors.invalidCurrency}`),
   check('residentialaddress')
     .optional()
     .exists({ checkFalsy: true })
-    .withMessage(`residentialaddress ${loginProfileErrors.undefinedResidentialAddress}`)
+    .withMessage(`residentialaddress ${userProfileErrors.undefinedResidentialAddress}`)
     .isAlpha()
-    .withMessage(`residentialaddress ${loginProfileErrors.invalidResidentialAddress}`),
+    .withMessage(`residentialaddress ${userProfileErrors.invalidResidentialAddress}`),
   check('role')
     .optional()
     .exists({ checkFalsy: true })
-    .withMessage(`role ${loginProfileErrors.undefinedRole}`)
+    .withMessage(`role ${userProfileErrors.undefinedRole}`)
     .matches(/^.*(develop|qa|maintenance).*$$/)
-    .withMessage(`role ${loginProfileErrors.invalidRole}`),
+    .withMessage(`role ${userProfileErrors.invalidRole}`),
   check('department')
     .optional()
     .exists({ checkFalsy: true })
-    .withMessage(`department ${loginProfileErrors.undefinedDepartment}`)
+    .withMessage(`department ${userProfileErrors.undefinedDepartment}`)
     .isAlpha()
-    .withMessage(`department ${loginProfileErrors.invalidDepartment}`),
+    .withMessage(`department ${userProfileErrors.invalidDepartment}`),
   check('linemanager')
     .optional()
     .exists({ checkFalsy: true })
-    .withMessage(`linemanager ${loginProfileErrors.undefinedLineManager}`)
+    .withMessage(`linemanager ${userProfileErrors.undefinedLineManager}`)
     .isNumeric()
-    .withMessage(`linemanager ${loginProfileErrors.invalidLineManager}`),
+    .withMessage(`linemanager ${userProfileErrors.invalidLineManager}`),
   async (req, res, next) => {
     const { errors } = validationResult(req);
     if (errors.length) {

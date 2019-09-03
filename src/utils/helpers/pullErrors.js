@@ -5,19 +5,19 @@
  */
 const pullErrors = (errors) => {
   const combinedErrors = {};
-  const firstname = [];
-  const lastname = [];
+  const firstName = [];
+  const lastName = [];
   const email = [];
   const phone = [];
   const password = [];
   const gender = [];
   const birthday = [];
-  const preferredlanguage = [];
+  const preferredLanguage = [];
   const currency = [];
-  const residentialaddress = [];
+  const residentialAddress = [];
   const role = [];
   const department = [];
-  const linemanager = [];
+  const lineManager = [];
   errors.forEach((error) => {
     const { msg } = error;
     const msgArray = msg.split(' ');
@@ -26,10 +26,10 @@ const pullErrors = (errors) => {
     const extractedError = msgArray.join(' ');
     switch (msgType) {
       case 'firstname':
-        firstname.push(extractedError);
+        firstName.push(extractedError);
         break;
       case 'lastname':
-        lastname.push(extractedError);
+        lastName.push(extractedError);
         break;
       case 'email':
         email.push(extractedError);
@@ -47,13 +47,13 @@ const pullErrors = (errors) => {
         birthday.push(extractedError);
         break;
       case 'preferredlanguage':
-        preferredlanguage.push(extractedError);
+        preferredLanguage.push(extractedError);
         break;
       case 'currency':
         currency.push(extractedError);
         break;
       case 'residentialaddress':
-        residentialaddress.push(extractedError);
+        residentialAddress.push(extractedError);
         break;
       case 'role':
         role.push(extractedError);
@@ -62,16 +62,16 @@ const pullErrors = (errors) => {
         department.push(extractedError);
         break;
       case 'linemanager':
-        linemanager.push(extractedError);
+        lineManager.push(extractedError);
         break;
       default:
     }
   });
-  if (firstname.length > 0) {
-    combinedErrors.firstname = firstname;
+  if (firstName.length > 0) {
+    combinedErrors.firstName = firstName;
   }
-  if (lastname.length > 0) {
-    combinedErrors.lastname = lastname;
+  if (lastName.length > 0) {
+    combinedErrors.lastname = lastName;
   }
   if (email.length > 0) {
     combinedErrors.email = email;
@@ -88,14 +88,14 @@ const pullErrors = (errors) => {
   if (birthday.length > 0) {
     combinedErrors.birthday = birthday;
   }
-  if (preferredlanguage.length > 0) {
-    combinedErrors.preferrdlanguage = preferredlanguage;
+  if (preferredLanguage.length > 0) {
+    combinedErrors.preferredLanguage = preferredLanguage;
   }
   if (currency.length > 0) {
     combinedErrors.currency = currency;
   }
-  if (residentialaddress.length > 0) {
-    combinedErrors.residentialaddress = residentialaddress;
+  if (residentialAddress.length > 0) {
+    combinedErrors.residentialaddress = residentialAddress;
   }
   if (role.length > 0) {
     combinedErrors.role = role;
@@ -103,8 +103,8 @@ const pullErrors = (errors) => {
   if (department.length > 0) {
     combinedErrors.department = department;
   }
-  if (linemanager.length > 0) {
-    combinedErrors.linemanager = linemanager;
+  if (lineManager.length > 0) {
+    combinedErrors.lineManager = lineManager;
   }
   return combinedErrors;
 };

@@ -27,7 +27,7 @@ describe('Testing User Profile Page Setting ', () => {
   describe('Testing User Profile Page Setting ', () => {
     it('should fetch a user profile', (done) => {
       chai.request(server)
-        .get('/api/v1/users/profiles')
+        .get('/api/v1/users/profile')
         .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           if (err) return done(err);
@@ -39,7 +39,7 @@ describe('Testing User Profile Page Setting ', () => {
     });
     it('should fail to get the profile of an unauthorized user', (done) => {
       chai.request(server)
-        .get('/api/v1/users/profiles')
+        .get('/api/v1/users/profile')
         .set('token', `Bearer ${token}`)
         .end((err, res) => {
           if (err) return done(err);
@@ -55,7 +55,7 @@ describe('Testing User Profile Page Setting ', () => {
         department: 'maintenance',
       };
       chai.request(server)
-        .put('/api/v1/users/profiles')
+        .put('/api/v1/users/profile')
         .set('Authorization', `Bearer ${token}`)
         .send(trip)
         .end((err, res) => {

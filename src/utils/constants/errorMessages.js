@@ -19,7 +19,7 @@ export const signupVerifyErrors = {
   notFound: 'No pending verification found'
 };
 
-export const loginProfileErrors = {
+export const userProfileErrors = {
   undefinedFirstName: 'Firstname is required',
   invalidFirstName: 'Firstname should be an Alphabet',
   undefinedLastName: 'Lastname is required',
@@ -33,18 +33,18 @@ export const loginProfileErrors = {
   undefinedGender: 'Gender is required',
   invalidGender: 'Gender should be an Alphabet',
   undefinedBirthday: 'Birthday is required',
-  invalidBirthday: 'Birthday should be  a date',
-  undefinedPreferredLanguage: 'Preferred Language  is required',
+  invalidBirthday: 'Birthday should be a date',
+  undefinedPreferredLanguage: 'Preferred Language is required',
   invalidPreferredLanguage: 'Preferred Language should be an Alphabet',
-  undefinedCurrency: 'Currency  is required',
-  invalidCurrency: 'Currency  should be an Alphabet',
-  undefinedResidentialAddress: 'Residential address  is required',
+  undefinedCurrency: 'Currency is required',
+  invalidCurrency: 'Currency should be an Alphabet',
+  undefinedResidentialAddress: 'Residential address is required',
   invalidResidentialAddress: 'Residential address should be an Alphabet',
-  undefinedRole: 'role  is required',
+  undefinedRole: 'role is required',
   invalidRole: 'role can be developer,qa or maintenance',
-  undefinedDepartment: 'Department  is required',
+  undefinedDepartment: 'Department is required',
   invalidDepartment: 'Department should be an Alphabet',
-  undefinedLineManager: 'Line manager  is required',
+  undefinedLineManager: 'Line manager is required',
   invalidLineManager: 'Line manager should be an integer',
 };
 
