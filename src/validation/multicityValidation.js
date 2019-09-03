@@ -22,10 +22,15 @@ const multicityCheck = [
 const validateInput = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const errorResult = errors.array().map(err => `${err.param}: ${err.msg}`);
+    const errorObj = {};
+    errors.array().map(err => {
+      if (errorObj[err.param]) return errorObj[err.param].push(err.msg);
+      errorObj[err.param] = [err.msg];
+      return errorObj;
+    });
     return res.status(400).json({
       status: 'error',
-      message: errorResult
+      error: errorObj
     });
   }
   return next();

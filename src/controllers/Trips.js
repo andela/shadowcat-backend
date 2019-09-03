@@ -37,7 +37,7 @@ class Trips {
         raw: true
       });
       const locationId = locationsData.map((data) => data.id);
-      if (locationsData.length !== travelLocations.length + 1) return serverResponse(res, 400, ...['error', 'message', 'Enter a valid Andela office location']);
+      if (locationsData.length === 1 || (locationsData.length !== travelLocations.length + 1)) return serverResponse(res, 400, ...['error', 'message', 'Enter a valid Andela office location']);
       const destinationId = locationId.slice(1);
       const tripsData = {
         currentOfficeLocation: locationId[0],
