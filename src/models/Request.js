@@ -6,7 +6,7 @@ export default (sequelize, DataTypes) => {
       required: true
     },
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       required: true
     },
     departureDate: {
@@ -33,7 +33,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       required: true
     },
-    destinations: DataTypes.ARRAY(DataTypes.INTEGER)
+    destination: DataTypes.ARRAY(DataTypes.INTEGER)
   }, {});
   Requests.associate = (models) => {
     // associations can be defined here
