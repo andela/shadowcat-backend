@@ -7,24 +7,38 @@ export default {
         check('reason')
             .trim()
             .exists()
-            .withMessage('reason is required')
             .custom(value => notEmpty(value, 'reasons for Trip is required')),
         check('departureDate')
             .trim()
             .exists()
-            .withMessage('last_name is required')
+            .matches(/^\d{4}([-./,:])\d{2}\1\d{2}$/, 'i')
             .custom(value => notEmpty(value, 'departureDate is required')),
         check('returnDate')
             .trim()
             .exists()
-            .withMessage('returnDate is required', )
+            .matches(/^\d{4}([-./,:])\d{2}\1\d{2}$/, 'i')
             .custom(value => notEmpty(value,'returnDate is required')),
-        
         check('destination')
             .trim()
             .exists()
-            .withMessage('destination field is required')
-            
+            .custom(value => notEmpty(value, 'destination is required')),
+        check('currentOfficeLocation')
+            .trim()
+            .exists()
+            .withMessage('currentOfficeLocation must be specified')
+            .custom(value => notEmpty(value, 'currentOfficeLocation is required')),
+        check('tripType')
+            .trim()
+            .exists()
+            .matches(/^Return-Trip$/, 'i')
+            .withMessage('The trip type must match the type "Return-Trip"')
+            .custom(value => notEmpty(value, 'The trip type must match the type "Return-Trip"')),
+        check('accomodation')
+            .trim()
+            .exists()
+            .withMessage('accomodation must be specified')
+            .custom(value => notEmpty(value, 'accomodation is required')),   
+
     ],
     
 };

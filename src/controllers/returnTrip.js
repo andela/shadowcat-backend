@@ -21,9 +21,7 @@ class ReturnTrip {
     static async returnTripRequest(req, res, next) {
         try {
             const { id } = req;
-            const {
-                departureDate, returnDate, currentOfficeLocation, accomodation, reason, tripType, destination
-            } = req.body;
+            const { departureDate, returnDate, currentOfficeLocation, accomodation, reason, tripType, destination} = req.body;
             const departureDateUTC = new Date(departureDate);
             const returnDateUTC = new Date(returnDate);
 
@@ -31,14 +29,14 @@ class ReturnTrip {
             if (!duration) {
                 return res.status(400).json({
                     status: 'error',
-                    message: 'Departure date and Return date cant be the same'
+                    message: 'Departure and Return date can"t be the same'
                 });
             }
 
-            const tripsResult = await Trips.create({
+            const returnResult = await Trips.create({
                 currentOfficeLocation,
                 tripId: uuidv4(),
-                user_id: id,
+                userId: id,
                 departureDate: new Date(departureDate).toUTCString(),
                 returnDate: new Date(returnDate).toUTCString(),
                 accomodation,
@@ -47,15 +45,16 @@ class ReturnTrip {
                 requestStatus: 'pending',
                 destination
             });
-            if (tripsResult) {
+            if (returnResult) {
                 return res.status(201).json({
                     status: 'success',
                     data: {
-                        user_id: id,
+                        userId: id,
                         destination,
-                        current_office_location: currentOfficeLocation,
-                        departure_date: departureDateUTC,
-                        return_date: returnDateUTC,
+                        currentOfficeLocation,
+                        departureDate,
+                        returnDate,
+                        accomodation,
                         reason,
                         tripType,
                         requestStatus: 'pending'
