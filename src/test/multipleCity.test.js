@@ -35,7 +35,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         returnDate: '2019-12-10',
         currentOfficeLocation: 'Lagos Office',
         reason: 'official',
-        tripType: 'Multiple stops',
+        tripType: 'Multi-city',
         value1: 'Abuja Office',
         value2: 'Lagos Office 2'
       })
@@ -49,13 +49,12 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         expect((res.body)).to.haveOwnProperty('status').that.is.a('string');
         expect((res.body)).to.haveOwnProperty('data').that.is.an('object');
         expect((res.body.data)).to.be.an('object');
-        expect((res.body.data.user_id)).to.be.a('string');
+        expect((res.body.data.userId)).to.be.a('string');
         expect((res.body.data.destinationIDs)).to.be.an('array');
-        expect((res.body.data.current_office_location)).to.be.a('string');
+        expect((res.body.data.currentOfficeLocation)).to.be.a('string');
         expect((res.body.data.destinations)).to.be.an('array');
-        expect((res.body.data.departure_date)).to.be.a('string');
-        expect((res.body.data.return_date)).to.be.a('string');
-        expect((res.body.data.return_date)).to.be.a('string');
+        expect((res.body.data.departureDate)).to.be.a('string');
+        expect((res.body.data.returnDate)).to.be.a('string');
         expect((res.body.data.reason)).to.be.a('string');
         expect((res.body.data.tripType)).to.be.a('string');
         expect((res.body.data.requestStatus)).to.be.a('string');
@@ -63,7 +62,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         done();
       });
   });
-  it('should send an error 422 when an invalid date format is entered', (done) => {
+  it('should send an error 400 when an invalid date format is entered', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')
       .set('Authorization', `Bearer ${testToken}`)
@@ -79,15 +78,15 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
-        expect(res.status).to.equal(422);
-        expect((res.body)).to.have.all.keys('status', 'message');
-        expect((res.body.message)).to.be.an('array');
+        expect(res.status).to.equal(400);
+        expect((res.body)).to.have.all.keys('status', 'error');
+        expect((res.body.error)).to.be.an('object');
         expect((res.body.status)).to.equals('error');
-        expect((res.body)).to.haveOwnProperty('message').that.is.an('array');
+        expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
         done();
       });
   });
-  it('should send an error 422 when an invalid destination is entered', (done) => {
+  it('should send an error 400 when an invalid destination is entered', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')
       .set('Authorization', `Bearer ${testToken}`)
@@ -103,15 +102,15 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
-        expect(res.status).to.equal(422);
-        expect((res.body)).to.have.all.keys('status', 'message');
-        expect((res.body.message)).to.be.a('array');
+        expect(res.status).to.equal(400);
+        expect((res.body)).to.have.all.keys('status', 'error');
+        expect((res.body.error)).to.be.an('object');
         expect((res.body.status)).to.equals('error');
-        expect((res.body)).to.haveOwnProperty('message').that.is.an('array');
+        expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
         done();
       });
   });
-  it('should send an error 422 when current location is left empty', (done) => {
+  it('should send an error 400 when current location is left empty', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')
       .set('Authorization', `Bearer ${testToken}`)
@@ -127,15 +126,15 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
-        expect(res.status).to.equal(422);
-        expect((res.body)).to.have.all.keys('status', 'message');
-        expect((res.body.message)).to.be.an('array');
+        expect(res.status).to.equal(400);
+        expect((res.body)).to.have.all.keys('status', 'error');
+        expect((res.body.error)).to.be.an('object');
         expect((res.body.status)).to.equals('error');
-        expect((res.body)).to.haveOwnProperty('message').that.is.an('array');
+        expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
         done();
       });
   });
-  it('should send an error 422 when the trip reason is left empty', (done) => {
+  it('should send an error 400 when the trip reason is left empty', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')
       .set('Authorization', `Bearer ${testToken}`)
@@ -151,15 +150,15 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
-        expect(res.status).to.equal(422);
-        expect((res.body)).to.have.all.keys('status', 'message');
-        expect((res.body.message)).to.be.an('array');
+        expect(res.status).to.equal(400);
+        expect((res.body)).to.have.all.keys('status', 'error');
+        expect((res.body.error)).to.be.an('object');
         expect((res.body.status)).to.equals('error');
-        expect((res.body)).to.haveOwnProperty('message').that.is.an('array');
+        expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
         done();
       });
   });
-  it('should send an error 422 when the trip type is empty', (done) => {
+  it('should send an error 400 when the trip type is empty', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')
       .set('Authorization', `Bearer ${testToken}`)
@@ -175,11 +174,11 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
-        expect(res.status).to.equal(422);
-        expect((res.body)).to.have.all.keys('status', 'message');
-        expect((res.body.message)).to.be.an('array');
+        expect(res.status).to.equal(400);
+        expect((res.body)).to.have.all.keys('status', 'error');
+        expect((res.body.error)).to.be.an('object');
         expect((res.body.status)).to.equals('error');
-        expect((res.body)).to.haveOwnProperty('message').that.is.an('array');
+        expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
         done();
       });
   });

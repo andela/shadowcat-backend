@@ -15,15 +15,22 @@ const multicityCheck = [
     .withMessage('Reason field is required'),
   body('tripType').trim().not().isEmpty()
     .withMessage('The trip type field is required')
+    .matches(/^Multi-city$/, 'i')
+    .withMessage('The trip type must match the type "Multi-city"')
 ];
 
 const validateInput = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const errorResult = errors.array().map(err => `${err.param}: ${err.msg}`);
-    return res.status(422).json({
+    const errorObj = {};
+    errors.array().map(err => {
+      if (errorObj[err.param]) return errorObj[err.param].push(err.msg);
+      errorObj[err.param] = [err.msg];
+      return errorObj;
+    });
+    return res.status(400).json({
       status: 'error',
-      message: errorResult
+      error: errorObj
     });
   }
   return next();
