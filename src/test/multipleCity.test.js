@@ -33,11 +33,10 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
       .send({
         departureDate: '2019-10-10',
         returnDate: '2019-12-10',
-        currentOfficeLocation: 'Lagos Office',
+        currentOfficeLocation: 1,
         reason: 'official',
         tripType: 'Multi-city',
-        value1: 'Abuja Office',
-        value2: 'Lagos Office 2'
+        destination: [2, 3]
       })
       .end((err, res) => {
         if (err) return done(err);
@@ -51,7 +50,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         expect((res.body.data)).to.be.an('object');
         expect((res.body.data.userId)).to.be.a('string');
         expect((res.body.data.destinationIDs)).to.be.an('array');
-        expect((res.body.data.currentOfficeLocation)).to.be.a('string');
+        expect((res.body.data.currentOfficeLocation)).to.be.an('array');
         expect((res.body.data.destinations)).to.be.an('array');
         expect((res.body.data.departureDate)).to.be.a('string');
         expect((res.body.data.returnDate)).to.be.a('string');

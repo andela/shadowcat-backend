@@ -1,12 +1,11 @@
 import uuidv4 from 'uuid/v4';
-import { Op } from 'sequelize';
 import datecheck from '../utils/dateCheck';
 import models from '../models';
 import response from '../utils/Response';
 
 const { serverResponse } = response;
 
-const { Requests, Locations } = models;
+const { Requests } = models;
 /**
  *@description A class that handles multicity travel request by a user
  * @class Trips
@@ -25,22 +24,16 @@ class Trips {
     try {
       const { id: userId } = req;
       const {
-        departureDate, returnDate, currentOfficeLocation, reason, tripType, ...destinations
+        departureDate, currentOfficeLocation, returnDate, reason, tripType
       } = req.body;
+      const { currentOfficeData } = req;
+      const { destinationData } = req;
       const duration = datecheck(departureDate, returnDate);
       if (duration === 'negative value') return serverResponse(res, 400, ...['error', 'message', 'Departure date can not be less than Today\'s date']);
       if (!duration) return serverResponse(res, 400, ...['error', 'message', 'Departure date can not be above or the same as the return date']);
-      const travelLocations = Object.values(destinations);
-      const locationsData = await Locations.findAll({
-        attributes: ['id', 'locationName'],
-        where: { locationName: { [Op.or]: [currentOfficeLocation, ...travelLocations] } },
-        raw: true
-      });
-      const locationId = locationsData.map((data) => data.id);
-      if (locationsData.length === 1 || (locationsData.length !== travelLocations.length + 1)) return serverResponse(res, 400, ...['error', 'message', 'Enter a valid Andela office location']);
-      const destinationId = locationId.slice(1);
+
       const tripsData = {
-        currentOfficeLocation: locationId[0],
+        currentOfficeLocation: Number(currentOfficeLocation),
         tripId: uuidv4(),
         userId,
         departureDate: new Date(departureDate).toUTCString(),
@@ -48,15 +41,15 @@ class Trips {
         reason,
         tripType,
         requestStatus: 'pending',
-        destinations: destinationId
+        destination: Object.values(destinationData)
       };
       const tripsResult = await Requests.create(tripsData);
       if (tripsResult) {
         const resultObject = {
           userId,
-          destinationIDs: destinationId,
-          currentOfficeLocation,
-          destinations: travelLocations,
+          destinationIDs: Object.values(destinationData),
+          currentOfficeLocation: Object.keys(currentOfficeData),
+          destinations: Object.keys(destinationData),
           departureDate: new Date(departureDate).toUTCString(),
           returnDate: new Date(returnDate).toUTCString(),
           reason,

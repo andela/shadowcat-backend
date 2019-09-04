@@ -33,8 +33,8 @@ export default {
     currentOfficeLocation: {
       type: Sequelize.INTEGER,
     },
-    destinations: {
-      type: Sequelize.ARRAY(Sequelize.INTEGER),
+    destination: {
+      type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
     requestStatus: {
       type: Sequelize.STRING,
