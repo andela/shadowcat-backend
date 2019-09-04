@@ -78,7 +78,13 @@ export default (sequelize, DataTypes) => {
       },
       linemanager: {
         type: DataTypes.INTEGER,
-        required: false
+        required: false,
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
     },
     {}

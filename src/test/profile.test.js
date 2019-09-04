@@ -49,16 +49,28 @@ describe('Testing User Profile Page Setting ', () => {
     });
   });
   describe('Testing User Update Profile Page Setting ', () => {
+    it('should not update when the request body is empty ', (done) => {  
+      chai.request(server)
+        .put('/api/v1/users/profile')
+        .set('Authorization', `Bearer ${token}`)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(400);
+          expect(res.body).to.have.property('status');
+          done();
+        });
+    });
     it('should update a user profile', (done) => {
-      const trip = {
-        role: 'developer',
-        department: 'maintenance',
+      const profiles = {
+        currency: 'naira',
+        department: 'qa',
       };
       chai.request(server)
         .put('/api/v1/users/profile')
         .set('Authorization', `Bearer ${token}`)
-        .send(trip)
+        .send(profiles)
         .end((err, res) => {
+          if (err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.body).to.have.property('status');
           expect(res.body).to.have.property('data');

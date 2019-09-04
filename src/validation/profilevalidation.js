@@ -31,13 +31,14 @@ const profileValidation = [
     .optional()
     .exists({ checkFalsy: true })
     .withMessage(`gender ${userProfileErrors.undefinedGender}`)
-    .isAlpha()
-    .withMessage(`gender ${userProfileErrors.invalidGender}`),
+    .matches(/^(male|female)$/)
+    .withMessage(`role ${userProfileErrors.invalidGender}`),
   check('birthday')
     .optional()
     .exists({ checkFalsy: true })
     .withMessage(`birthday ${userProfileErrors.undefinedBirthday}`)
-    .isAscii()
+    // https://stackoverflow.com/questions/15491894/regex-to-validate-date-format-dd-mm-yyyy
+    .matches(/^((((0[13578])|([13578])|(1[02]))[\/](([1-9])|([0-2][0-9])|(3[01])))|(((0[469])|([469])|(11))[\/](([1-9])|([0-2][0-9])|(30)))|((2|02)[\/](([1-9])|([0-2][0-9]))))[\/]\d{4}$|^\d{4}$/)
     .withMessage(`birthday ${userProfileErrors.invalidBirthday}`),
   check('preferredlanguage')
     .optional()
@@ -55,13 +56,13 @@ const profileValidation = [
     .optional()
     .exists({ checkFalsy: true })
     .withMessage(`residentialaddress ${userProfileErrors.undefinedResidentialAddress}`)
-    .isAlpha()
+    .isAscii()
     .withMessage(`residentialaddress ${userProfileErrors.invalidResidentialAddress}`),
   check('role')
     .optional()
     .exists({ checkFalsy: true })
     .withMessage(`role ${userProfileErrors.undefinedRole}`)
-    .matches(/^.*(develop|qa|maintenance).*$$/)
+    .matches(/^(develop|qa|maintenance)$/)
     .withMessage(`role ${userProfileErrors.invalidRole}`),
   check('department')
     .optional()

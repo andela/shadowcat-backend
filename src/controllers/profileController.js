@@ -51,6 +51,13 @@ class ProfileController {
   */
   static async updateProfile(req, res, next) {
     try {
+      if (Object.keys(req.body).length === 0) {
+        response.sendError(
+          res,
+          400,
+          'request body is empty'
+        );
+      }
       const { id } = req;
       const profileDetails = await (req.body);
       const {

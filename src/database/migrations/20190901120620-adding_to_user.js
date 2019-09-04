@@ -35,7 +35,7 @@ export default {
     });
     await queryInterface.addColumn('Users', 'linemanager', {
       type: Sequelize.INTEGER,
-      allowNull: true
+      allowNull: true,
     });
   },
   down: async (queryInterface) => {
