@@ -1,5 +1,4 @@
 import uuidv4 from 'uuid/v4';
-import datecheck from '../utils/dateCheck';
 import models from '../models';
 import response from '../utils/Response';
 
@@ -28,10 +27,6 @@ class Trips {
       } = req.body;
       const { currentOfficeData } = req;
       const { destinationData } = req;
-      const duration = datecheck(departureDate, returnDate);
-      if (duration === 'negative value') return serverResponse(res, 400, ...['error', 'message', 'Departure date can not be less than Today\'s date']);
-      if (!duration) return serverResponse(res, 400, ...['error', 'message', 'Departure date can not be above or the same as the return date']);
-
       const tripsData = {
         currentOfficeLocation: Number(currentOfficeLocation),
         tripId: uuidv4(),
