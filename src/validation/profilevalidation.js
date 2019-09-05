@@ -62,7 +62,7 @@ const profileValidation = [
     .optional()
     .exists({ checkFalsy: true })
     .withMessage(`role ${userProfileErrors.undefinedRole}`)
-    .matches(/^(develop|qa|maintenance)$/)
+    .matches(/^(developer|qa|maintenance)$/)
     .withMessage(`role ${userProfileErrors.invalidRole}`),
   check('department')
     .optional()
