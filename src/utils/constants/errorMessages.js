@@ -19,4 +19,10 @@ export const signupVerifyErrors = {
   notFound: 'No pending verification found'
 };
 
+export const authorizationErrors = {
+  undefinedToken:
+           'Please make sure your request has an authorization header',
+  invalidToken: 'Authorization Denied.'
+};
+
 export default signupErrors;
