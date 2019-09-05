@@ -7,6 +7,6 @@ import Verify from '../../middlewares/verification';
 const profileRoute = Router();
 
 profileRoute.get('/', Authentication.authenticate, ProfileController.getProfile);
-profileRoute.put('/', Authentication.authenticate, Verify.verification, profileValidation, ProfileController.updateProfile);
+profileRoute.put('/', profileValidation, Authentication.authenticate, Verify.verification, ProfileController.updateProfile);
 
 export default profileRoute;
