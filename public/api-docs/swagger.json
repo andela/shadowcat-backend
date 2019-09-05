@@ -17,7 +17,6 @@
   },
   "host": "shadowcat-backend-staging.herokuapp.com",
   "basePath": "/api/v1",
-<<<<<<< HEAD
   "schemes": [
     "https"
   ],
@@ -27,11 +26,6 @@
   "produces": [
     "application/json"
   ],
-=======
-  "schemes": ["https"],
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
->>>>>>> 97ed2094fcb6ace09b0ef1c8f8ba7682818f30fd
   "tags": [
     {
       "name": "Users",
@@ -42,28 +36,19 @@
     "/users/forgot_password": {
       "x-swagger-router-controller": "UserController",
       "post": {
-<<<<<<< HEAD
         "tags": [
           "Users"
         ],
-=======
-        "tags": ["Users"],
->>>>>>> 97ed2094fcb6ace09b0ef1c8f8ba7682818f30fd
         "operationId": "ResetPasswordPost",
         "description": "Send a user and email with the reset link",
         "summary": "shadowcat-backend-staging.herokuapp.com/api/v1/users/forgot_password",
         "deprecated": false,
-<<<<<<< HEAD
         "produces": [
           "application/json"
         ],
         "consumes": [
           "application/x-www-form-urlencoded"
         ],
-=======
-        "produces": ["application/json"],
-        "consumes": ["application/x-www-form-urlencoded"],
->>>>>>> 97ed2094fcb6ace09b0ef1c8f8ba7682818f30fd
         "parameters": [
           {
             "name": "Content-Type",
@@ -113,7 +98,6 @@
       "patch": {
         "description": "User can reset password as long as token is valid",
         "summary": "shadowcat-backend-staging.herokuapp.com/api/v1/users/forgot_password/:token",
-<<<<<<< HEAD
         "tags": [
           "Users"
         ],
@@ -125,13 +109,6 @@
         "consumes": [
           "application/x-www-form-urlencoded"
         ],
-=======
-        "tags": ["Users"],
-        "operationId": "ResetPasswordPatch",
-        "deprecated": false,
-        "produces": ["application/json"],
-        "consumes": ["application/x-www-form-urlencoded"],
->>>>>>> 97ed2094fcb6ace09b0ef1c8f8ba7682818f30fd
         "parameters": [
           {
             "name": "Content-Type",
@@ -186,28 +163,19 @@
     "/auth/signup": {
       "x-swagger-router-controller": "AuthController",
       "post": {
-<<<<<<< HEAD
         "tags": [
           "Auth"
         ],
-=======
-        "tags": ["Auth"],
->>>>>>> 97ed2094fcb6ace09b0ef1c8f8ba7682818f30fd
         "operationId": "UserSignup",
         "description": "Users can create an account",
         "summary": "User sign up",
         "deprecated": false,
-<<<<<<< HEAD
         "produces": [
           "application/json"
         ],
         "consumes": [
           "application/x-www-form-urlencoded"
         ],
-=======
-        "produces": ["application/json"],
-        "consumes": ["application/x-www-form-urlencoded"],
->>>>>>> 97ed2094fcb6ace09b0ef1c8f8ba7682818f30fd
         "parameters": [
           {
             "name": "firstname",
@@ -276,28 +244,19 @@
     "/auth/verify/{token}": {
       "x-swagger-router-controller": "AuthController",
       "put": {
-<<<<<<< HEAD
         "tags": [
           "Auth"
         ],
-=======
-        "tags": ["Auth"],
->>>>>>> 97ed2094fcb6ace09b0ef1c8f8ba7682818f30fd
         "operationId": "UserEmailVerify",
         "description": "Users can verify their account through email verification",
         "summary": "User email verify",
         "deprecated": false,
-<<<<<<< HEAD
         "produces": [
           "application/json"
         ],
         "consumes": [
           "application/x-www-form-urlencoded"
         ],
-=======
-        "produces": ["application/json"],
-        "consumes": ["application/x-www-form-urlencoded"],
->>>>>>> 97ed2094fcb6ace09b0ef1c8f8ba7682818f30fd
         "parameters": [
           {
             "name": "token",
@@ -322,8 +281,6 @@
           }
         }
       }
-<<<<<<< HEAD
-=======
     },
     "/trips/request": {
       "x-swagger-router-controller": "TripsController",
@@ -419,7 +376,6 @@
           }
         }
       }
->>>>>>> 97ed2094fcb6ace09b0ef1c8f8ba7682818f30fd
     }
   },
   "definitions": {
@@ -485,13 +441,9 @@
       }
     },
     "ErrorResponse": {
-<<<<<<< HEAD
       "required": [
         "status"
       ],
-=======
-      "required": ["status"],
->>>>>>> 97ed2094fcb6ace09b0ef1c8f8ba7682818f30fd
       "properties": {
         "status": {
           "type": "string"
@@ -515,8 +467,4 @@
       }
     }
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 97ed2094fcb6ace09b0ef1c8f8ba7682818f30fd
