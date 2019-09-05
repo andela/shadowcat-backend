@@ -89,8 +89,6 @@ export default (sequelize, DataTypes) => {
     },
     {}
   );
-  Users.associate = () => {
-    // associations can be defined here
-  };
+  Users.associate = (models) => Users.hasMany(models.Requests, { foreignKey: 'userId', onUpdate: 'CASCADE', onDelete: 'SET NULL' });
   return Users;
 };
