@@ -14,9 +14,9 @@ const { Requests } = models;
  */
 export const userRequestHistory = async (req, res) => {
   const { id } = req;
-  let requests;
+
   try {
-    requests = await Requests.findAll({
+    const requests = await Requests.findAll({
       where: { userId: id }
     });
     const data = [];

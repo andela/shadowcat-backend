@@ -9,7 +9,7 @@ import morgan from 'morgan';
 import methodOverride from 'method-override';
 import dotenv from 'dotenv';
 import passport from 'passport';
-import swaggerDocument from '../public/api-docs/swagger.json';
+import swaggerDocument from '../public/api-docs/openapi.json';
 import './models/user';
 import apiRoutes from './routes';
 

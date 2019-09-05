@@ -1,0 +1,648 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "BAREFOOT NOMAD",
+    "description": "Making company travel and accommodation easy and convenient",
+    "contact": {
+      "email": "barefootnomadmail@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "description": "production server(uses live data)",
+      "url": "https://shadowcat-backend-staging.herokuapp.com/api/v1"
+    },
+    {
+      "description": "localhost server",
+      "url": "http://localhost:3000/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "api route for all users"
+    }
+  ],
+  "paths": {
+    "/users/forgot_password": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "shadowcat-backend-staging.herokuapp.com/api/v1/users/forgot_password",
+        "description": "Send a user and email with the reset link",
+        "operationId": "ResetPasswordPost",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": ""
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendEmailResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The email is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "x-swagger-router-controller": "UserController"
+    },
+    "/users/forgot_password/:token": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "shadowcat-backend-staging.herokuapp.com/api/v1/users/forgot_password/:token",
+        "description": "User can reset password as long as token is valid",
+        "operationId": "ResetPasswordPatch",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "required": [
+                  "confirmPassword",
+                  "newPassword"
+                ],
+                "properties": {
+                  "newPassword": {
+                    "type": "string",
+                    "description": ""
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "description": ""
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendEmailResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized Access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "x-swagger-router-controller": "UserController"
+    },
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User sign up",
+        "description": "Users can create an account",
+        "operationId": "UserSignup",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "required": [
+                  "email",
+                  "firstname",
+                  "lastname",
+                  "password",
+                  "phone"
+                ],
+                "properties": {
+                  "firstname": {
+                    "type": "string",
+                    "description": "User first name"
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "description": "User last name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User email"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "User phone number"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "User password"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicting Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "x-swagger-router-controller": "AuthController"
+    },
+    "/auth/verify/{token}": {
+      "put": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User email verify",
+        "description": "Users can verify their account through email verification",
+        "operationId": "UserEmailVerify",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "description": "Validation token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpVerificationResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "x-swagger-router-controller": "AuthController"
+    },
+    "/trips/request": {
+      "get": {
+        "tags": [
+          "Trips"
+        ],
+        "summary": "User travel request history",
+        "description": "Users can get a history of their travel requests",
+        "operationId": "UserGetRequests",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTravelRequestsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-swagger-router-controller": "UserController"
+      },
+      "post": {
+        "tags": [
+          "Trips"
+        ],
+        "summary": "Posts a trip request",
+        "description": "An endpoint for booking a multi-city trip request",
+        "operationId": "Trips2Post",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "required": [
+                  "Destination 1",
+                  "Destination 2",
+                  "currentOfficeLocation",
+                  "departureDate",
+                  "reason",
+                  "returnDate",
+                  "tripType"
+                ],
+                "properties": {
+                  "departureDate": {
+                    "type": "string",
+                    "description": "Date Format is YYYY-MM-DD",
+                    "default": "2019-10-01T00:00:00.000Z"
+                  },
+                  "returnDate": {
+                    "type": "string",
+                    "description": "Date Format is YYYY-MM-DD",
+                    "default": "2019-10-30T00:00:00.000Z"
+                  },
+                  "currentOfficeLocation": {
+                    "type": "string",
+                    "description": "",
+                    "default": "Lagos Office"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "description": "",
+                    "default": "Official"
+                  },
+                  "tripType": {
+                    "type": "string",
+                    "description": "This field must be Multi-city for this type of request",
+                    "default": "Multi-city"
+                  },
+                  "Destination 1": {
+                    "type": "string",
+                    "description": "",
+                    "default": "Abuja Office"
+                  },
+                  "Destination 2": {
+                    "type": "string",
+                    "description": "",
+                    "default": "Lagos Office 2"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "x-swagger-router-controller": "TripsController"
+    }
+  },
+  "components": {
+    "schemas": {
+      "SendEmailResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "SignUpResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "createdAt": {
+                "type": "integer"
+              },
+              "firstname": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "active": {
+                "type": "boolean"
+              },
+              "userId": {
+                "type": "number"
+              },
+              "email": {
+                "type": "string"
+              },
+              "lastname": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "SignUpVerificationResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "data": {
+            "type": "string"
+          }
+        }
+      },
+      "SignUpErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "error": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "GetTravelRequestsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "tripId": {
+                  "type": "string"
+                },
+                "tripType": {
+                  "type": "string"
+                },
+                "origin": {
+                  "type": "object",
+                  "properties": {
+                    "locationId": {
+                      "type": "integer"
+                    },
+                    "locationName": {
+                      "type": "string"
+                    },
+                    "locationAddress": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "destinations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "locationId": {
+                        "type": "integer"
+                      },
+                      "locationName": {
+                        "type": "string"
+                      },
+                      "locationAddress": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "departureDate": {
+                  "type": "string"
+                },
+                "returnDate": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "requestStatus": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

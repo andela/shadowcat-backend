@@ -5,6 +5,12 @@ const { serverResponse } = response;
 
 const { Locations } = models;
 
+/**
+ * Returns the id, name and address of a location
+ * @param { array } destination - Arary of the destination IDs
+ * @param { object } res - The response object
+ * @returns { object } object containing id, name and address of a location
+ */
 const getDetailedLocation = async (destination, res) => {
   try {
     const location = await Locations.findOne({
@@ -20,7 +26,6 @@ const getDetailedLocation = async (destination, res) => {
 
     return returnDestination;
   } catch (err) {
-    console.log(err);
     return serverResponse(
       res,
       500,
