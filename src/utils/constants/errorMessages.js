@@ -33,7 +33,7 @@ export const userProfileErrors = {
   undefinedGender: 'Gender is required',
   invalidGender: 'Gender should be either male or female',
   undefinedBirthday: 'Birthday is required',
-  invalidBirthday: 'Birthday should be a date format mm-dd-yyyy',
+  invalidBirthday: 'Birthday should be a date format dd-mm-yyyy',
   undefinedPreferredLanguage: 'Preferred Language is required',
   invalidPreferredLanguage: 'Preferred Language should be a set of alphabets with no spaces',
   undefinedCurrency: 'Currency is required',
