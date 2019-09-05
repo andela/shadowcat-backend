@@ -19,6 +19,7 @@ export const signupVerifyErrors = {
   notFound: 'No pending verification found'
 };
 
+<<<<<<< HEAD
 export const userProfileErrors = {
   undefinedFirstName: 'Firstname is required',
   invalidFirstName: 'Firstname should be a set of alphabets with no spaces',
@@ -48,4 +49,6 @@ export const userProfileErrors = {
   invalidLineManager: 'Line manager should be an integer',
 };
 
+=======
+>>>>>>> staging
 export default signupErrors;

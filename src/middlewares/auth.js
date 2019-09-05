@@ -16,8 +16,8 @@ class Authentication {
    *
    * @returns {Object} Object
    */
-  static authenticate(req, res, next) {
-    const payload = Authentication.consumeToken(req);
+  static async authenticate(req, res, next) {
+    const payload = await Authentication.consumeToken(req);
     if (payload.status && payload.status !== 200) {
       return response.sendError(res, payload.status, payload.message);
     }
@@ -91,7 +91,7 @@ class Authentication {
    * @param {object} payload
    * @returns {Object} Object
    */
-  static consumeToken(req) {
+  static async consumeToken(req) {
     const result = {};
     if (!req.headers.authorization) {
       result.status = 401;
@@ -105,7 +105,7 @@ class Authentication {
       result.message = 'Invalid token type. Must be type Bearer';
       return result;
     }
-    const payload = Authentication.bearer(token);
+    const payload = await Authentication.bearer(token);
     if (!payload) {
       result.status = 401;
       result.message = 'Authorization Denied.';

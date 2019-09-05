@@ -5,6 +5,7 @@
  */
 const pullErrors = (errors) => {
   const combinedErrors = {};
+<<<<<<< HEAD
   const firstName = [];
   const lastName = [];
   const email = [];
@@ -18,6 +19,13 @@ const pullErrors = (errors) => {
   const role = [];
   const department = [];
   const lineManager = [];
+=======
+  const firstname = [];
+  const lastname = [];
+  const email = [];
+  const phone = [];
+  const password = [];
+>>>>>>> staging
   errors.forEach((error) => {
     const { msg } = error;
     const msgArray = msg.split(' ');
@@ -26,10 +34,17 @@ const pullErrors = (errors) => {
     const extractedError = msgArray.join(' ');
     switch (msgType) {
       case 'firstname':
+<<<<<<< HEAD
         firstName.push(extractedError);
         break;
       case 'lastname':
         lastName.push(extractedError);
+=======
+        firstname.push(extractedError);
+        break;
+      case 'lastname':
+        lastname.push(extractedError);
+>>>>>>> staging
         break;
       case 'email':
         email.push(extractedError);
@@ -40,6 +55,7 @@ const pullErrors = (errors) => {
       case 'password':
         password.push(extractedError);
         break;
+<<<<<<< HEAD
       case 'gender':
         gender.push(extractedError);
         break;
@@ -72,6 +88,16 @@ const pullErrors = (errors) => {
   }
   if (lastName.length > 0) {
     combinedErrors.lastname = lastName;
+=======
+      default:
+    }
+  });
+  if (firstname.length > 0) {
+    combinedErrors.firstname = firstname;
+  }
+  if (lastname.length > 0) {
+    combinedErrors.lastname = lastname;
+>>>>>>> staging
   }
   if (email.length > 0) {
     combinedErrors.email = email;
@@ -82,6 +108,7 @@ const pullErrors = (errors) => {
   if (password.length > 0) {
     combinedErrors.password = password;
   }
+<<<<<<< HEAD
   if (gender.length > 0) {
     combinedErrors.gender = gender;
   }
@@ -106,6 +133,8 @@ const pullErrors = (errors) => {
   if (lineManager.length > 0) {
     combinedErrors.lineManager = lineManager;
   }
+=======
+>>>>>>> staging
   return combinedErrors;
 };
 
