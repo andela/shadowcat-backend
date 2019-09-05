@@ -34,7 +34,7 @@ class UserController {
           } = user;
           const token = await Auth.signJwt({
             id: userId,
-            isAdmin,
+            isAdmin
           });
           const data = {
             token,
