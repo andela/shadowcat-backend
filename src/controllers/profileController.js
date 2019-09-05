@@ -32,7 +32,26 @@ class ProfileController {
       return response.sendSuccess(
         res,
         200,
-        user,
+        {
+          id: user.id,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          userId: user.userId,
+          email: user.email,
+          gmail: user.gmail,
+          facebook: user.facebook,
+          phone: user.phone,
+          active: user.active,
+          isAdmin: user.isAdmin,
+          gender: user.gender,
+          birthday: user.birthday,
+          preferredlanguage: user.preferredlanguage,
+          currency: user.currency,
+          residentialaddress: user.residentialaddress,
+          role: user.role,
+          department: user.department,
+          linemanager: user.linemanager
+        },
         'success',
       );
     } catch (error) {
@@ -86,7 +105,26 @@ class ProfileController {
         return response.sendSuccess(
           res,
           200,
-          updatedDetails,
+          {
+            id: updatedDetails.id,
+            firstname: updatedDetails.firstname,
+            lastname: updatedDetails.lastname,
+            userId: updatedDetails.userId,
+            email: updatedDetails.email,
+            gmail: updatedDetails.gmail,
+            phone: updatedDetails.phone,
+            facebook: updatedDetails.facebook,
+            active: updatedDetails.active,
+            isAdmin: updatedDetails.isAdmin,
+            gender: updatedDetails.gender,
+            birthday: updatedDetails.birthday,
+            preferredlanguage: updatedDetails.preferredlanguage,
+            currency: updatedDetails.currency,
+            residentialaddress: updatedDetails.residentialaddress,
+            role: updatedDetails.role,
+            department: updatedDetails.department,
+            linemanager: updatedDetails.linemanager
+          },
           'profile sucessfully updated',
         );
       }
