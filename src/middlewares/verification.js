@@ -29,7 +29,7 @@ class Verify {
           return response.sendError(
             res,
             404,
-            'line manager does not exit',
+            'Line manager does not exist',
           );
         }
       }

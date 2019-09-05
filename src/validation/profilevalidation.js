@@ -32,7 +32,7 @@ const profileValidation = [
     .exists({ checkFalsy: true })
     .withMessage(`gender ${userProfileErrors.undefinedGender}`)
     .matches(/^(male|female)$/)
-    .withMessage(`role ${userProfileErrors.invalidGender}`),
+    .withMessage(`gender ${userProfileErrors.invalidGender}`),
   check('birthday')
     .optional()
     .exists({ checkFalsy: true })
