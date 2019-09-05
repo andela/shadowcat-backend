@@ -48,6 +48,22 @@ class response {
       error: responseError,
     };
   }
+
+  /**
+   *
+ * @static
+ * @param {object} responseObj
+ * @param {number} statusValue
+ * @param {Array} [values]
+ * @returns {object} Returns a response object
+ * @memberof response
+ */
+  static serverResponse(responseObj, statusValue, ...[statusResult, dataKey, dataValue]) {
+    return responseObj.status(statusValue).json({
+      status: statusResult,
+      [dataKey]: dataValue
+    });
+  }
 }
 
 export default response;
