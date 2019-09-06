@@ -21,8 +21,36 @@ export const signupVerifyErrors = {
 
 export const authorizationErrors = {
   undefinedToken:
-           'Please make sure your request has an authorization header',
+    'Please make sure your request has an authorization header',
   invalidToken: 'Authorization Denied.'
+};
+export const userProfileErrors = {
+  undefinedFirstName: 'Firstname is required',
+  invalidFirstName: 'Firstname should be a set of alphabets with no spaces',
+  undefinedLastName: 'Lastname is required',
+  invalidLastName: 'Lastname should be a set of alphabets with no spaces',
+  undefinedEmail: 'Email is required',
+  undefinedPassword: 'Password is required',
+  invalidPassword: 'Password cannot be less than 8 characters',
+  invalidEmail: 'Enter a valid email address',
+  nonAndelanEmail: 'Email should be an andela email',
+  alphaNumericPassword: 'Password should be alphanumeric',
+  undefinedGender: 'Gender is required',
+  invalidGender: 'Gender should be either male or female',
+  undefinedBirthday: 'Birthday is required',
+  invalidBirthday: 'Birthday should be a date format mm-dd-yyyy',
+  undefinedPreferredLanguage: 'Preferred Language is required',
+  invalidPreferredLanguage: 'Preferred Language should be a set of alphabets with no spaces',
+  undefinedCurrency: 'Currency is required',
+  invalidCurrency: 'Currency should be a set of alphabets with no spaces',
+  undefinedResidentialAddress: 'Residential address is required',
+  invalidResidentialAddress: 'Residential address should be an address',
+  undefinedRole: 'role is required',
+  invalidRole: 'role can be developer,qa or maintenance',
+  undefinedDepartment: 'Department is required',
+  invalidDepartment: 'Department should be a set of alphabets with no spaces',
+  undefinedLineManager: 'Line manager is required',
+  invalidLineManager: 'Line manager should be an integer',
 };
 
 export default signupErrors;
