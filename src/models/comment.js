@@ -14,19 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {});
 
-    Comment.associate = (models) => {
-        const { Requests, Users, } = models;
-
-        Comment.belongsTo(Requests, {
-            foreignKey: 'tripId',
-            onDelete: 'CASCADE',
-        });
-
-        Comment.belongsTo(Users, {
-            foreignKey: 'userId',
-            onDelete: 'CASCADE',
-            as: 'author'
-        });
+    Comment.associate = () => {
+        
+      
     };
 
     return Comment;

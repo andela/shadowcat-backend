@@ -8,10 +8,7 @@ module.exports = {
     },
     userId: {
       type: Sequelize.STRING,
-      references: {
-        model: 'Users',
-        key: 'userId'
-      }
+      
     },
     tripId: {
       type: Sequelize.STRING,
