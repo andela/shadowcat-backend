@@ -34,7 +34,7 @@ class Authentication {
    *
    * @returns {Object} Object
    */
-  static isAdmin(req, res, next) {
+  static async isAdmin(req, res, next) {
     if (req.isAdmin !== true) {
       return response.sendError(res, 401, 'Authorized for only admins');
     }

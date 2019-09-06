@@ -5,11 +5,19 @@
  */
 const pullErrors = (errors) => {
   const combinedErrors = {};
-  const firstname = [];
-  const lastname = [];
+  const firstName = [];
+  const lastName = [];
   const email = [];
   const phone = [];
   const password = [];
+  const gender = [];
+  const birthday = [];
+  const preferredLanguage = [];
+  const currency = [];
+  const residentialAddress = [];
+  const role = [];
+  const department = [];
+  const lineManager = [];
   errors.forEach((error) => {
     const { msg } = error;
     const msgArray = msg.split(' ');
@@ -18,10 +26,10 @@ const pullErrors = (errors) => {
     const extractedError = msgArray.join(' ');
     switch (msgType) {
       case 'firstname':
-        firstname.push(extractedError);
+        firstName.push(extractedError);
         break;
       case 'lastname':
-        lastname.push(extractedError);
+        lastName.push(extractedError);
         break;
       case 'email':
         email.push(extractedError);
@@ -32,14 +40,38 @@ const pullErrors = (errors) => {
       case 'password':
         password.push(extractedError);
         break;
+      case 'gender':
+        gender.push(extractedError);
+        break;
+      case 'birthday':
+        birthday.push(extractedError);
+        break;
+      case 'preferredlanguage':
+        preferredLanguage.push(extractedError);
+        break;
+      case 'currency':
+        currency.push(extractedError);
+        break;
+      case 'residentialaddress':
+        residentialAddress.push(extractedError);
+        break;
+      case 'role':
+        role.push(extractedError);
+        break;
+      case 'department':
+        department.push(extractedError);
+        break;
+      case 'linemanager':
+        lineManager.push(extractedError);
+        break;
       default:
     }
   });
-  if (firstname.length > 0) {
-    combinedErrors.firstname = firstname;
+  if (firstName.length > 0) {
+    combinedErrors.firstname = firstName;
   }
-  if (lastname.length > 0) {
-    combinedErrors.lastname = lastname;
+  if (lastName.length > 0) {
+    combinedErrors.lastname = lastName;
   }
   if (email.length > 0) {
     combinedErrors.email = email;
@@ -49,6 +81,30 @@ const pullErrors = (errors) => {
   }
   if (password.length > 0) {
     combinedErrors.password = password;
+  }
+  if (gender.length > 0) {
+    combinedErrors.gender = gender;
+  }
+  if (birthday.length > 0) {
+    combinedErrors.birthday = birthday;
+  }
+  if (preferredLanguage.length > 0) {
+    combinedErrors.preferredLanguage = preferredLanguage;
+  }
+  if (currency.length > 0) {
+    combinedErrors.currency = currency;
+  }
+  if (residentialAddress.length > 0) {
+    combinedErrors.residentialaddress = residentialAddress;
+  }
+  if (role.length > 0) {
+    combinedErrors.role = role;
+  }
+  if (department.length > 0) {
+    combinedErrors.department = department;
+  }
+  if (lineManager.length > 0) {
+    combinedErrors.lineManager = lineManager;
   }
   return combinedErrors;
 };

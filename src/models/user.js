@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Users = sequelize.define(
     'Users',
     {
@@ -42,7 +42,50 @@ module.exports = (sequelize, DataTypes) => {
       facebook: {
         type: DataTypes.STRING,
         required: false
-      }
+      },
+      gender: {
+        type: DataTypes.STRING,
+        required: false
+      },
+      birthday: {
+        type: DataTypes.DATE,
+        required: false
+      },
+      preferredlanguage: {
+        type: DataTypes.STRING,
+        required: false
+      },
+      currency: {
+        type: DataTypes.STRING,
+        required: false
+      },
+      residentialaddress: {
+        type: DataTypes.STRING,
+        required: false
+      },
+      role: {
+        type: DataTypes.ENUM,
+        values: [
+          'Developer',
+          'QA',
+          'Maintenance',
+        ],
+        required: false
+      },
+      department: {
+        type: DataTypes.STRING,
+        required: false
+      },
+      linemanager: {
+        type: DataTypes.INTEGER,
+        required: false,
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
+      },
     },
     {}
   );
