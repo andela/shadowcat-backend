@@ -22,7 +22,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 // Create global app object
 const app = express();
 const server = http.Server(app);
-const io = SocketIO(server);
+export const io = SocketIO(server);
 
 app.use(cors());
 

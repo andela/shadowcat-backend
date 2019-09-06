@@ -143,7 +143,7 @@ class Trips {
     const { id } = req.params;
     try {
       this.io.on(`${id}`, (data) => data);
-      return res.send(htmlTemplate(id));
+      return res.status(200).send(htmlTemplate(id));
     } catch (error) {
       return res.status(500).json(errorResponse('Internal Server Error'));
     }
