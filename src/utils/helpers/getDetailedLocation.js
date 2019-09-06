@@ -1,7 +1,4 @@
 import models from '../../models';
-import response from '../Response';
-
-const { serverResponse } = response;
 
 const { Locations } = models;
 
@@ -11,7 +8,7 @@ const { Locations } = models;
  * @param { object } res - The response object
  * @returns { object } object containing id, name and address of a location
  */
-const getDetailedLocation = async (destination, res) => {
+const getDetailedLocation = async (destination) => {
   try {
     const location = await Locations.findOne({
       where: { id: destination }
@@ -26,11 +23,7 @@ const getDetailedLocation = async (destination, res) => {
 
     return returnDestination;
   } catch (err) {
-    return serverResponse(
-      res,
-      500,
-      ...['error', 'error', 'a location does not exist']
-    );
+    return {};
   }
 };
 

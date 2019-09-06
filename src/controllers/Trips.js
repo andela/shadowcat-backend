@@ -95,11 +95,11 @@ class Trips {
         } = request;
         const destinationList = [];
 
-        const origin = await getDetailedLocation(currentOfficeLocation, res);
+        const origin = await getDetailedLocation(currentOfficeLocation);
 
         for (let j = 0; j < destination.length; j += 1) {
           const dest = destination[j];
-          const detailedLocation = await getDetailedLocation(dest, res);
+          const detailedLocation = await getDetailedLocation(dest);
           destinationList.push(detailedLocation);
         }
 
