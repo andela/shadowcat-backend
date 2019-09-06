@@ -1,4 +1,3 @@
-
 export default {
   up: (queryInterface, Sequelize) => Promise.all([
     queryInterface.addColumn('Users', 'userId', {
