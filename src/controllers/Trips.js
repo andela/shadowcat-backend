@@ -4,6 +4,8 @@ import models from '../models';
 import response from '../utils/Response';
 import { getDetailedLocation } from '../utils/helpers';
 
+import constants from '../utils/constants/constants';
+
 const { serverResponse } = response;
 
 const { Requests } = models;
@@ -116,7 +118,17 @@ class Trips {
         data.push(subData);
       }
 
-      return serverResponse(res, 200, ...[200, 'data', data]);
+      return data.length > 0
+        ? res.status(200).json({
+          status: 200,
+          message: constants.requestHistory,
+          data
+        })
+        : res.status(200).json({
+          status: 200,
+          message: constants.zeroRequestHistory,
+          data
+        });
     } catch (err) {
       return serverResponse(
         res,

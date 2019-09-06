@@ -4,6 +4,7 @@ import user from './__MOCK__/user';
 import multiTrip from './__MOCK__/multiTrip';
 import server from '../index';
 import { authorizationErrors } from '../utils/constants/errorMessages';
+import constants from '../utils/constants/constants';
 import models from '../models';
 
 chai.use(chaiHttp);
@@ -119,8 +120,11 @@ describe('GET request route', () => {
 
           expect(body).to.have.property('status');
           expect(body).to.have.property('data');
+          expect(body).to.have.property('message');
 
-          const { status, data } = body;
+          const { status, message, data } = body;
+
+          expect(message).to.equal(constants.requestHistory);
           expect(status).to.deep.equal(200);
           expect(data).to.be.an('array');
           expect(data.length).to.deep.equal(1);
