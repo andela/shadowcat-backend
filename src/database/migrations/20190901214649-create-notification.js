@@ -9,22 +9,29 @@ export default {
     tripId: {
       type: Sequelize.STRING,
       references: {
-        model: 'Trips',
+        model: 'Requests',
         key: 'tripId'
       }
     },
-    managerId: {
-      type: Sequelize.STRING,
+    lineManager: {
+      type: Sequelize.INTEGER,
+      allowNull: false
     },
     userId: {
       type: Sequelize.STRING,
+      allowNull: false
     },
     content: {
       type: Sequelize.STRING,
+      allowNull: false
     },
     isViewed: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
+      allowNull: false
+    },
+    type: {
+      type: Sequelize.STRING,
       allowNull: false
     },
     createdAt: {

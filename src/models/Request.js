@@ -1,5 +1,6 @@
+
 export default (sequelize, DataTypes) => {
-  const Trips = sequelize.define('Trips', {
+  const Requests = sequelize.define('Requests', {
     tripId: {
       type: DataTypes.STRING,
       required: true
@@ -8,19 +9,15 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       required: true
     },
-    managerId: {
-      type: DataTypes.STRING,
-      required: true
-    },
     departureDate: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
       required: true
     },
     returnDate: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
       required: true
     },
-    type: {
+    tripType: {
       type: DataTypes.STRING,
       required: true
     },
@@ -29,20 +26,24 @@ export default (sequelize, DataTypes) => {
       required: true
     },
     currentOfficeLocation: {
+      type: DataTypes.INTEGER,
+      required: true
+    },
+    requestStatus: {
       type: DataTypes.STRING,
       required: true
     },
-    destinations: DataTypes.ARRAY(DataTypes.INTEGER)
+    destination: DataTypes.ARRAY(DataTypes.INTEGER)
   }, {});
-  Trips.associate = (models) => {
+  Requests.associate = (models) => {
     // associations can be defined here
-    Trips.belongsTo(models.Users, {
+    Requests.belongsTo(models.Users, {
       foreignKey: 'userId'
     });
-    Trips.hasMany(models.Notifications, {
-      as: 'notifydetails', foreignKey: 'tripId', onUpdate: 'CASCADE', onDelete: 'CASCADE'
+    Requests.hasMany(models.Notifications, {
+      foreignKey: 'tripId', onUpdate: 'CASCADE', onDelete: 'CASCADE'
     });
   };
 
-  return Trips;
+  return Requests;
 };

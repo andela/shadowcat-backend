@@ -1,6 +1,6 @@
 import Model from '../models';
 
-const { Trips, Notifications } = Model;
+const { Requests, Notifications } = Model;
 /**
  *
  *
@@ -35,7 +35,7 @@ class notifyUserService {
  */
   static async getSpecificTrips(id) {
     try {
-      const theTrips = await Trips.findOne({
+      const theTrips = await Requests.findOne({
         where: { managerId: id }
       });
       return theTrips;

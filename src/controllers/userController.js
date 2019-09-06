@@ -1,8 +1,10 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import ResponseGenerator from '../utils/response.util';
 import models from '../models';
+import GeneralUtils from '../utils/index';
+import Auth from '../middlewares/auth';
 
 const { Users } = models;
+const response = new ResponseGenerator();
 /**
  * @description Handles Users
  * @class UserController
@@ -24,37 +26,36 @@ class UserController {
           email
         }
       });
-      if (!user) {
-        return res.status(400).json({
-          success: false,
-          message: 'Invalid email or password',
-        });
-      }
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) {
-        return res.status(400).json({
-          success: false,
-          message: 'Invalid email or password',
-        });
-      }
-      const payload = {
-        id: user.id,
-        email: user.email
-      };
-      jwt.sign(
-        { id: user.id, email: user.email },
-        process.env.JWTSECRET, (err, token) => {
-          if (err) {
-            throw new Error('something is wrong');
-          } else {
-            res.status(200).json({
-              status: 'success', message: 'User successfully logged in', payload, token
-            });
-          }
+      if (user) {
+        const bycrptResponse = GeneralUtils.validate(password, user.password);
+        if (bycrptResponse) {
+          const {
+            id, userId, isAdmin, firstname, lastname
+          } = user;
+          const token = await Auth.signJwt({
+            id: userId,
+            isAdmin,
+            email
+          });
+          const data = {
+            token,
+            id,
+            isAdmin,
+            firstname,
+            lastname,
+            email
+          };
+          return response.sendSuccess(
+            res,
+            200,
+            data,
+            'User successfully logged in'
+          );
         }
-      );
-    } catch (error) {
-      next(error);
+      }
+      return response.sendError(res, 400, 'Invalid email or password');
+    } catch (err) {
+      next(err);
     }
   }
 }

@@ -22,8 +22,7 @@
     "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
     "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
     "refreshdb:test": "cross-env NODE_ENV=test npm run refreshdb",
-    "test": "npm run refreshdb:test && cross-env NODE_ENV=test nyc mocha --require @babel/register  src/test/**.test.js --timeout 20000 --exit",
-    "testdev": "cross-env NODE_ENV=test mocha --require @babel/register src/test/**.test.js --timeout 20000 --exit"
+    "test": "npm run refreshdb:test && cross-env NODE_ENV=test nyc --require @babel/register ---reporter=html --reporter=text mocha src/test/**.test.js --timeout 20000 --exit"
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
@@ -44,6 +43,7 @@
     "jsonwebtoken": "^8.3.0",
     "method-override": "^2.3.10",
     "methods": "^1.1.2",
+    "moment": "^2.24.0",
     "mongoose": "^5.2.2",
     "mongoose-unique-validator": "^2.0.1",
     "morgan": "^1.9.1",

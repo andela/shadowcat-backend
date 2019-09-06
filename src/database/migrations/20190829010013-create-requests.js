@@ -1,5 +1,6 @@
+
 export default {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Trips', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Requests', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -14,30 +15,30 @@ export default {
       type: Sequelize.STRING,
       references: {
         model: 'Users',
-        key: 'userId',
+        key: 'userId'
       }
     },
-    managerId: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
     departureDate: {
-      type: Sequelize.STRING,
+      type: Sequelize.DATE,
     },
     returnDate: {
-      type: Sequelize.STRING,
+      type: Sequelize.DATE,
     },
-    type: {
+    tripType: {
       type: Sequelize.STRING,
     },
     reason: {
       type: Sequelize.TEXT,
     },
     currentOfficeLocation: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
     },
-    destinations: {
-      type: Sequelize.ARRAY(Sequelize.STRING),
+    destination: {
+      type: Sequelize.ARRAY(Sequelize.INTEGER)
+    },
+    requestStatus: {
+      type: Sequelize.STRING,
+      required: true
     },
     createdAt: {
       allowNull: false,
@@ -48,5 +49,5 @@ export default {
       type: Sequelize.DATE
     }
   }),
-  down: (queryInterface) => queryInterface.dropTable('Trips')
+  down: (queryInterface) => queryInterface.dropTable('Requests')
 };

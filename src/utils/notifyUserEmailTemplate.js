@@ -5,7 +5,7 @@ const getMailUserBody = (userDetails, tripInfo) => {
   const {
     firstname, lastname
   } = userDetails;
-  const { tripLocation } = tripInfo;
+  const { locations, departureDate, returnDate } = tripInfo;
   const FirstName = capitalize(firstname);
   const LastName = capitalize(lastname);
 
@@ -42,7 +42,7 @@ const getMailUserBody = (userDetails, tripInfo) => {
         <div class='m-3'>
           <h4>Dear ${FirstName} ${LastName}</h4>
           <p>
-            Your Trip to ${tripLocation} was successfully created and it is awaiting Approval.
+            Your Trip to ${locations} scheduled for ${departureDate} till ${returnDate} was successfully created and it is awaiting Approval.
           </p>
           <p>
             Thank you for your patronage

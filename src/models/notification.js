@@ -5,8 +5,8 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       required: true
     },
-    managerId: {
-      type: DataTypes.STRING,
+    lineManager: {
+      type: DataTypes.INTEGER,
       required: true
     },
     userId: {
@@ -20,11 +20,15 @@ export default (sequelize, DataTypes) => {
     content: {
       type: DataTypes.STRING,
       required: true
+    },
+    type: {
+      type: DataTypes.STRING,
+      required: true
     }
   }, {});
   Notifications.associate = (models) => {
     // associations can be defined here
-    Notifications.belongsTo(models.Trips, {
+    Notifications.belongsTo(models.Requests, {
       foreignKey: 'tripId'
     });
   };
