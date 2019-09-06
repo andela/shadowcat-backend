@@ -121,7 +121,6 @@ describe('GET request route', () => {
           expect(body).to.have.property('data');
 
           const { status, data } = body;
-          console.log(data);
           expect(status).to.deep.equal(200);
           expect(data).to.be.an('array');
           expect(data.length).to.deep.equal(1);
