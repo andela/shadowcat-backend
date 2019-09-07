@@ -1,7 +1,8 @@
+import ResponseGenerator from '../utils/response.util';
 import models from '../models';
 
-const { User } = models;
-
+const { Users } = models;
+const response = new ResponseGenerator();
 /**
  * @exports ProfileController
  * @class ProfileController
@@ -17,20 +18,42 @@ class ProfileController {
    */
   static async getProfile(req, res, next) {
     try {
-      const { id } = req.params;
-      const user = await User.findOne({
-        where: { id }
+      const { id } = req;
+      const user = await Users.findOne({
+        where: { userId: id }
       });
       if (!user) {
-        return res.status(404).json({
-          message: 'User does not exist',
-        });
+        return response.sendError(
+          res,
+          404,
+          'user not found'
+        );
       }
-      const profile = await user;
-      return res.status(200).json({
-        status: 'success',
-        profile,
-      });
+      return response.sendSuccess(
+        res,
+        200,
+        {
+          id: user.id,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          userId: user.userId,
+          email: user.email,
+          gmail: user.gmail,
+          facebook: user.facebook,
+          phone: user.phone,
+          active: user.active,
+          isAdmin: user.isAdmin,
+          gender: user.gender,
+          birthday: user.birthday,
+          preferredlanguage: user.preferredlanguage,
+          currency: user.currency,
+          residentialaddress: user.residentialaddress,
+          role: user.role,
+          department: user.department,
+          linemanager: user.linemanager
+        },
+        'success',
+      );
     } catch (error) {
       next(error);
     }
@@ -47,14 +70,21 @@ class ProfileController {
   */
   static async updateProfile(req, res, next) {
     try {
-      const { id } = req.params;
+      if (Object.keys(req.body).length === 0) {
+        response.sendError(
+          res,
+          400,
+          'request body is empty'
+        );
+      }
+      const { id } = req;
       const profileDetails = await (req.body);
       const {
         firstname, lastname, email, gmail, facebook, gender, birthday,
         preferredlanguage, currency, residentialaddress, role, department, linemanager
       } = profileDetails;
-      const user = await User.findOne({
-        where: { id }
+      const user = await Users.findOne({
+        where: { userId: id }
       });
       if (user !== undefined) {
         const updatedDetails = await user.update({
@@ -72,12 +102,37 @@ class ProfileController {
           department,
           linemanager
         });
-        return res.status(200).json({
-          status: 'success',
-          message: 'profile sucessfully updated',
-          updatedDetails,
-        });
+        return response.sendSuccess(
+          res,
+          200,
+          {
+            id: updatedDetails.id,
+            firstname: updatedDetails.firstname,
+            lastname: updatedDetails.lastname,
+            userId: updatedDetails.userId,
+            email: updatedDetails.email,
+            gmail: updatedDetails.gmail,
+            phone: updatedDetails.phone,
+            facebook: updatedDetails.facebook,
+            active: updatedDetails.active,
+            isAdmin: updatedDetails.isAdmin,
+            gender: updatedDetails.gender,
+            birthday: updatedDetails.birthday,
+            preferredlanguage: updatedDetails.preferredlanguage,
+            currency: updatedDetails.currency,
+            residentialaddress: updatedDetails.residentialaddress,
+            role: updatedDetails.role,
+            department: updatedDetails.department,
+            linemanager: updatedDetails.linemanager
+          },
+          'profile sucessfully updated',
+        );
       }
+      return response.sendError(
+        res,
+        404,
+        'user does not exist'
+      );
     } catch (error) {
       next(error);
     }
