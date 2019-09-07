@@ -48,8 +48,6 @@ class response {
       error: responseError,
     };
   }
-<<<<<<< HEAD
-=======
 
   /**
    *
@@ -66,7 +64,6 @@ class response {
       [dataKey]: dataValue
     });
   }
->>>>>>> 97ed2094fcb6ace09b0ef1c8f8ba7682818f30fd
 }
 
 export default response;
