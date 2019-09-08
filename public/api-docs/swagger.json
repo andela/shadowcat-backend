@@ -281,6 +281,101 @@
           }
         }
       }
+    },
+    "/trips/request": {
+      "x-swagger-router-controller": "TripsController",
+      "post": {
+        "description": "An endpoint for booking a multi-city trip request",
+        "tags": ["Trips"],
+        "summary": "Posts a trip request",
+        "operationId": "Trips2Post",
+        "deprecated": false,
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "departureDate",
+            "in": "formData",
+            "required": true,
+            "default": "2019-10-01",
+            "type": "string",
+            "description": "Date Format is YYYY-MM-DD"
+          },
+          {
+            "name": "returnDate",
+            "in": "formData",
+            "required": true,
+            "default": "2019-10-30",
+            "type": "string",
+            "description": "Date Format is YYYY-MM-DD"
+          },
+          {
+            "name": "currentOfficeLocation",
+            "in": "formData",
+            "required": true,
+            "default": "Lagos Office",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "reason",
+            "in": "formData",
+            "required": true,
+            "default": "Official",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "tripType",
+            "in": "formData",
+            "required": true,
+            "default": "Multi-city",
+            "type": "string",
+            "description": "This field must be Multi-city for this type of request"
+          },
+          {
+            "name": "Destination 1",
+            "in": "formData",
+            "required": true,
+            "default": "Abuja Office",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Destination 2",
+            "in": "formData",
+            "required": true,
+            "default": "Lagos Office 2",
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/SignUpErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {

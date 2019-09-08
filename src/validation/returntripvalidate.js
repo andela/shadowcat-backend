@@ -12,11 +12,13 @@ export default {
             .trim()
             .exists()
             .matches(/^\d{4}([-./,:])\d{2}\1\d{2}$/, 'i')
+            .withMessage('The date must follow date format YYYY-MM-DD')
             .custom(value => notEmpty(value, 'departureDate is required')),
         check('returnDate')
             .trim()
             .exists()
             .matches(/^\d{4}([-./,:])\d{2}\1\d{2}$/, 'i')
+            .withMessage('The date must follow date format YYYY-MM-DD')
             .custom(value => notEmpty(value,'returnDate is required')),
         check('destination')
             .trim()
