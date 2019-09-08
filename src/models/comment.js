@@ -17,7 +17,8 @@ export default (sequelize, DataTypes) => {
   Comment.associate = (models) => {
     // associations can be defined here
     Comment.belongsTo(models.Requests, {
-      foreignKey: 'tripId'
+      foreignKey: 'tripId',
+      targetKey: 'tripId'
     });
     Comment.belongsTo(models.Users, {
       foreignKey: 'userId'
