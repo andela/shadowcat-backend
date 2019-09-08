@@ -6,11 +6,11 @@ import { googleCredentials, facebookCredentials } from './socialMediaCredentials
 
 import models from '../models';
 
-const { User } = models;
+const { Users } = models;
 
 passport.serializeUser((user, done) => done(null, user.userId));
 passport.deserializeUser(async (id, done) => {
-  const user = await User.findOne({
+  const user = await Users.findOne({
     where: {
       userId: id
     }
@@ -26,7 +26,7 @@ passport.use(new GoogleStrategy({
   try {
     const { _json: userDetails } = profile;
     const { email } = userDetails;
-    const userData = await User.findOne({
+    const userData = await Users.findOne({
       where: { gmail: email },
       raw: true
     });
@@ -53,7 +53,7 @@ passport.use(new FacebookStrategy(
     try {
       const { _json: userDetails } = profile;
       const { email } = userDetails;
-      const userData = await User.findOne({
+      const userData = await Users.findOne({
         where: { facebook: email },
         raw: true
       });

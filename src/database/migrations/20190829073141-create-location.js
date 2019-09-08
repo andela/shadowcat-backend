@@ -1,4 +1,5 @@
-export default {
+
+module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Locations', {
     id: {
       allowNull: false,

@@ -16,8 +16,8 @@ class Authentication {
    *
    * @returns {Object} Object
    */
-  static async authenticate(req, res, next) {
-    const payload = await Authentication.consumeToken(req);
+  static authenticate(req, res, next) {
+    const payload = Authentication.consumeToken(req);
     if (payload.status && payload.status !== 200) {
       return response.sendError(res, payload.status, payload.message);
     }
@@ -47,7 +47,7 @@ class Authentication {
    *
    * @returns {Object} Object
    */
-  static async signJwt(user) {
+  static signJwt(user) {
     const payload = {
       id: user.id,
       isAdmin: user.isAdmin,
@@ -65,11 +65,23 @@ class Authentication {
    * @param {object} payload
    * @returns {Object} Object
    */
-  static async decodeJwt(token) {
-    const payload = await jwt.verify(token, index.secret, (err, decoded) => {
-      if (err) return null;
+  static decodeJwt(token) {
+    let payload = null;
+    payload = jwt.verify(token, index.secret, (err, decoded) => {
+      if (err) return false;
       return decoded;
     });
+    return payload;
+  }
+
+  /**
+   * @description - Check bearer token
+   * @param {string} token
+   * @param {object} payload
+   * @returns {Object} Object
+   */
+  static bearer(token) {
+    const payload = this.decodeJwt(token);
     return payload;
   }
 
@@ -79,7 +91,7 @@ class Authentication {
    * @param {object} payload
    * @returns {Object} Object
    */
-  static async consumeToken(req) {
+  static consumeToken(req) {
     const result = {};
     if (!req.headers.authorization) {
       result.status = 401;
@@ -88,16 +100,12 @@ class Authentication {
     }
     const token = req.headers.authorization.split(' ')[1];
     const type = req.headers.authorization.split(' ')[0];
-    let payload;
-    switch (type) {
-      case 'Bearer':
-        payload = await Authentication.decodeJwt(token);
-        break;
-      default:
-        result.status = 401;
-        result.message = 'Invalid token type. Must be type Bearer';
-        return result;
+    if (type !== 'Bearer') {
+      result.status = 401;
+      result.message = 'Invalid token type. Must be type Bearer';
+      return result;
     }
+    const payload = Authentication.bearer(token);
     if (!payload) {
       result.status = 401;
       result.message = 'Authorization Denied.';
