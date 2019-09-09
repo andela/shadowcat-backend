@@ -1,5 +1,6 @@
 import express from 'express';
 import authRouter from './auth';
+import profileRoute from './profile';
 import multiCityTripsRouter from './trips.route';
 import passwordRouter from './passwordResetRoute';
 
@@ -12,6 +13,9 @@ const indexRoute = (io = null) => {
   usersRouter.use('/v1/users', passwordRouter);
 
   usersRouter.use('/v1/trips', multiCityTripsRouter(io));
+
+  usersRouter.use('/v1/users/profile', profileRoute);
+
 
   usersRouter.get('/', (req, res) => res.status(200).send('Welcome to  Shadowcat API'));
 
