@@ -25,6 +25,20 @@ describe('Testing User Comment On Travel Request ', () => {
         done();
       });
   });
+  it('should return a 500 if your is not in the request database', (done) => {
+    chai.request(server)
+      .post('/api/v1/trips/request/comment')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        comment: 'will be going to dubia on partner engagement'
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(500);
+        expect((res.body)).to.be.an('object');
+        done();
+      });
+  });
   it('should post new multi city trip request to the database', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')
@@ -114,6 +128,21 @@ describe('Testing User Comment On Travel Request ', () => {
           done();
         });
     });
+    it('should return a 404 for an invalid route', (done) => {
+      chai.request(server)
+        .post('/api/v1/trips/request/comments')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          comment: 'will be going to dubia on partner engagement'
+        })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(404);
+          expect((res.body)).to.be.an('object');
+          expect((res.body)).to.have.all.keys('message');
+          done();
+        });
+    });
   });
   describe('Testing User Update Comment On Travel Request ', () => {
     it('should update the comment on travel request', (done) => {
@@ -169,7 +198,7 @@ describe('Testing User Comment On Travel Request ', () => {
         });
     });
   });
-  describe('Testing User Update Comment On Travel Request ', () => {
+  describe('Testing User Fetch Comment On Travel Request ', () => {
     it('should post a new comment on a trip request', (done) => {
       chai.request(server)
         .get('/api/v1/trips/request/comment')

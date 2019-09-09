@@ -6,11 +6,11 @@ const { Requests, Comments } = models;
 
 /**
  * @description User comment on travel request
- * @class RequestComment
+ * @class Comment
  */
-class RequestComment {
+class Comment {
   /**
-  * create request comment
+  * create a request trip comment
   * @async
   * @param  {object} req - Request object
   * @param {object} res - Response object
@@ -117,4 +117,4 @@ class RequestComment {
     }
   }
 }
-export default RequestComment;
+export default Comment;
