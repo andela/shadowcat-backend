@@ -24,7 +24,6 @@ class Authentication {
     req.id = payload.id;
     req.isAdmin = payload.isAdmin;
     req.email = payload.email;
-    console.log(req.email, 'from middleware');
     return next();
   }
 
