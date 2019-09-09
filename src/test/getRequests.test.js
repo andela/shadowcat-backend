@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import user from './__MOCK__/user';
 import multiTrip from './__MOCK__/multiTrip';
 import server from '../index';
-import { authorizationErrors } from '../utils/constants/errorMessages';
+import { authorizationErrors, userRequestHistoryErrors } from '../utils/constants/errorMessages';
 import constants from '../utils/constants/constants';
 import models from '../models';
 
@@ -97,6 +97,37 @@ describe('GET request route', () => {
           const { status, error } = body;
           expect(status).to.deep.equal(401);
           expect(error).to.equal(authorizationErrors.invalidToken);
+
+          done();
+        });
+    } catch (err) {
+      expect(err).to.have.status(500);
+    }
+  });
+  it('should return 400 with invalid limit query and offset', done => {
+    try {
+      chai
+        .request(server)
+        .get(`${url}?limit=sh1&offset=121asd`)
+        .set('Authorization', `Bearer ${createdUser.token}`)
+        .send()
+        .end((err, res) => {
+          expect(res).to.have.property('status');
+          expect(res).to.have.property('body');
+          expect(res.status).to.deep.equal(400);
+
+          const { body } = res;
+          expect(body).to.have.property('status');
+          expect(body).to.have.property('error');
+
+          const { status, error } = body;
+          expect(status).to.deep.equal(400);
+          expect(error).to.have.property('limit');
+          expect(error).to.have.property('offset');
+
+          const { limit, offset } = error;
+          expect(limit[0]).to.equal(userRequestHistoryErrors.nonNumericLimit);
+          expect(offset[0]).to.equal(userRequestHistoryErrors.nonNumericOffset);
 
           done();
         });
