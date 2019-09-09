@@ -77,14 +77,15 @@ class Trips {
     const { offset = 0, limit = null } = req.query;
 
     try {
-      const requests = await Requests.findAll({
+      const requests = await Requests.findAndCountAll({
         where: { userId: id },
         offset,
         limit
       });
+      const { rows, count } = requests;
       const data = [];
-      for (let i = 0; i < requests.length; i += 1) {
-        const request = requests[i];
+      for (let i = 0; i < rows.length; i += 1) {
+        const request = rows[i];
         const {
           tripId,
           tripType,
@@ -120,10 +121,11 @@ class Trips {
 
         data.push(subData);
       }
+
       const pagination = {
         limit,
         offset,
-        totalCount: data.length,
+        totalCount: count,
       };
 
       return data.length > 0
@@ -140,6 +142,7 @@ class Trips {
           pagination
         });
     } catch (err) {
+      console.log(err);
       return serverResponse(
         res,
         500,
