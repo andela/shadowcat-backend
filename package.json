@@ -14,6 +14,7 @@
     "migration": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
     "reverse": "sequelize db:migrate:undo:all",
+    "reverse:recent": "sequelize db:migrate:undo",
     "refreshdb": "npm run reverse && npm run migration && npm run seed",
     "coveralls-coverage": "coveralls < lcov.info",
     "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",

@@ -2,6 +2,7 @@ import { body, validationResult } from 'express-validator';
 import { Op } from 'sequelize';
 import models from '../models';
 import datecheck from '../utils/dateCheck';
+import errorAssignment from '../utils/errorAssignment';
 
 const { Locations } = models;
 
@@ -34,23 +35,12 @@ class Validation {
  * @memberof Validation
  */
   static validateDate(request) {
-    const errors = {};
+    let errors = {};
     const { departureDate, returnDate } = request.body;
     const duration = datecheck(departureDate, returnDate);
-    if (duration === 'negative value') {
-      if (!errors.departureDate) {
-        errors.departureDate = ['Departure date can not be less than Today\'s date'];
-      } else {
-        errors.departureDate.push('Departure date can not be less than Today\'s date');
-      }
-    }
-    if (!duration) {
-      if (!errors.departureDate) {
-        errors.departureDate = ['Departure date can not be above or the same as the return date'];
-      } else {
-        errors.departureDate.push('Departure date can not be above or the same as the return date');
-      }
-    }
+    if (duration === 'negative value') errors = { ...errorAssignment('Departure date can not be less than Today\'s date', 'departureDate') };
+
+    if (!duration) errors = { ...errorAssignment('Departure date can not be above or the same as the return date', 'departureDate') };
     return errors;
   }
 
@@ -62,15 +52,12 @@ class Validation {
  * @memberof Validation
  */
   static async validateOrigin(request) {
-    const errors = {};
+    let errors = {};
     const { currentOfficeLocation } = request.body;
-    if (!currentOfficeLocation) {
-      if (!errors.currentOfficeLocation) errors.currentOfficeLocation = ['currentOfficeLocation is required'];
-      else errors.currentOfficeLocation.push('currentOfficeLocation is required');
-    }
+    if (!currentOfficeLocation) errors = { ...errorAssignment('currentOfficeLocation is required', 'currentOfficeLocation') };
+
     if (!/^\d+$/.test(currentOfficeLocation)) {
-      if (!errors.currentOfficeLocation) errors.currentOfficeLocation = ['currentOfficeLocation must be a number'];
-      else errors.currentOfficeLocation.push('currentOfficeLocation must be a number');
+      errors = { ...errorAssignment('currentOfficeLocation must be a number', 'currentOfficeLocation') };
     }
     if (!errors.currentOfficeLocation && currentOfficeLocation) {
       const locationsData = await Locations.findAll({
@@ -78,10 +65,7 @@ class Validation {
         where: { id: currentOfficeLocation },
         raw: true
       });
-      if (!locationsData.length) {
-        if (!errors.currentOfficeLocation) errors.currentOfficeLocation = ['Current office location does not exist'];
-        else errors.currentOfficeLocation.push('Current office location does not exist');
-      }
+      if (!locationsData.length) errors = { ...errorAssignment('Current office location does not exist', 'currentOfficeLocation') };
       if (locationsData.length) {
         const currentOfficeData = {};
         currentOfficeData[locationsData[0].locationName] = locationsData[0].id;
@@ -99,33 +83,20 @@ class Validation {
  * @memberof Validation
  */
   static async validateDestination(request) {
-    const errors = {};
+    let errors = {};
     let { destination } = request.body;
-    if (!destination) {
-      if (!errors.destination) errors.destination = ['Destination input must be an array', 'Mutiple office locations inputs are required'];
-      else errors.destination.push('Destination input must be an array', 'Mutiple office locations inputs are required');
-    }
-    if (!Array.isArray(destination)) {
-      if (!errors.destination) errors.destination = ['Destination field must be an array'];
-      else errors.destination.push('Destination field must be an array');
-    }
+    if (!destination) errors = { ...errorAssignment('Destination input must be an array', 'Mutiple office locations inputs are required', 'destination') };
+
+    if (!Array.isArray(destination)) errors = { ...errorAssignment('Destination field must be an array', 'destination') };
+
     if (destination && Array.isArray(destination)) {
-      if (destination.length === 0) {
-        if (!errors.destination) errors.destination = ['Destination field is required'];
-        else errors.destination.push('Destination field is required');
-      }
-      if (destination.length < 2) {
-        if (!errors.destination) errors.destination = ['Multi-city trip type must have one than one destinations'];
-        else errors.destination.push('Multi-city trip type must have more than one destinations');
-      }
+      if (destination.length === 0) errors = { ...errorAssignment('Destination field is required', 'destination') };
+
+      if (destination.length < 2) errors = { ...errorAssignment('Multi-city trip type must have one than one destinations', 'destination') };
+
       destination.map(value => {
-        if (!/^\d+$/.test(value)) {
-          if (!errors.destination) {
-            errors.destination = [`${value} must be a number`];
-          } else {
-            errors.destination.push(`${value} must be a number`);
-          }
-        }
+        if (!/^\d+$/.test(value)) errors = { ...errorAssignment(`${value} must be a number`, 'destination') };
+
         return value;
       });
       // eslint-disable-next-line
@@ -133,11 +104,7 @@ class Validation {
         if (destination.indexOf(value) === index) {
           return value;
         }
-        if (!errors.destination) {
-          errors.destination = [`${value} must be unique to the request`];
-        } else {
-          errors.destination.push(`${value} must be unique to the request`);
-        }
+        errors = { ...errorAssignment(`${value} must be unique to the request`, 'destination') };
       });
     }
     if (!errors.destination && destination) {
@@ -146,10 +113,8 @@ class Validation {
         where: { id: { [Op.or]: [...destination] } },
         raw: true
       });
-      if (!locationsData.length || (locationsData.length !== destination.length)) {
-        if (!errors.destination) errors.destination = ['One or more destinations do not match andela\'s office location'];
-        else errors.destination.push('One or more destinations do not match andela\'s office location');
-      }
+      if (!locationsData.length || (locationsData.length !== destination.length)) errors = { ...errorAssignment('One or more destinations do not match andela\'s office location', 'destination') };
+
       if (locationsData.length === destination.length) {
         const destinationData = {};
         locationsData.map(data => {
