@@ -64,12 +64,7 @@ export default (sequelize, DataTypes) => {
         required: false
       },
       role: {
-        type: DataTypes.ENUM,
-        values: [
-          'Developer',
-          'QA',
-          'Maintenance',
-        ],
+        type: DataTypes.INTEGER,
         required: false
       },
       department: {
@@ -89,6 +84,8 @@ export default (sequelize, DataTypes) => {
     },
     {}
   );
-  Users.associate = (models) => Users.hasMany(models.Requests, { foreignKey: 'userId', onUpdate: 'CASCADE', onDelete: 'SET NULL' });
+  Users.associate = (models) => {
+    Users.hasMany(models.Requests, { foreignKey: 'userId', onUpdate: 'CASCADE', onDelete: 'SET NULL' });
+  };
   return Users;
 };
