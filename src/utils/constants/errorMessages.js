@@ -54,8 +54,8 @@ export const userProfileErrors = {
 };
 
 export const userRequestHistoryErrors = {
-  nonNumericOffset: 'Offset should be a digit',
-  nonNumericLimit: 'Limit should be a digit'
+  nonIntegerOffset: 'Offset should be a digit',
+  nonIntegerLimit: 'Limit should be a digit'
 };
 
 export default signupErrors;

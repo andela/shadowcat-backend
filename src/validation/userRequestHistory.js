@@ -12,12 +12,12 @@ import pullErrors from '../utils/helpers/pullErrors';
 export const userRequestHistory = [
   check('limit')
     .optional()
-    .isNumeric()
-    .withMessage(`limit ${userRequestHistoryErrors.nonNumericLimit}`),
+    .isInt()
+    .withMessage(`limit ${userRequestHistoryErrors.nonIntegerLimit}`),
   check('offset')
     .optional()
-    .isNumeric()
-    .withMessage(`offset ${userRequestHistoryErrors.nonNumericOffset}`),
+    .isInt()
+    .withMessage(`offset ${userRequestHistoryErrors.nonIntegerOffset}`),
   async (req, res, next) => {
     const { errors } = validationResult(req);
     if (errors.length) {

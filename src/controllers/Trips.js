@@ -74,14 +74,13 @@ class Trips {
    */
   static async getUserRequestHistory(req, res) {
     const { id } = req;
-    const { offset, limit } = req.query;
+    const { offset = 0, limit = null } = req.query;
 
     try {
       const requests = await Requests.findAll({
         where: { userId: id },
         offset,
         limit
-
       });
       const data = [];
       for (let i = 0; i < requests.length; i += 1) {
@@ -121,17 +120,24 @@ class Trips {
 
         data.push(subData);
       }
+      const pagination = {
+        limit,
+        offset,
+        totalCount: data.length,
+      };
 
       return data.length > 0
         ? res.status(200).json({
           status: 200,
           message: constants.requestHistory,
-          data
+          data,
+          pagination
         })
         : res.status(200).json({
           status: 200,
           message: constants.zeroRequestHistory,
-          data
+          data,
+          pagination
         });
     } catch (err) {
       return serverResponse(

@@ -126,8 +126,8 @@ describe('GET request route', () => {
           expect(error).to.have.property('offset');
 
           const { limit, offset } = error;
-          expect(limit[0]).to.equal(userRequestHistoryErrors.nonNumericLimit);
-          expect(offset[0]).to.equal(userRequestHistoryErrors.nonNumericOffset);
+          expect(limit[0]).to.equal(userRequestHistoryErrors.nonIntegerLimit);
+          expect(offset[0]).to.equal(userRequestHistoryErrors.nonIntegerOffset);
 
           done();
         });
@@ -152,8 +152,11 @@ describe('GET request route', () => {
           expect(body).to.have.property('status');
           expect(body).to.have.property('data');
           expect(body).to.have.property('message');
+          expect(body).to.have.property('pagination');
 
-          const { status, message, data } = body;
+          const {
+            status, message, data, pagination
+          } = body;
 
           expect(message).to.equal(constants.requestHistory);
           expect(status).to.deep.equal(200);
@@ -195,6 +198,11 @@ describe('GET request route', () => {
           expect(origin).to.has.property('locationId');
           expect(origin).to.has.property('locationName');
           expect(origin).to.has.property('locationAddress');
+
+          expect(pagination).to.be.an('object');
+          expect(pagination).to.have.property('limit');
+          expect(pagination).to.have.property('offset');
+          expect(pagination).to.have.property('totalCount');
 
           done();
         });
