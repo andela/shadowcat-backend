@@ -9,6 +9,6 @@ const { authenticate } = Authentication;
 
 const router = express.Router();
 
-router.post('/request', authenticate, returnTripRequest, returntripvalidate, multicityCheck, validateInput, multiCityRequest);
+router.post('/request', authenticate, multicityCheck, validateInput, multiCityRequest);
 
 export default router;
