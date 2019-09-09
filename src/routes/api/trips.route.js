@@ -1,7 +1,7 @@
 import express from 'express';
 import { Trips } from '../../controllers';
 import { Authentication } from '../../middlewares';
-import { multicityCheck, validateInput } from '../../validation';
+import { multicityCheck, validateInput, userRequestHistoryValidator } from '../../validation';
 
 const { multiCityRequest, getUserRequestHistory } = Trips;
 const { authenticate } = Authentication;
@@ -12,8 +12,7 @@ router.post('/request', authenticate, multicityCheck, validateInput, multiCityRe
 
 router.get(
   '/request',
-  authenticate,
-  getUserRequestHistory
+  authenticate, userRequestHistoryValidator, getUserRequestHistory
 );
 
 export default router;

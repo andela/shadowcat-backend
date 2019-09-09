@@ -403,6 +403,18 @@
             "required": true,
             "default": "Bearer {token}",
             "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {

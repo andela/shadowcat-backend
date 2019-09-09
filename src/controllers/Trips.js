@@ -74,10 +74,14 @@ class Trips {
    */
   static async getUserRequestHistory(req, res) {
     const { id } = req;
+    const { offset, limit } = req.query;
 
     try {
       const requests = await Requests.findAll({
-        where: { userId: id }
+        where: { userId: id },
+        offset,
+        limit
+
       });
       const data = [];
       for (let i = 0; i < requests.length; i += 1) {

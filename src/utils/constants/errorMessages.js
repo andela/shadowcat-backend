@@ -53,4 +53,9 @@ export const userProfileErrors = {
   invalidLineManager: 'Line manager should be an integer',
 };
 
+export const userRequestHistoryErrors = {
+  nonNumericOffset: 'Offset should be a digit',
+  nonNumericLimit: 'Limit should be a digit'
+};
+
 export default signupErrors;
