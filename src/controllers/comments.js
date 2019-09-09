@@ -75,8 +75,7 @@ class RequestComment {
       return response.sendSuccess(
         res,
         200,
-        updateComment[1
-        ],
+        updateComment[1],
         'comment updated!'
       );
     } catch (error) {
@@ -111,8 +110,8 @@ class RequestComment {
         res,
         200,
         getComments,
-        'sucess'
-      )
+        'success'
+      );
     } catch (error) {
       next(error);
     }

@@ -18,6 +18,7 @@ const pullErrors = (errors) => {
   const role = [];
   const department = [];
   const lineManager = [];
+  const comment = [];
   errors.forEach((error) => {
     const { msg } = error;
     const msgArray = msg.split(' ');
@@ -64,6 +65,9 @@ const pullErrors = (errors) => {
       case 'linemanager':
         lineManager.push(extractedError);
         break;
+      case 'comment':
+        comment.push(extractedError);
+        break;
       default:
     }
   });
@@ -103,8 +107,8 @@ const pullErrors = (errors) => {
   if (department.length > 0) {
     combinedErrors.department = department;
   }
-  if (lineManager.length > 0) {
-    combinedErrors.lineManager = lineManager;
+  if (comment.length > 0) {
+    combinedErrors.comment = comment;
   }
   return combinedErrors;
 };

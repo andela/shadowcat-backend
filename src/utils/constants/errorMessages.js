@@ -46,6 +46,8 @@ export const userProfileErrors = {
   invalidDepartment: 'Department should be a set of alphabets with no spaces',
   undefinedLineManager: 'Line manager is required',
   invalidLineManager: 'Line manager should be an integer',
+  undefinedComment: 'comment is required',
+  invalidComment: 'comment should be a text',
 };
 
 export default signupErrors;
