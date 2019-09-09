@@ -86,7 +86,7 @@ class Trips {
         destination: Object.values(destinationData)
       };
       const tripsResult = await Requests.create(tripsData);
-      const locations = Object.keys(destinationData).join(',');
+      const locations = Object.keys(destinationData).join(', ');
       const tripDetailsEmail = {
         locations,
         departureDate: new Date(departureDate).toUTCString(),
