@@ -1,36 +1,47 @@
-import { check, validationResult } from 'express-validator';
+import { body, validationResult } from 'express-validator';
 import pullErrors from '../utils/helper/request.pullError';
 
-const requestValidation = [
-  check('currentOfficeLocation')
+const onewayCheck = body('tripType').matches(/^(one-way)$/, 'i') ? [
+  body('currentOfficeLocation')
     .exists({ checkFalsy: true })
-    .withMessage('currentOfficeLocation CurrentO ffice Location is required')
+    .withMessage('currentOfficeLocation Current Office Location is required')
     .isInt()
     .withMessage('currentOfficeLocation Current Office Location must be an integer'),
-  check('destination')
+  body('destination')
     .exists({ checkFalsy: true })
     .withMessage('destination Destination is required')
     .isInt()
     .withMessage('destination Destination must be an integer'),
-  check('type')
-    .exists({ checkFalsy: true })
-    .withMessage('tripType Trip Type is required')
-    .isString()
-    .withMessage('tripType Trip Type must be a string'),
-  check('departureDate')
+  body('departureDate')
     .exists({ checkFalsy: true })
     .withMessage('departureDate Departure date is required'),
-  check('travelreasons')
+  body('travelreasons')
     .exists({ checkFalsy: true })
     .withMessage('travelReasons Travel Reasons is required')
     .isString()
     .withMessage('travelReasons Travel Reasons should be strings'),
-  check('accommodation')
+  body('accommodation')
     .exists({ checkFalsy: true })
     .withMessage('accommodation Accommodation is required')
     .isInt()
     .withMessage('accommodation Accommodation must be an integer'),
-  async (req, res, next) => {
+] : [];
+/**
+ *@description A class that handles all validations
+ * @class Validation
+ */
+class Validation {
+  /**
+ *@description Validates all the inputs
+ * @static
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Object} next
+ * @returns {Function} next
+ * @memberof Validation
+ */
+  static async onewayValidateInput(req, res, next) {
+    if (req.body.tripType !== 'one-way') return next();
     const { errors } = validationResult(req);
     if (errors.length) {
       const pulledErrors = pullErrors(errors);
@@ -41,6 +52,6 @@ const requestValidation = [
     }
     return next();
   }
-];
-
-export default requestValidation;
+}
+const { onewayValidateInput } = Validation;
+export { onewayCheck, onewayValidateInput };

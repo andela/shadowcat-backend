@@ -7,7 +7,6 @@ const pullErrors = errors => {
   const combinedErrors = {};
   const currentOfficeLocation = [];
   const destination = [];
-  const tripType = [];
   const departureDate = [];
   const travelReasons = [];
   const accommodation = [];
@@ -22,9 +21,6 @@ const pullErrors = errors => {
         currentOfficeLocation.push(extractedError);
         break;
       case 'destination':
-        destination.push(extractedError);
-        break;
-      case 'tripType':
         destination.push(extractedError);
         break;
       case 'departureDate':
@@ -43,9 +39,6 @@ const pullErrors = errors => {
     combinedErrors.currentOfficeLocation = currentOfficeLocation;
   }
   if (destination.length > 0) {
-    combinedErrors.destination = destination;
-  }
-  if (tripType.length > 0) {
     combinedErrors.destination = destination;
   }
   if (departureDate.length > 0) {

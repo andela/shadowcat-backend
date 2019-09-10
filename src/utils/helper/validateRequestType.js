@@ -1,22 +1,25 @@
-import { multicityCheck } from '../../validation';
-import ResponseGenerator from '../response.util';
+import { body, validationResult } from 'express-validator';
+import pullErrors from './request.pullError';
 
-const response = new ResponseGenerator();
-const checkRequestType = async (req, res, next) => {
-  const diffRequest = ['one-way', 'return', 'Multi-city'];
-  const { tripType } = req.body;
-  if (!diffRequest.includes(tripType)) response.sendError(res, 400, `Request type must be one of ${diffRequest}`);
-  switch (tripType) {
-    case 'one-way':
-      break;
-    case 'return':
-      break;
-    case 'Multi-city':
-      await multicityCheck(req, res, next);
-      break;
-    default:
-      return next;
+const validateRequestType = [
+  body('tripType')
+    .exists({ checkFalsy: true })
+    .withMessage('tripType Trip Type is required')
+    .isString()
+    .withMessage('tripType Trip Type must be a string')
+    .matches(/^(one-way|return|Multi-city)$/, 'i')
+    .withMessage('tripType Trip Type must be one of [one-way, return, Multi-city]'),
+  async (req, res, next) => {
+    const { errors } = validationResult(req);
+    if (errors.length) {
+      const pulledErrors = pullErrors(errors);
+      return res.status(400).json({
+        status: 400,
+        error: pulledErrors
+      });
+    }
+    global.userTripType = req.body.userTripType;
+    return next();
   }
-};
-
-export default checkRequestType;
+];
+export default validateRequestType;

@@ -13,8 +13,7 @@ const { Requests } = models;
  * @class Trips
  */
 class Trips {
-
-/**
+  /**
 *@description A function that handles different trips request
 * @static
 * @param {Object} req
@@ -23,28 +22,28 @@ class Trips {
 * @returns {object} Details of booked trips
 * @memberof Trips
 */
-static async tripRequest (req, res, next) {
-  const { tripType } = req.body;
-  switch (tripType) {
-    case 'one-way':
-      await Trips.oneWay(req, res, next);
-      break;
-    case 'return':
-      await Trips.return(req, res, next);
-      break;
-    case 'Multi-city':
-      await Trips.multiCityRequest(req, res, next);
-      break;
-    default:
-      return responsegen.sendError(
-        res,
-        500,
-        'Something went wrong, please check type of request and try again'
-      );
+  static async tripRequest(req, res, next) {
+    const { tripType } = req.body;
+    switch (tripType) {
+      case 'one-way':
+        await Trips.oneWay(req, res, next);
+        break;
+      case 'return':
+        await Trips.return(req, res, next);
+        break;
+      case 'Multi-city':
+        await Trips.multiCityRequest(req, res, next);
+        break;
+      default:
+        return responsegen.sendError(
+          res,
+          500,
+          'Something went wrong, please check type of request and try again'
+        );
+    }
   }
-}
 
-/**
+  /**
  *@description A function that handles one-way travel request by a user
  * @static
  * @param {Object} req
@@ -54,9 +53,9 @@ static async tripRequest (req, res, next) {
  * @memberof Trips
  */
 
- static async oneWay (req, res, next) {
-
- }
+  static async oneWay(req, res, next) {
+  console.log('zzzzzzzzzzzzzzzzzzz');
+  }
 
   /**
   *@description A function that handles return travel request by a user
@@ -72,7 +71,7 @@ static async tripRequest (req, res, next) {
 
   }
 
-/**
+  /**
  *@description A function that handles multicity travel request by a user
  * @static
  * @param {Object} req

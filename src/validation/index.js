@@ -1,3 +1,6 @@
-import { multicityCheck, validateInput } from './multicityValidation';
+import { multicityCheck, multicityValidateInput } from './multicityValidation';
+import { onewayCheck, onewayValidateInput } from './onewayValidation';
 
-export { multicityCheck, validateInput };
+export {
+  onewayCheck, onewayValidateInput, multicityCheck, multicityValidateInput
+};
