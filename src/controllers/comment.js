@@ -25,14 +25,14 @@ class Comment {
       const getTrip = await Requests.findOne({
         where: { userId: id }
       });
-      const { tripId } = getTrip;
-      if (!tripId) {
+      if (!getTrip) {
         return response.sendError(
           res,
           404,
           'No trip request have been made'
         );
       }
+      const { tripId } = getTrip;
       const createComment = await Comments.create({ comment, tripId, userId: req.id });
       return response.sendSuccess(
         res,

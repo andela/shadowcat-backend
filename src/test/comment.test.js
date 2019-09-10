@@ -25,7 +25,7 @@ describe('Testing User Comment On Travel Request ', () => {
         done();
       });
   });
-  it('should return a 500 if your is not in the request database', (done) => {
+  it('should return a 404 if your is not in the request database', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request/comment')
       .set('Authorization', `Bearer ${token}`)
@@ -34,7 +34,7 @@ describe('Testing User Comment On Travel Request ', () => {
       })
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.status).to.equal(500);
+        expect(res.status).to.equal(404);
         expect((res.body)).to.be.an('object');
         done();
       });
