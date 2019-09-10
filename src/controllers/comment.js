@@ -29,7 +29,7 @@ class Comment {
         return response.sendError(
           res,
           404,
-          'No trip request have been made'
+          'No trip request has been made'
         );
       }
       const { tripId } = getTrip;
@@ -41,7 +41,7 @@ class Comment {
         'comment created!'
       );
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 
@@ -64,7 +64,7 @@ class Comment {
         return response.sendError(
           res,
           404,
-          'No comment have been made'
+          'No comment has been made'
         );
       }
       const updateComment = await Comments.update({ comment: req.body.comment },
@@ -79,7 +79,7 @@ class Comment {
         'comment updated!'
       );
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 
@@ -103,7 +103,7 @@ class Comment {
         return response.sendError(
           res,
           404,
-          'No comment have been made'
+          'No comment has been made'
         );
       }
       return response.sendSuccess(
@@ -113,7 +113,7 @@ class Comment {
         'success'
       );
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 }

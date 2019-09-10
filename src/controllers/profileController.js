@@ -10,14 +10,12 @@ const response = new ResponseGenerator();
  */
 class ProfileController {
   /**
-  * get user profile
-  * @async
+   * @static
   * @param  {object} req - Request object
   * @param {object} res - Response object
   * @param {object} next The next middleware
   * @return {json} Returns json object
-  * @static
-  */
+   */
   static async getProfile(req, res, next) {
     try {
       const { id } = req;
@@ -57,7 +55,7 @@ class ProfileController {
         'success',
       );
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 
@@ -136,7 +134,7 @@ class ProfileController {
         'user does not exist'
       );
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 }
