@@ -19,6 +19,8 @@ const pullErrors = (errors) => {
   const department = [];
   const lineManager = [];
   const comment = [];
+  const offset = [];
+  const limit = [];
   errors.forEach((error) => {
     const { msg } = error;
     const msgArray = msg.split(' ');
@@ -68,6 +70,12 @@ const pullErrors = (errors) => {
       case 'comment':
         comment.push(extractedError);
         break;
+      case 'offset':
+        offset.push(extractedError);
+        break;
+      case 'limit':
+        limit.push(extractedError);
+        break;
       default:
     }
   });
@@ -109,6 +117,12 @@ const pullErrors = (errors) => {
   }
   if (comment.length > 0) {
     combinedErrors.comment = comment;
+  }
+  if (limit.length > 0) {
+    combinedErrors.limit = limit;
+  }
+  if (offset.length > 0) {
+    combinedErrors.offset = offset;
   }
   return combinedErrors;
 };

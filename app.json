@@ -1,7 +1,5 @@
 {
-  "addons": [
-    "heroku-postgresql"
-  ],
+  "addons": ["heroku-postgresql"],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
@@ -16,6 +14,39 @@
     },
     "TEST_DATABASE_URL": {
       "required": true
+    },
+    "CLIENTID_PROD": {
+      "required": true
+    },
+    "CLIENTSECRET_PROD": {
+      "required": true
+    },
+    "EMAIL_VERIFY_URL_PROD": {
+      "required": true
+    },
+    "FACEBOOK_CALLBACK_URL_PROD": {
+      "required": true
+    },
+    "FACEBOOK_CLIENTID_PROD": {
+      "required": true
+    },
+    "FACEBOOK_CLIENTSECRET_PROD": {
+      "required": true
+    },
+    "GOOGLE_CALLBACK_URL_PROD": {
+      "required": true
+    },
+    "JWTSECRET": {
+      "required": true
+    },
+    "SENDGRID_API_KEY": {
+      "required": true
+    },
+    "SESSION_SECRET": {
+      "required": true
+    },
+    "WEB_MAIL_URL": {
+      "required": true
     }
   },
   "formation": {
@@ -24,7 +55,6 @@
     }
   },
   "name": "shadowcat-backend",
-  "scripts": {
-  },
+  "scripts": {},
   "stack": "heroku-18"
 }

@@ -19,6 +19,11 @@ export const signupVerifyErrors = {
   notFound: 'No pending verification found'
 };
 
+export const authorizationErrors = {
+  undefinedToken:
+    'Please make sure your request has an authorization header',
+  invalidToken: 'Authorization Denied.'
+};
 export const userProfileErrors = {
   undefinedFirstName: 'Firstname is required',
   invalidFirstName: 'Firstname should be a set of alphabets with no spaces',
@@ -48,6 +53,15 @@ export const userProfileErrors = {
   invalidLineManager: 'Line manager should be an integer',
   undefinedComment: 'comment is required',
   invalidComment: 'comment should be a text',
+};
+
+export const userRequestHistoryErrors = {
+  nonIntegerOffset: 'Offset should be a digit',
+  nonIntegerLimit: 'Limit should be a digit',
+  nonNegativeOffset: 'Offset should be greater than 0',
+  nonNegativeLimit: 'Limit should be greater than 0',
+  exceedsMaxIntLimit: 'Limit exceeds maximum integer value',
+  exceedsMaxIntOffset: 'Offset exceeds maximum integer value'
 };
 
 export default signupErrors;
