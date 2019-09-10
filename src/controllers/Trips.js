@@ -142,7 +142,6 @@ class Trips {
           pagination
         });
     } catch (err) {
-      console.log(err);
       return serverResponse(
         res,
         500,
