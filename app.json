@@ -1,7 +1,5 @@
 {
-  "addons": [
-    "heroku-postgresql"
-  ],
+  "addons": ["heroku-postgresql"],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
@@ -57,7 +55,6 @@
     }
   },
   "name": "shadowcat-backend",
-  "scripts": {
-  },
+  "scripts": {},
   "stack": "heroku-18"
 }
