@@ -73,8 +73,6 @@ export default (sequelize, DataTypes) => {
           'Developer',
           'QA',
           'Maintenance',
-          'Line Manager',
-          'User'
         ],
         required: false
       },
@@ -95,6 +93,15 @@ export default (sequelize, DataTypes) => {
     },
     {}
   );
-  Users.associate = (models) => Users.hasMany(models.Requests, { foreignKey: 'userId', onUpdate: 'CASCADE', onDelete: 'SET NULL' });
+  Users.associate = (models) => {
+    Users.hasMany(models.Requests,
+      {
+        foreignKey: 'userId', onUpdate: 'CASCADE', onDelete: 'SET NULL'
+      });
+    Users.hasMany(models.Notifications, {
+      foreignKey: 'userId', onUpdate: 'CASCADE', onDelete: 'SET NULL'
+    });
+  };
+
   return Users;
 };

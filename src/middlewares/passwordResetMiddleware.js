@@ -62,17 +62,6 @@ class authenticator {
       return res.status(500).json(errorResponse(msg));
     }
   }
-
-  /**
- *
- *
- * @static
- * @param {object} req
- * @param {object} res
- * @param {method} next
- * @returns {Method} Calls next method on success
- * @memberof authenticator
- */
 }
 
 export default authenticator;

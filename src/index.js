@@ -9,11 +9,11 @@ import morgan from 'morgan';
 import methodOverride from 'method-override';
 import dotenv from 'dotenv';
 import passport from 'passport';
-import http from 'http';
 import SocketIO from 'socket.io';
 import swaggerDocument from '../public/api-docs/swagger.json';
 import './models/user';
 import apiRoutes from './routes';
+import socketEmission from './services/socketEmission';
 
 dotenv.config();
 
@@ -21,8 +21,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
 const app = express();
-const server = http.Server(app);
-export const io = SocketIO(server);
+
 
 app.use(cors());
 
@@ -53,7 +52,7 @@ app.use(
 if (!isProduction) {
   app.use(errorhandler());
 }
-app.use(apiRoutes(io));
+app.use(apiRoutes);
 
 
 // testing route
@@ -101,8 +100,11 @@ app.use((err, req, res) => {
 const port = process.env.NODE_ENV === 'test' ? 3001 : 3000;
 
 // finally, let's start our server...
-server.listen(process.env.PORT || port, () => {
+const server = app.listen(process.env.PORT || port, () => {
   console.log(`Listening on port ${server.address().port}`);
 });
+export const io = SocketIO(server);
+// eslint-disable-next-line no-unused-vars
+const emission = new socketEmission(io);
 
 export default server;

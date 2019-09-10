@@ -1,6 +1,6 @@
 import Model from '../models';
 
-const { Requests, Notifications } = Model;
+const { Notifications } = Model;
 /**
  *
  *
@@ -19,26 +19,6 @@ class notifyUserService {
     try {
       const createdNotification = await Notifications.create(newNotification);
       return createdNotification;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  /**
- *
- *
- * @static
- * @param {Integer} id
- * @param {String} updatePassword
- * @returns {Object} User
- * @memberof userService
- */
-  static async getSpecificTrips(id) {
-    try {
-      const theTrips = await Requests.findOne({
-        where: { managerId: id }
-      });
-      return theTrips;
     } catch (error) {
       return false;
     }

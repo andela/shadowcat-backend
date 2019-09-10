@@ -31,6 +31,9 @@ export default (sequelize, DataTypes) => {
     Notifications.belongsTo(models.Requests, {
       foreignKey: 'tripId'
     });
+    Notifications.belongsTo(models.Users, {
+      foreignKey: 'userId'
+    });
   };
 
   return Notifications;

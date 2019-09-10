@@ -1,48 +1,25 @@
 import uuidv4 from 'uuid/v4';
-
-import autoBind from 'auto-bind';
-
 import notifyUserService from '../services/notifyUserService';
-
 import response from '../utils/Response';
-
 import passwordEmail from '../utils/Mailer';
-
 import userService from '../services/passwordResetService';
-
-
 import mailTemplate from '../utils/notifyUserEmailTemplate';
-
 import htmlTemplate from '../utils/dummyIndex';
-
 import models from '../models';
+import socketEmission from '../services/socketEmission';
 
 
-const { errorResponse, serverResponse } = response;
-
+const { serverResponse } = response;
 const { getUser } = userService;
-
 const { createNotification } = notifyUserService;
-
 const { sendEmail } = passwordEmail;
-
-
 const { Requests } = models;
+
 /**
  *@description A class that handles multicity travel request by a user
  * @class Trips
  */
 class Trips {
-/**
- *Creates an instance of Trips.
- * @param {*} io
- * @memberof Trips
- */
-  constructor(io) {
-    this.io = io;
-    autoBind(this);
-  }
-
   /**
  *@description A function that handles multicity travel request by a user
  * @static
@@ -52,7 +29,7 @@ class Trips {
  * @returns {object} Details of booked trips
  * @memberof Trips
  */
-  async multiCityRequest(req, res, next) {
+  static async multiCityRequest(req, res, next) {
     try {
       const { email } = req;
       const aUser = await getUser(email);
@@ -110,8 +87,7 @@ class Trips {
       const emitMessage = `${firstName} ${lastName} 
       Just Booked a trip to ${locations} on 
        ${tripsResult.createdAt}`;
-      this.io.emit(`${lineManagerUser}`, emitMessage);
-
+      socketEmission.emission(`${lineManagerUser}`, emitMessage);
       if (tripsResult) {
         const resultObject = {
           userId,
@@ -139,14 +115,10 @@ class Trips {
  * @returns{html}template
  * @memberof Trips
  */
-  async getManagerTrips(req, res) {
+  static async getManagerTrips(req, res) {
     const { id } = req.params;
-    try {
-      this.io.on(`${id}`, (data) => data);
-      return res.status(200).send(htmlTemplate(id));
-    } catch (error) {
-      return res.status(500).json(errorResponse('Internal Server Error'));
-    }
+
+    return res.status(200).send(htmlTemplate(id));
   }
 }
 export default Trips;
