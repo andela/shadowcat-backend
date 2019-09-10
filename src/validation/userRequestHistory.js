@@ -13,11 +13,23 @@ export const userRequestHistory = [
   check('limit')
     .optional()
     .isInt()
-    .withMessage(`limit ${userRequestHistoryErrors.nonIntegerLimit}`),
+    .withMessage(`limit ${userRequestHistoryErrors.nonIntegerLimit}`)
+    .isInt({ gt: 1 })
+    .withMessage(`limit ${userRequestHistoryErrors.nonNegativeLimit}`)
+    .isInt({ lt: 9223372036854775808 })
+    .withMessage(
+      `limit ${userRequestHistoryErrors.exceedsMaxIntLimit}`
+    ),
   check('offset')
     .optional()
     .isInt()
-    .withMessage(`offset ${userRequestHistoryErrors.nonIntegerOffset}`),
+    .withMessage(`offset ${userRequestHistoryErrors.nonIntegerOffset}`)
+    .isInt({ gt: 1 })
+    .withMessage(`offset ${userRequestHistoryErrors.nonNegativeOffset}`)
+    .isInt({ lt: 9223372036854775808 })
+    .withMessage(
+      `offset ${userRequestHistoryErrors.exceedsMaxIntOffset}`
+    ),
   async (req, res, next) => {
     const { errors } = validationResult(req);
     if (errors.length) {
