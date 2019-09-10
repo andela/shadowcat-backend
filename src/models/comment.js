@@ -1,23 +1,27 @@
-module.exports = (sequelize, DataTypes) => {
-    const Comment = sequelize.define('Comment', {
-        userId: {
-            type: DataTypes.STRING,
-            required: true
-        },
+export default (sequelize, DataTypes) => {
+    const Comment = sequelize.define('Comments', {
         tripId: {
             type: DataTypes.STRING,
             required: true
         },
-        body: {
+        comment: {
             type: DataTypes.TEXT,
-            allowNull: false
-        }
+            required: true
+        },
+        userId: {
+            type: DataTypes.STRING,
+            required: true
+        },
     }, {});
-
-    Comment.associate = () => {
-        
-      
+    Comment.associate = (models) => {
+        // associations can be defined here
+        Comment.belongsTo(models.Requests, {
+            foreignKey: 'tripId',
+            targetKey: 'tripId'
+        });
+        Comment.belongsTo(models.Users, {
+            foreignKey: 'userId'
+        });
     };
-
     return Comment;
 };

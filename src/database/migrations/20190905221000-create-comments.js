@@ -3,20 +3,25 @@ module.exports = {
     id: {
       allowNull: false,
       autoIncrement: true,
-      type: Sequelize.INTEGER,
-      primaryKey: true
-    },
-    userId: {
-      type: Sequelize.STRING,
-      
+      primaryKey: true,
+      type: Sequelize.INTEGER
     },
     tripId: {
       type: Sequelize.STRING,
-      unique: true
+      references: {
+        model: 'Requests',
+        key: 'tripId'
+      }
     },
-    body: {
-      type: Sequelize.TEXT,
-      allowNull: false
+    comment: {
+      type: Sequelize.TEXT
+    },
+    userId: {
+      type: Sequelize.STRING,
+      references: {
+        model: 'Users',
+        key: 'userId'
+      }
     },
     createdAt: {
       allowNull: false,
@@ -27,5 +32,5 @@ module.exports = {
       type: Sequelize.DATE
     }
   }),
-  down: queryInterface => queryInterface.dropTable('Comments')
+  down: (queryInterface) => queryInterface.dropTable('Comments')
 };
