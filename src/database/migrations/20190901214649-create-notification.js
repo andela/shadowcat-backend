@@ -6,17 +6,6 @@ export default {
       type: Sequelize.INTEGER,
       primaryKey: true
     },
-    tripId: {
-      type: Sequelize.STRING,
-      references: {
-        model: 'Requests',
-        key: 'tripId'
-      }
-    },
-    lineManager: {
-      type: Sequelize.INTEGER,
-      allowNull: false
-    },
     userId: {
       type: Sequelize.STRING,
       references: {
@@ -24,6 +13,17 @@ export default {
         key: 'userId'
       },
       allowNull: false
+    },
+    lineManager: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    tripId: {
+      type: Sequelize.STRING,
+      references: {
+        model: 'Requests',
+        key: 'tripId'
+      }
     },
     content: {
       type: Sequelize.STRING,
