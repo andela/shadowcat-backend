@@ -14,7 +14,7 @@ export const userRequestHistory = [
     .optional()
     .isInt()
     .withMessage(`limit ${userRequestHistoryErrors.nonIntegerLimit}`)
-    .isInt({ gt: 1 })
+    .isInt({ gt: 0 })
     .withMessage(`limit ${userRequestHistoryErrors.nonNegativeLimit}`)
     .isInt({ lt: 9223372036854775808 })
     .withMessage(
@@ -24,7 +24,7 @@ export const userRequestHistory = [
     .optional()
     .isInt()
     .withMessage(`offset ${userRequestHistoryErrors.nonIntegerOffset}`)
-    .isInt({ gt: 1 })
+    .isInt({ gt: 0 })
     .withMessage(`offset ${userRequestHistoryErrors.nonNegativeOffset}`)
     .isInt({ lt: 9223372036854775808 })
     .withMessage(
