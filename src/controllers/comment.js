@@ -1,5 +1,6 @@
 import models from '../models';
 import ResponseGenerator from '../utils/response.util';
+import validateParam from '../utils/validateParams';
 
 const response = new ResponseGenerator();
 const { Requests, Comments } = models;
@@ -123,7 +124,7 @@ class Comment {
             const { id } = req.params;
 
 
-            const comment = await Comment.findOne({ where: { userId: id } });
+            const comment = await Comments.findOne({ where: { id } });
 
             if (!comment) {
                 return res.status(404).json({
@@ -131,7 +132,7 @@ class Comment {
                     error: 'Comment Not Found',
                 });
             }
-            await Comment.destroy({ where: { userId: id } });
+            await Comments.destroy({ where: { id, userId:id, } });
             return res.status(200).json({
                 status: "success",
                 message: "Your comment has been Sucessfully Deleted"
@@ -140,6 +141,7 @@ class Comment {
             next(error);
         }
     }
+
 
 
 }
