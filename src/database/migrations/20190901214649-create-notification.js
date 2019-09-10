@@ -19,11 +19,11 @@ export default {
     },
     userId: {
       type: Sequelize.STRING,
-      allowNull: false,
       references: {
         model: 'Users',
         key: 'userId'
-      }
+      },
+      allowNull: false
     },
     content: {
       type: Sequelize.STRING,

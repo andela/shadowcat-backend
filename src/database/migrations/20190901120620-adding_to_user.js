@@ -26,10 +26,7 @@ export default {
         'Developer',
         'QA',
         'Maintenance',
-        'User',
-        'Line Manager'
       ],
-      defaultValue: 'User',
       allowNull: true
     });
     await queryInterface.addColumn('Users', 'department', {
