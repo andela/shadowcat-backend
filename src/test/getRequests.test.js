@@ -1,11 +1,9 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import user from './__MOCK__/user';
 import multiTrip from './__MOCK__/multiTrip';
 import server from '../index';
 import { authorizationErrors, userRequestHistoryErrors } from '../utils/constants/errorMessages';
 import constants from '../utils/constants/constants';
-import models from '../models';
 
 chai.use(chaiHttp);
 
@@ -39,21 +37,6 @@ describe('GET request route', () => {
       .set('Authorization', `Bearer ${testToken}`)
       .send(cloneTrip);
     createdMultiTrip = res.body.data;
-  });
-
-  // Code cleanup after tests
-  after(async () => {
-    const { Users, Requests } = models;
-    await Requests.destroy({
-      where: {
-        userId: createdUser.userId
-      }
-    });
-    await Users.destroy({
-      where: {
-        userId: createdUser.userId
-      }
-    });
   });
 
   it('should return 401 with undefined authorization token', done => {
@@ -112,7 +95,7 @@ describe('GET request route', () => {
       chai
         .request(server)
         .get(`${url}?limit=sh1&offset=121asd`)
-        .set('Authorization', `Bearer ${createdUser.token}`)
+        .set('Authorization', `Bearer ${testToken}`)
         .send()
         .end((err, res) => {
           expect(res).to.have.property('status');
@@ -143,7 +126,7 @@ describe('GET request route', () => {
       chai
         .request(server)
         .get(`${url}`)
-        .set('Authorization', `Bearer ${createdUser.token}`)
+        .set('Authorization', `Bearer ${testToken}`)
         .send()
         .end((err, res) => {
           expect(res).to.have.property('status');
