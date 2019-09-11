@@ -35,6 +35,10 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         required: false
       },
+      notifyemail: {
+        type: DataTypes.BOOLEAN,
+        required: true
+      },
       gmail: {
         type: DataTypes.STRING,
         required: false
@@ -89,6 +93,15 @@ export default (sequelize, DataTypes) => {
     },
     {}
   );
-  Users.associate = (models) => Users.hasMany(models.Requests, { foreignKey: 'userId', onUpdate: 'CASCADE', onDelete: 'SET NULL' });
+  Users.associate = (models) => {
+    Users.hasMany(models.Requests,
+      {
+        foreignKey: 'userId', onUpdate: 'CASCADE', onDelete: 'SET NULL'
+      });
+    Users.hasMany(models.Notifications, {
+      foreignKey: 'userId', onUpdate: 'CASCADE', onDelete: 'SET NULL'
+    });
+  };
+
   return Users;
 };

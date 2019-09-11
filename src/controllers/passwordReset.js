@@ -40,7 +40,7 @@ class passwordResetController {
       const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
       const templateArray = template(aUser, fullUrl);
       const [templateFile, token] = templateArray;
-      await sendEmail(email, templateFile);
+      await sendEmail(email, templateFile, 'Reset Password');
       return res.status(200).json(successResponse('Success, an email has been sent to you', { id, email, token }));
     } catch (error) {
       return res.status(500).json(errorResponse('Internal Server Error'));

@@ -23,6 +23,7 @@ class Authentication {
     }
     req.id = payload.id;
     req.isAdmin = payload.isAdmin;
+    req.email = payload.email;
     return next();
   }
 
@@ -51,6 +52,7 @@ class Authentication {
     const payload = {
       id: user.id,
       isAdmin: user.isAdmin,
+      email: user.email,
       iat: moment().unix(),
       exp: moment()
         .add(1, 'days')
