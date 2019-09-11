@@ -37,7 +37,20 @@ class Comment {
       return response.sendSuccess(
         res,
         201,
-        createComment,
+        {
+          id: createComment.id,
+          requestId: getTrip.id,
+          tripId: getTrip.tripId,
+          userId: getTrip.userId,
+          departureDate: getTrip.departureDate,
+          returnDate: getTrip.returnDate,
+          tripType: getTrip.tripType,
+          reason: getTrip.reason,
+          currentOfficeLocation: getTrip.currentOfficeLocation,
+          requestStatus: getTrip.requestStatus,
+          destination: getTrip.destination,
+          comment: createComment.comment
+        },
         'comment created!'
       );
     } catch (error) {
@@ -57,6 +70,10 @@ class Comment {
   static async updateComment(req, res, next) {
     try {
       const { commentId } = req.params;
+      const { id } = req;
+      const getRequest = await Requests.findOne({
+        where: { userId: id }
+      });
       const getComment = await Comments.findOne({
         where: { id: commentId }
       });
@@ -67,17 +84,30 @@ class Comment {
           'No comment has been made'
         );
       }
-      const updateComment = await Comments.update({ comment: req.body.comment },
-        {
-          returning: true,
-          where: { id: commentId, userId: req.id }
-        });
-      return response.sendSuccess(
-        res,
-        200,
-        updateComment[1],
-        'comment updated!'
-      );
+      if (getRequest.userId === getComment.userId) {
+        const updateComment = await Comments.update({ comment: req.body.comment },
+          {
+            returning: true,
+            where: { id: commentId, userId: req.id }
+          });
+        return response.sendSuccess(
+          res,
+          200,
+          {
+            requestId: getRequest.id,
+            userId: getRequest.userId,
+            departureDate: getRequest.departureDate,
+            returnDate: getRequest.returnDate,
+            tripType: getRequest.tripType,
+            reason: getRequest.reason,
+            currentOfficeLocation: getRequest.currentOfficeLocation,
+            requestStatus: getRequest.requestStatus,
+            destination: getRequest.destination,
+            comment: updateComment[1]
+          },
+          'comment updated!'
+        );
+      }
     } catch (error) {
       return next(error);
     }
@@ -96,20 +126,35 @@ class Comment {
   static async getComment(req, res, next) {
     try {
       const { id } = req;
+      const getRequest = await Requests.findOne({
+        where: { userId: id }
+      });
       const getComments = await Comments.findAll({
         where: { userId: id }
       });
-      if (!getComments) {
+      if (!getComments || !getRequest) {
         return response.sendError(
           res,
           404,
-          'No comment has been made'
+          'No comment or request has been made'
         );
       }
       return response.sendSuccess(
         res,
         200,
-        getComments,
+        {
+          requestId: getRequest.id,
+          tripId: getRequest.tripId,
+          userId: getRequest.userId,
+          departureDate: getRequest.departureDate,
+          returnDate: getRequest.returnDate,
+          tripType: getRequest.tripType,
+          reason: getRequest.reason,
+          currentOfficeLocation: getRequest.currentOfficeLocation,
+          requestStatus: getRequest.requestStatus,
+          destination: getRequest.destination,
+          comments: getComments
+        },
         'success'
       );
     } catch (error) {
