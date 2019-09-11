@@ -120,7 +120,7 @@ class Trips {
  *
  * @param {object} req
  * @param {object} res
- * @returns{html}template
+ * @returns{html}template.
  * @memberof Trips
  */
   static async getManagerTrips(req, res) {
