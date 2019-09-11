@@ -3,6 +3,8 @@ import { Trips } from '../../controllers';
 import { Authentication } from '../../middlewares';
 import { multicityCheck, validateInput, userRequestHistoryValidator } from '../../validation';
 
+
+
 const { authenticate } = Authentication;
 const { multiCityRequest, getUserRequestHistory, getManagerTrips } = Trips;
 const router = express.Router();
@@ -14,5 +16,6 @@ router.get(
   '/request',
   authenticate, userRequestHistoryValidator, getUserRequestHistory
 );
+
 
 export default router;
