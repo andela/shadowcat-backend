@@ -12,9 +12,11 @@
     "heroku-postbuild": "npm run reverse && npm run migration && npm run seed",
     "lint": "eslint src/ --fix . && echo 'Lint complete.'",
     "migration": "sequelize db:migrate",
+    "migration:test": "cross-env NODE_ENV=test npm run migration",
     "seed": "sequelize db:seed:all",
     "reverse": "sequelize db:migrate:undo:all",
     "reverse:recent": "sequelize db:migrate:undo",
+    "reverse:test": "cross-env NODE_ENV=test sequelize db:migrate:undo:all",
     "refreshdb": "npm run reverse && npm run migration && npm run seed",
     "coveralls-coverage": "coveralls < lcov.info",
     "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
@@ -55,10 +57,11 @@
     "request": "^2.87.0",
     "sequelize": "^5.15.0",
     "sequelize-cli": "^5.5.0",
+    "socket.io": "^2.2.0",
     "swagger-ui-express": "^4.0.7",
     "underscore": "^1.9.1",
-    "uuidv4": "^4.0.0",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "uuidv4": "^4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",

@@ -15,17 +15,18 @@ class passwordEmail {
    * @static
    * @param {props} userEmail
    * @param {email} template
+   * @param {string} subjectTopic
    * @returns{object} Success Message
    * @memberof PasswordEmail
    */
-  static async sendEmail(userEmail, template) {
+  static async sendEmail(userEmail, template, subjectTopic) {
     emailer.setApiKey(process.env.SENDGRID_API_KEY);
 
     const detail = {
 
       to: userEmail,
       from: { email: process.env.WEB_MAIL_URL, name: 'BareFoot Nomad' },
-      subject: 'Reset Password',
+      subject: subjectTopic,
       html: template,
     };
 
