@@ -27,7 +27,8 @@ class Comment {
                 where: { userId: id }
             });
             const { tripId } = getTrip;
-            if (!tripId) {
+     
+           if (!tripId) {
                 return response.sendError(
                     res,
                     404,
@@ -46,44 +47,7 @@ class Comment {
         }
     }
 
-    /**
-    * update request comment
-    * @async
-    * @param  {object} req - Request object
-    * @param {object} res - Response object
-    * @param {object} next The next middleware
-    * @return {json} Returns json object
-    * @static
-    */
-    static async updateComment(req, res, next) {
-        try {
-            const { commentId } = req.params;
-            const getComment = await Comments.findOne({
-                where: { id: commentId }
-            });
-            if (getComment === null) {
-                return response.sendError(
-                    res,
-                    404,
-                    'No comment have been made'
-                );
-            }
-            const updateComment = await Comments.update({ comment: req.body.comment },
-                {
-                    returning: true,
-                    where: { id: commentId, userId: req.id }
-                });
-            return response.sendSuccess(
-                res,
-                200,
-                updateComment[1],
-                'comment updated!'
-            );
-        } catch (error) {
-            next(error);
-        }
-    }
-
+  
     /**
      * Get all comments
      * @static
@@ -118,13 +82,24 @@ class Comment {
         }
     }
 
+
+/**
+ * Delete Trip request comments
+ * @static
+ * @param {object} req - The Request Object
+ * @param {object} res - The Response Object
+ * @param {object} next - The Next Middleware
+ * @return {json} - Returns json Object
+ * @memberof RequestComment
+ * @static
+ */
     static async deleteComment(req, res, next) {
         try {
-            validateParam(res, req.params.id);
-            const { id } = req.params;
+            validateParam(res, req.params.commentId );
+            const {  commentId } = req.params;
 
 
-            const comment = await Comments.findOne({ where: { id } });
+            const comment = await Comments.findOne({ where: { id: commentId } });
 
             if (!comment) {
                 return res.status(404).json({
@@ -132,7 +107,7 @@ class Comment {
                     error: 'Comment Not Found',
                 });
             }
-            await Comments.destroy({ where: { id, userId:id, } });
+            await Comments.destroy({ where: { id: commentId } });
             return res.status(200).json({
                 status: "success",
                 message: "Your comment has been Sucessfully Deleted"
