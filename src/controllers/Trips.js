@@ -286,6 +286,7 @@ class Trips {
           requestStatus,
           destination,
           createdAt,
+          accommodation,
           currentOfficeLocation
         } = request;
         const destinationList = [];
@@ -305,6 +306,7 @@ class Trips {
           destinations: destinationList,
           departureDate,
           returnDate,
+          accommodation,
           reason,
           requestStatus,
           createdAt
