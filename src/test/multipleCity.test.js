@@ -6,18 +6,15 @@ import server from '../index';
 const { expect } = chai;
 chai.use(chaiHttp);
 const testUser3 = {
-  email: 'james@andela.com',
-  firstname: 'james',
-  lastname: 'awarga',
-  password: 'Qwertyuiop1$',
-  phone: '08032626214'
+  email: 'stephenibaba@andela.com',
+  password: 'Jennylove19',
 };
 
 let testToken = null;
 describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
   before((done) => {
     chai.request(server)
-      .post('/api/v1/auth/signup')
+      .post('/api/v1/auth/login')
       .send(testUser3)
       .end((err, res) => {
         if (err) return done(err);
@@ -43,7 +40,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         expect(res.status).to.equal(201);
         expect((res.body)).to.be.an('object');
         expect((res.body)).to.have.all.keys('status', 'data');
-        expect((res.body)).to.haveOwnProperty('status').that.equals('success');
+        expect((res.body)).to.haveOwnProperty('status').that.equals('success, an email has been sent to you');
         expect((res.body)).to.haveOwnProperty('status').that.is.a('string');
         expect((res.body)).to.haveOwnProperty('data').that.is.an('object');
         expect((res.body.data)).to.be.an('object');
@@ -248,6 +245,17 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         expect((res.body.error)).to.be.a('string');
         expect((res.body.status)).to.equals(401);
         expect((res.body)).to.haveOwnProperty('error').that.is.a('string');
+        done();
+      });
+  });
+  it('should show trips created as a notification to manager in real time', (done) => {
+    chai.request(server)
+      .get('/api/v1/trips/get_trips/1')
+      .set('token', `Bearer ${testToken}`)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res).to.be.an('Object');
+        expect(res.status).to.equal(200);
         done();
       });
   });

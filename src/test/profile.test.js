@@ -49,7 +49,7 @@ describe('Testing User Profile Page Setting ', () => {
     });
   });
   describe('Testing User Update Profile Page Setting ', () => {
-    it('should not update when the request body is empty ', (done) => {  
+    it('should not update when the request body is empty ', (done) => {
       chai.request(server)
         .put('/api/v1/users/profile')
         .set('Authorization', `Bearer ${token}`)
