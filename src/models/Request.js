@@ -40,6 +40,9 @@ export default (sequelize, DataTypes) => {
     Requests.belongsTo(models.Users, {
       foreignKey: 'userId'
     });
+    Requests.hasMany(models.Notifications, {
+      foreignKey: 'tripId', onUpdate: 'CASCADE', onDelete: 'CASCADE'
+    });
   };
 
   return Requests;
