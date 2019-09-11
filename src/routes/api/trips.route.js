@@ -4,14 +4,13 @@ import { Authentication } from '../../middlewares';
 import {
   onewayCheck, onewayValidateInput, multicityCheck, multicityValidateInput
 } from '../../validation';
-import validateRequestType from '../../utils/helper/validateRequestType';
+import { validate, validateRequestType } from '../../utils/helper/tripTypeChecker';
 
 const { tripRequest } = Trips;
 const { authenticate } = Authentication;
-
-
 const router = express.Router();
 
-router.post('/request', authenticate, validateRequestType, onewayCheck, onewayValidateInput, multicityCheck, multicityValidateInput, tripRequest);
+router.post('/request', authenticate, validateRequestType, validate(onewayCheck(), 'one-way'),
+  onewayValidateInput, validate(multicityCheck(), 'Multi-city'), multicityValidateInput, tripRequest);
 
 export default router;

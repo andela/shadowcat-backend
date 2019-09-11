@@ -3,7 +3,6 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../index';
 
-
 const { expect } = chai;
 chai.use(chaiHttp);
 const testUser3 = {
@@ -174,10 +173,9 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
         expect(res.status).to.equal(400);
-        expect((res.body)).to.have.all.keys('status', 'error');
         expect((res.body.error)).to.be.an('object');
-        expect((res.body.status)).to.equals(400);
-        expect((res.body)).to.haveOwnProperty('error').to.be.a('string');
+        expect((res.body.status)).to.equals('error');
+        expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
         done();
       });
   });

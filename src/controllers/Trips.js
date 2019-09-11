@@ -52,9 +52,43 @@ class Trips {
  * @returns {object} Details of booked trips
  * @memberof Trips
  */
-
   static async oneWay(req, res, next) {
-  console.log('zzzzzzzzzzzzzzzzzzz');
+    try {
+      const { id: userId } = req;
+      const {
+        currentOfficeLocation, reason, tripType, accommodation, departureDate
+      } = req.body;
+      const { currentOfficeLocationData } = req;
+      const { destinationData } = req;
+      const tripsData = {
+        currentOfficeLocation: Number(currentOfficeLocation),
+        tripId: uuidv4(),
+        userId,
+        departureDate: new Date(departureDate).toUTCString(),
+        reason,
+        tripType,
+        requestStatus: 'pending',
+        destination: Object.values(destinationData),
+        accommodation
+      };
+      const tripsResult = await Requests.create(tripsData);
+      if (tripsResult) {
+        const resultObject = {
+          userId,
+          destinationID: Object.values(destinationData)[0],
+          currentOfficeLocation: Object.keys(currentOfficeLocationData)[0],
+          destination: Object.keys(destinationData)[0],
+          departureDate: new Date(departureDate).toUTCString(),
+          accommodation,
+          reason,
+          tripType,
+          requestStatus: 'pending'
+        };
+        return serverResponse(res, 201, ...['success', 'data', resultObject]);
+      }
+    } catch (error) {
+      return next(error);
+    }
   }
 
   /**
@@ -66,9 +100,7 @@ class Trips {
   * @returns {object} Details of booked trips
   * @memberof Trips
   */
-
   static async return(req, res, next) {
-
   }
 
   /**
@@ -84,7 +116,11 @@ class Trips {
     try {
       const { id: userId } = req;
       const {
-        departureDate, currentOfficeLocation, returnDate, reason, tripType
+        departureDate,
+        currentOfficeLocation,
+        returnDate,
+        reason,
+        tripType
       } = req.body;
       const { currentOfficeData } = req;
       const { destinationData } = req;

@@ -4,7 +4,7 @@ import models from '../models';
 import datecheck from '../utils/dateCheck';
 
 const { Locations } = models;
-const multicityCheck = body('tripType').matches(/^Multi-city$/, 'i') ? [
+const multicityCheck = () => [
   body('departureDate').trim().not().isEmpty()
     .withMessage('Departure Date field is required')
     .matches(/^\d{4}([-./,:])\d{2}\1\d{2}$/, 'i')
@@ -15,7 +15,7 @@ const multicityCheck = body('tripType').matches(/^Multi-city$/, 'i') ? [
     .withMessage('The date must follow date format YYYY-MM-DD'),
   body('reason').trim().not().isEmpty()
     .withMessage('Reason field is required'),
-] : [];
+];
 /**
  *@description A class that handles all validations
  * @class Validation
@@ -60,7 +60,7 @@ class Validation {
     const errors = {};
     const { currentOfficeLocation } = request.body;
     if (!currentOfficeLocation) {
-      if (!errors.currentOfficeLocation) errors.currentOfficeLocation = ['currentOfficeLocation is required'];
+      if (!errors.currentOfficeLocation) errors.currentOfficeLocation = ['urrentOfficeLocation is required'];
       else errors.currentOfficeLocation.push('currentOfficeLocation is required');
     }
     if (!/^\d+$/.test(currentOfficeLocation)) {
@@ -168,30 +168,29 @@ class Validation {
  */
   static async multicityValidateInput(req, res, next) {
     const { tripType } = req.body;
-    if (tripType.toLowerCase() === 'multi-city') {
-      const errors = validationResult(req);
-      const validateOriginError = await Validation.validateOrigin(req);
-      const validateDestinationError = await Validation.validateDestination(req);
-      const validateDateError = Validation.validateDate(req);
-      const validateDateKey = Object.keys(validateDateError);
-      const validateOriginKey = Object.keys(validateOriginError);
-      const validateDestinationKey = Object.keys(validateDestinationError);
-      if (!errors.isEmpty()
+    if (tripType !== 'Multi-city') return next();
+
+    const errors = validationResult(req);
+    const validateOriginError = await Validation.validateOrigin(req);
+    const validateDestinationError = await Validation.validateDestination(req);
+    const validateDateError = Validation.validateDate(req);
+    const validateDateKey = Object.keys(validateDateError);
+    const validateOriginKey = Object.keys(validateOriginError);
+    const validateDestinationKey = Object.keys(validateDestinationError);
+    if (!errors.isEmpty()
         || validateOriginKey.length
         || validateDestinationKey.length
         || validateDateKey.length) { // eslint-disable-next-line
         const errorObj = { ...validateOriginError, ...validateDestinationError, ...validateDateError };
-        errors.array().map(err => {
-          if (errorObj[err.param]) return errorObj[err.param].push(err.msg);
-          errorObj[err.param] = [err.msg];
-          return errorObj;
-        });
-        return res.status(400).json({
-          status: 'error',
-          error: errorObj
-        });
-      }
-      return next();
+      errors.array().map(err => {
+        if (errorObj[err.param]) return errorObj[err.param].push(err.msg);
+        errorObj[err.param] = [err.msg];
+        return errorObj;
+      });
+      return res.status(400).json({
+        status: 'error',
+        error: errorObj
+      });
     }
     return next();
   }
