@@ -12,7 +12,7 @@ export default {
         password: bcrypt.hashSync('IamUser', 10),
         userId: uuidv4(),
         linemanager: 1,
-        role: 'User',
+        role: '5',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -22,7 +22,7 @@ export default {
         lastname: 'chidinma',
         email: 'stephenibaba@andela.com',
         password: bcrypt.hashSync('Jennylove19', 10),
-        role: 'Line Manager',
+        role: '5',
         linemanager: 2,
         createdAt: new Date(),
         updatedAt: new Date()

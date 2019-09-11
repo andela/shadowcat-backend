@@ -6,5 +6,7 @@ export default {
       defaultValue: 1
     });
   },
-  down: (queryInterface) => Promise.all([queryInterface.removeColumn('Users', 'role')])
+  down: async (queryInterface) => {
+    await queryInterface.removeColumn('Users', 'role');
+  }
 };
