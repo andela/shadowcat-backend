@@ -1,7 +1,10 @@
 export default {
-  up: (queryInterface, Sequelize) => Promise.all([queryInterface.addColumn('Users', 'role', {
-    type: Sequelize.INTEGER,
-    defaultValue: 1
-  })]),
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.removeColumn('Users', 'role');
+    await queryInterface.addColumn('Users', 'role', {
+      type: Sequelize.INTEGER,
+      defaultValue: 1
+    });
+  },
   down: (queryInterface) => Promise.all([queryInterface.removeColumn('Users', 'role')])
 };

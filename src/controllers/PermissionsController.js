@@ -7,8 +7,7 @@ const { roles } = models;
 
 
 /**
- *
- *
+ *@description A class that handles permissions related functions
  * @class Permissions
  */
 class Permissions {
