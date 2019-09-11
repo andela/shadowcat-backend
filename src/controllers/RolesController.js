@@ -23,8 +23,7 @@ class Roles {
   static async assignRole(req, res, next) {
     try {
       const { email, newRole } = req.body;
-      const { staffId } = req;
-      const { staffOldRole } = req;
+      const { staffId, oldRole } = req;
       const updatedData = await Users.update({
         role: newRole
       }, {
@@ -37,7 +36,7 @@ class Roles {
         updatedAt: createdAt, role: updatedRole
       } = updatedData[1][0];
       const responseObj = {
-        email, oldRole: staffOldRole, newRole: updatedRole, createdAt
+        email, oldRole, newRole: updatedRole, createdAt
       };
       return serverResponse(res, 201, ...['success', 'data', responseObj]);
     } catch (err) {

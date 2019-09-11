@@ -6,17 +6,17 @@ const { roles } = models;
 
 const validateRole = async (request) => {
   let errors = {};
-  const { affectedRole } = request.body;
-  if (!affectedRole) errors = { ...errorAssignment('Role input is compulsory', 'affectedRole') };
-  if (!/^\d+$/.test(affectedRole)) errors = { ...errorAssignment('Role input must be a number', 'affectedRole') };
+  const { role } = request.body;
+  if (!role) errors = { ...errorAssignment('Role input is compulsory', 'role') };
+  if (!/^\d+$/.test(role)) errors = { ...errorAssignment('Role input must be a number', 'role') };
 
-  if (!errors.affectedRole && affectedRole) {
+  if (!errors.role && role) {
     const userRole = await roles.findOne({
-      where: { id: affectedRole },
+      where: { id: role },
       raw: true
     });
     if (!userRole) {
-      errors = { ...errorAssignment('Check role input and try again', 'affectedRole') };
+      errors = { ...errorAssignment('Role is invalid', 'role') };
     } else {
       request.userRole = userRole.id;
     }
@@ -32,7 +32,7 @@ const validatePermissionField = async (request) => {
   // eslint-disable-next-line
   if (!request.body.hasOwnProperty('addPermission')&&!request.body.hasOwnProperty('removePermission')) errors = { ...errorAssignment('Permission field accepts keys \'addPermission\' OR \'removePermission\'', 'permission') };
 
-  if (!/^.{8,}$/i.test(removePermission || addPermission)) errors = { ...errorAssignment('Permission value is compulsory and must be atleast 8 characters', 'permission') };
+  if (!/^\S{8,}$/i.test(removePermission || addPermission)) errors = { ...errorAssignment('Permission value is compulsory, must be atleast 8 characters with no spaces allowed', 'permission') };
   return errors;
 };
 

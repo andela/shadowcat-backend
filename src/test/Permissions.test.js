@@ -29,7 +29,7 @@ describe('TESTING PERMISSIONS ASSIGNMENT ENDPOINT', () => {
       .set('Authorization', `Bearer ${testToken}`)
       .send({
         addPermission: 'canAuthorize',
-        affectedRole: 4
+        role: 4
       })
       .end((err, res) => {
         if (err) return done(err);
@@ -56,7 +56,7 @@ describe('TESTING PERMISSIONS ASSIGNMENT ENDPOINT', () => {
       .set('Authorization', `Bearer ${testToken}`)
       .send({
         addPermission: 'canAuthorize',
-        affectedRole: 4
+        role: 4
       })
       .end((err, res) => {
         if (err) return done(err);
@@ -76,7 +76,7 @@ describe('TESTING PERMISSIONS ASSIGNMENT ENDPOINT', () => {
       .set('Authorization', `Bearer ${testToken}`)
       .send({
         removePermission: 'canAuthorize',
-        affectedRole: 4
+        role: 4
       })
       .end((err, res) => {
         if (err) return done(err);
@@ -102,7 +102,7 @@ describe('TESTING PERMISSIONS ASSIGNMENT ENDPOINT', () => {
       .set('Authorization', `Bearer ${testToken}`)
       .send({
         removePermission: 'canAuthorize',
-        affectedRole: 4
+        role: 4
       })
       .end((err, res) => {
         if (err) return done(err);
@@ -122,7 +122,7 @@ describe('TESTING PERMISSIONS ASSIGNMENT ENDPOINT', () => {
       .set('Authorization', `Bearer ${testToken}`)
       .send({
         addPermission: 'canAuthorize',
-        affectedRole: 4
+        role: 4
       })
       .end((err, res) => {
         if (err) return done(err);
@@ -149,7 +149,7 @@ describe('TESTING PERMISSIONS ASSIGNMENT ENDPOINT', () => {
       .set('Authorization', `Bearer ${testToken}`)
       .send({
         addPermission: 'canAuthorize',
-        affectedRole: 25
+        role: 25
       })
       .end((err, res) => {
         if (err) return done(err);
@@ -157,8 +157,8 @@ describe('TESTING PERMISSIONS ASSIGNMENT ENDPOINT', () => {
         expect(res.status).to.equal(400);
         expect((res.body)).to.have.all.keys('status', 'error');
         expect((res.body.error)).to.be.an('object');
-        expect((res.body.error.affectedRole)).to.be.an('array');
-        expect((res.body.error.affectedRole[0])).to.be.an('string');
+        expect((res.body.error.role)).to.be.an('array');
+        expect((res.body.error.role[0])).to.be.an('string');
         done();
       });
   });
@@ -167,7 +167,7 @@ describe('TESTING PERMISSIONS ASSIGNMENT ENDPOINT', () => {
       .patch('/api/v1/users/set_permission')
       .set('Authorization', `Bearer ${testToken}`)
       .send({
-        affectedRole: 4
+        role: 4
       })
       .end((err, res) => {
         if (err) return done(err);

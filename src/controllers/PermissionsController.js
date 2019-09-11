@@ -22,10 +22,10 @@ class Permissions {
   static async updatePermissions(req, res, next) {
     try {
       const {
-        addPermission, removePermission, affectedRole
+        addPermission, removePermission, role
       } = req.body;
       const roleData = await roles.findOne({
-        where: { id: affectedRole },
+        where: { id: role },
         raw: true
       });
       if (!roleData) return serverResponse(res, 400, ...['error', 'message', 'Role does not exist']);
@@ -38,7 +38,7 @@ class Permissions {
           rolePermissions: roleArray
         }, {
           returning: true,
-          where: { id: affectedRole },
+          where: { id: role },
           raw: true
         });
       }
@@ -49,11 +49,11 @@ class Permissions {
           rolePermissions: roleArray
         }, {
           returning: true,
-          where: { id: affectedRole },
+          where: { id: role },
           raw: true
         });
       }
-      const responseObj = { role: affectedRole, permissions: updatedRole[1][0].rolePermissions };
+      const responseObj = { role, permissions: updatedRole[1][0].rolePermissions };
       return serverResponse(res, 201, ...['success', 'data', responseObj]);
     } catch (err) {
       return next(err);

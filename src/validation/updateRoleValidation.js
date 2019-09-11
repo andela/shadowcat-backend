@@ -28,7 +28,7 @@ const validateEmail = async (request) => {
       errors = { ...errorAssignment('Check email and try again', 'email') };
     } else {
       request.staffId = userData.userId;
-      request.staffOldRole = userData.role;
+      request.oldRole = userData.role;
     }
   }
   return errors;
