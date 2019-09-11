@@ -10,20 +10,24 @@ import models from '../models';
 chai.use(chaiHttp);
 
 const url = '/api/v1/trips/request';
-const signupUrl = '/api/v1/auth/signup';
-let createdUser = null;
 let createdMultiTrip = null;
+let testToken = null;
+const testUser3 = {
+  email: 'stephenibaba@andela.com',
+  password: 'Jennylove19',
+};
 
 describe('GET request route', () => {
-  // Create a user
-  before(async () => {
-    const cloneUser = { ...user };
-    const res = await chai
-      .request(server)
-      .post(`${signupUrl}`)
-      .send(cloneUser);
-
-    createdUser = res.body.data;
+  // sign in a user
+  before((done) => {
+    chai.request(server)
+      .post('/api/v1/auth/login')
+      .send(testUser3)
+      .end((err, res) => {
+        if (err) return done(err);
+        testToken = res.body.data.token;
+        return done();
+      });
   });
 
   // Create a trip for user
@@ -32,9 +36,8 @@ describe('GET request route', () => {
     const res = await chai
       .request(server)
       .post(`${url}`)
-      .set('Authorization', `Bearer ${createdUser.token}`)
+      .set('Authorization', `Bearer ${testToken}`)
       .send(cloneTrip);
-
     createdMultiTrip = res.body.data;
   });
 
@@ -148,7 +151,6 @@ describe('GET request route', () => {
           expect(res.status).to.deep.equal(200);
 
           const { body } = res;
-
           expect(body).to.have.property('status');
           expect(body).to.have.property('data');
           expect(body).to.have.property('message');
