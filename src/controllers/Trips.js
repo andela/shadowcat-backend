@@ -78,7 +78,7 @@ class Trips {
         notifyemail: notifyEmail
       } = aUser;
       if (!lineManagerUser) {
-        return serverResponse(res, 400, ...['error', 'message', 'Line Manager must be present to continue']);
+        return serverResponse(res, 400, ...['error', 'message', 'You must have a line manager in order to continue']);
       }
       const {
         currentOfficeLocation, reason, tripType, accommodation, departureDate
@@ -176,7 +176,7 @@ class Trips {
         notifyemail: notifyEmail
       } = aUser;
       if (!lineManagerUser) {
-        return serverResponse(res, 400, ...['error', 'message', 'Line Manager must be present to continue']);
+        return serverResponse(res, 400, ...['error', 'message', 'You must have a line manager in order to continue']);
       }
       const {
         departureDate,
