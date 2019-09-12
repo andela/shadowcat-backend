@@ -79,6 +79,29 @@ describe('TESTING ONE WAY REQUEST', () => {
         done();
       });
   });
+  it('should send an error 400 when departure date is behind current date', (done) => {
+    chai.request(server)
+      .post('/api/v1/trips/request')
+      .set('Authorization', `Bearer ${testToken}`)
+      .send({
+        departureDate: '2018-10-25',
+        currentOfficeLocation: 1,
+        reason: 'official',
+        tripType: 'one-way',
+        destination: 2,
+        accommodation: 2
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body).to.haveOwnProperty('status');
+        expect(res.status).to.equal(400);
+        expect((res.body)).to.have.all.keys('status', 'error');
+        expect((res.body.error)).to.be.an('object');
+        expect((res.body.status)).to.equals('error');
+        expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
+        done();
+      });
+  });
   it('should send an error 400 when a Destination matches Current Office Location', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')

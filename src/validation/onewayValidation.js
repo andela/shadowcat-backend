@@ -6,7 +6,9 @@ const onewayCheck = () => [
   body('departureDate').trim().not().isEmpty()
     .withMessage('Departure Date field is required')
     .matches(/^\d{4}([-./,:])\d{2}\1\d{2}$/, 'i')
-    .withMessage('The date must follow date format YYYY-MM-DD'),
+    .withMessage('The date must follow date format YYYY-MM-DD')
+    .custom((value) => value.replace(/-/g, '/') >= (new Date().toISOString().slice(0, 10)).replace(/-/g, '/'))
+    .withMessage('Departure date must be greater than or equal to today\'s date'),
   body('reason').trim().not().isEmpty()
     .withMessage('Reason field is required'),
 ];
