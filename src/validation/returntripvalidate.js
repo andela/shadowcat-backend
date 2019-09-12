@@ -1,22 +1,22 @@
-import { check } from 'express-validator/check';
+import { check, body } from 'express-validator/check';
 import notEmpty from '../utils/helper/notEmpty';
-import { Op } from 'sequelize';
+import datecheck from '../utils/dateCheck';
 import models from '../models';
 import {  validationResult } from 'express-validator';
 
-
+const { Locations } = models
 const returnTripCheck = () => [
     check('reason')
         .trim()
         .exists()
         .custom(value => notEmpty(value, 'reasons for Trip is required')),
-    check('departureDate')
+    body('departureDate')
         .trim()
         .exists()
         .matches(/^\d{4}([-./,:])\d{2}\1\d{2}$/, 'i')
         .withMessage('The date must follow date format YYYY-MM-DD')
         .custom(value => notEmpty(value, 'departureDate is required')),
-    check('returnDate')
+    body('returnDate')
         .trim()
         .exists()
         .matches(/^\d{4}([-./,:])\d{2}\1\d{2}$/, 'i')
@@ -46,6 +46,36 @@ const returnTripCheck = () => [
 ];
     
 class Validation {
+
+    /**
+    *@description A validation for the date
+    * @static
+    * @param {Object} request
+    * @returns {Object} errors
+    * @memberof Validation
+    */
+    static validateDate(request) {
+        const errors = {};
+        const { departureDate, returnDate } = request.body;
+        const duration = datecheck(departureDate, returnDate);
+        if (duration === 'negative value') {
+            if (!errors.departureDate) {
+                errors.departureDate = ['Departure date can not be less than Today\'s date'];
+            } else {
+                errors.departureDate.push('Departure date can not be less than Today\'s date');
+            }
+        }
+        if (!duration) {
+            if (!errors.departureDate) {
+                errors.departureDate = ['Departure date can not be above or the same as the return date'];
+            } else {
+                errors.departureDate.push('Departure date can not be above or the same as the return date');
+            }
+        }
+        return errors;
+    }
+
+
     /**
    *@description A validation for fields
    * @static
@@ -57,6 +87,7 @@ class Validation {
    */
     static async validateField(req, value, field) {
         const errors = {};
+        
         if (!value) {
             if (!errors[`${field}`]) errors[`${field}`] = [field === 'currentOfficeLocation' ? 'Current Office Location is required' : 'Destination is required'];
             else errors[`${field}`].push(field === 'currentOfficeLocation' ? 'Current Office Location is required' : 'Destination is required');
@@ -71,6 +102,7 @@ class Validation {
         }
         if (!errors[`${field}`]) {
             const locationsData = await Locations.findAll({
+
                 attributes: ['id', 'locationName'],
                 where: { id: value },
                 raw: true
@@ -89,76 +121,6 @@ class Validation {
     }
 
 
-/**
-*@description A validation for destination
-* @static
-* @param {Object} request
-* @returns {Object} errors
-* @memberof Validation
-*/
-    static async validateDestination(request) {
-        const errors = {};
-        let { destination } = request.body;
-        if (!destination) {
-            if (!errors.destination) errors.destination = ['Destination input must be an array', 'Mutiple office locations inputs are required'];
-            else errors.destination.push('Destination input must be an array', 'Mutiple office locations inputs are required');
-        }
-        if (!Array.isArray(destination)) {
-            if (!errors.destination) errors.destination = ['Destination field must be an array'];
-            else errors.destination.push('Destination field must be an array');
-        }
-        if (destination && Array.isArray(destination)) {
-            if (destination.length === 0) {
-                if (!errors.destination) errors.destination = ['Destination field is required'];
-                else errors.destination.push('Destination field is required');
-            }
-            if (destination.length < 2) {
-                if (!errors.destination) errors.destination = ['Multi-city trip type must have one than one destinations'];
-                else errors.destination.push('Multi-city trip type must have more than one destinations');
-            }
-            destination.map(value => {
-                if (!/^\d+$/.test(value)) {
-                    if (!errors.destination) {
-                        errors.destination = [`${value} must be a number`];
-                    } else {
-                        errors.destination.push(`${value} must be a number`);
-                    }
-                }
-                return value;
-            });
-            // eslint-disable-next-line
-            destination = destination.filter((value, index) => {
-                if (destination.indexOf(value) === index) {
-                    return value;
-                }
-                if (!errors.destination) {
-                    errors.destination = [`${value} must be unique to the request`];
-                } else {
-                    errors.destination.push(`${value} must be unique to the request`);
-                }
-            });
-        }
-        if (!errors.destination && destination) {
-            const locationsData = await Locations.findAll({
-                attributes: ['id', 'locationName'],
-                where: { id: { [Op.or]: [...destination] } },
-                raw: true
-            });
-            if (!locationsData.length || (locationsData.length !== destination.length)) {
-                if (!errors.destination) errors.destination = ['One or more destinations do not match andela\'s office location'];
-                else errors.destination.push('One or more destinations do not match andela\'s office location');
-            }
-            if (locationsData.length === destination.length) {
-                const destinationData = {};
-                locationsData.map(data => {
-                    destinationData[data.locationName] = data.id;
-                    return destinationData;
-                });
-                request.destinationData = destinationData;
-            }
-        }
-        return errors;
-    }
 
     /**
    *@description A validation check for the current location
