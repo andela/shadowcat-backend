@@ -2,7 +2,6 @@ import express from 'express';
 import { Trips } from '../../controllers';
 import { Authentication } from '../../middlewares';
 import {
-  // eslint-disable-next-line max-len
   onewayCheck, onewayValidateInput, multicityCheck, multicityValidateInput, userRequestHistoryValidator
 } from '../../validation';
 import { validate, validateRequestType } from '../../utils/helper/tripTypeChecker';
