@@ -1,29 +1,31 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import user from './__MOCK__/user';
 import multiTrip from './__MOCK__/multiTrip';
 import server from '../index';
 import { authorizationErrors, userRequestHistoryErrors } from '../utils/constants/errorMessages';
 import constants from '../utils/constants/constants';
-import models from '../models';
 
 chai.use(chaiHttp);
 
 const url = '/api/v1/trips/request';
-const signupUrl = '/api/v1/auth/signup';
-let createdUser = null;
 let createdMultiTrip = null;
+let testToken = null;
+const testUser3 = {
+  email: 'stephenibaba@andela.com',
+  password: 'Jennylove19',
+};
 
 describe('GET request route', () => {
-  // Create a user
-  before(async () => {
-    const cloneUser = { ...user };
-    const res = await chai
-      .request(server)
-      .post(`${signupUrl}`)
-      .send(cloneUser);
-
-    createdUser = res.body.data;
+  // sign in a user
+  before((done) => {
+    chai.request(server)
+      .post('/api/v1/auth/login')
+      .send(testUser3)
+      .end((err, res) => {
+        if (err) return done(err);
+        testToken = res.body.data.token;
+        return done();
+      });
   });
 
   // Create a trip for user
@@ -32,25 +34,9 @@ describe('GET request route', () => {
     const res = await chai
       .request(server)
       .post(`${url}`)
-      .set('Authorization', `Bearer ${createdUser.token}`)
+      .set('Authorization', `Bearer ${testToken}`)
       .send(cloneTrip);
-
     createdMultiTrip = res.body.data;
-  });
-
-  // Code cleanup after tests
-  after(async () => {
-    const { Users, Requests } = models;
-    await Requests.destroy({
-      where: {
-        userId: createdUser.userId
-      }
-    });
-    await Users.destroy({
-      where: {
-        userId: createdUser.userId
-      }
-    });
   });
 
   it('should return 401 with undefined authorization token', done => {
@@ -109,7 +95,7 @@ describe('GET request route', () => {
       chai
         .request(server)
         .get(`${url}?limit=sh1&offset=121asd`)
-        .set('Authorization', `Bearer ${createdUser.token}`)
+        .set('Authorization', `Bearer ${testToken}`)
         .send()
         .end((err, res) => {
           expect(res).to.have.property('status');
@@ -140,7 +126,7 @@ describe('GET request route', () => {
       chai
         .request(server)
         .get(`${url}`)
-        .set('Authorization', `Bearer ${createdUser.token}`)
+        .set('Authorization', `Bearer ${testToken}`)
         .send()
         .end((err, res) => {
           expect(res).to.have.property('status');
@@ -148,7 +134,6 @@ describe('GET request route', () => {
           expect(res.status).to.deep.equal(200);
 
           const { body } = res;
-
           expect(body).to.have.property('status');
           expect(body).to.have.property('data');
           expect(body).to.have.property('message');

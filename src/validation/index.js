@@ -1,4 +1,8 @@
-import { multicityCheck, validateInput } from './multicityValidation';
+import { multicityCheck, multicityValidateInput } from './multicityValidation';
+import { onewayCheck, onewayValidateInput } from './onewayValidation';
 import { userRequestHistory as userRequestHistoryValidator } from './userRequestHistory';
 
-export { multicityCheck, validateInput, userRequestHistoryValidator };
+export {
+  // eslint-disable-next-line max-len
+  onewayCheck, onewayValidateInput, multicityCheck, multicityValidateInput, userRequestHistoryValidator
+};

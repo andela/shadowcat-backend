@@ -3,7 +3,6 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../index';
 
-
 const { expect } = chai;
 chai.use(chaiHttp);
 const testUser3 = {
@@ -67,7 +66,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         returnDate: '2019-12-10',
         currentOfficeLocation: 'Lagos Office',
         reason: 'official',
-        tripType: 'Multiple stops',
+        tripType: 'Multi-city',
         value1: 'Abuja Office',
         value2: 'Lagos Office 2'
       })
@@ -91,7 +90,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         returnDate: '2019-12-10',
         currentOfficeLocation: 'Lagos Office',
         reason: 'official',
-        tripType: 'Multiple stops',
+        tripType: 'Multi-city',
         value1: 'Abuja Office',
         value2: 'Lagos Offic'
       })
@@ -115,7 +114,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         returnDate: '2019-12-10',
         currentOfficeLocation: '',
         reason: 'official',
-        tripType: 'Multiple stops',
+        tripType: 'Multi-city',
         value1: 'Abuja Office',
         value2: 'Lagos Office 2'
       })
@@ -139,7 +138,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         returnDate: '2019-12-10',
         currentOfficeLocation: 'Lagos Office',
         reason: '',
-        tripType: 'Multiple stops',
+        tripType: 'Multi-city',
         value1: 'Abuja Office',
         value2: 'Lagos Office 2'
       })
@@ -171,7 +170,6 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         if (err) return done(err);
         expect(res.body).to.haveOwnProperty('status');
         expect(res.status).to.equal(400);
-        expect((res.body)).to.have.all.keys('status', 'error');
         expect((res.body.error)).to.be.an('object');
         expect((res.body.status)).to.equals('error');
         expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
@@ -187,7 +185,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         returnDate: '2019-12-10',
         currentOfficeLocation: 'Lagos Office',
         reason: 'official',
-        tripType: 'Multiple stops',
+        tripType: 'Multi-city',
         value1: 'Abuja Office',
         value2: 'Lagos Office 2'
       })
@@ -211,7 +209,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         returnDate: '2019-12-10',
         currentOfficeLocation: 'Lagos Office',
         reason: 'official',
-        tripType: 'Multiple stops',
+        tripType: 'Multi-city',
         value1: 'Abuja Office',
         value2: 'Lagos Office 2'
       })
@@ -235,7 +233,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
         returnDate: '2019-12-10',
         currentOfficeLocation: 'Lagos Office',
         reason: 'official',
-        tripType: 'Multiple stops',
+        tripType: 'Multi-city',
         value1: 'Abuja Office',
         value2: 'Lagos Office 2'
       })

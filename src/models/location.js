@@ -10,8 +10,6 @@ export default (sequelize, DataTypes) => {
       required: true
     }
   }, {});
-  Locations.associate = () => {
-
-  };
+  Locations.associate = (models) => Locations.hasMany(models.Accommodation, { foreignKey: 'locationId', onUpdate: 'CASCADE', onDelete: 'SET NULL' });
   return Locations;
 };
