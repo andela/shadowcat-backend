@@ -45,9 +45,9 @@ describe('TESTING ONE WAY REQUEST', () => {
         expect((res.body)).to.haveOwnProperty('data').that.is.an('object');
         expect((res.body.data)).to.be.an('object');
         expect((res.body.data.userId)).to.be.a('string');
-        expect((res.body.data.destinationID)).to.be.a('number');
-        expect((res.body.data.currentOfficeLocation)).to.be.a('string');
-        expect((res.body.data.destination)).to.be.a('string');
+        expect((res.body.data.destinationIDs)).to.be.an('array');
+        expect((res.body.data.currentOfficeLocation)).to.be.an('array');
+        expect((res.body.data.destination)).to.be.an('array');
         expect((res.body.data.departureDate)).to.be.a('string');
         expect((res.body.data.reason)).to.be.a('string');
         expect((res.body.data.tripType)).to.be.a('string');

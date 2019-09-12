@@ -2,7 +2,11 @@ import express from 'express';
 import { Trips } from '../../controllers';
 import { Authentication } from '../../middlewares';
 import {
-  onewayCheck, onewayValidateInput, multicityCheck, multicityValidateInput, userRequestHistoryValidator
+  onewayCheck,
+  onewayValidateInput,
+  multicityCheck,
+  multicityValidateInput,
+  userRequestHistoryValidator
 } from '../../validation';
 import { validate, validateRequestType } from '../../utils/helper/tripTypeChecker';
 

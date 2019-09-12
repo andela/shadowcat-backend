@@ -92,9 +92,9 @@ class Trips {
         departureDate: new Date(departureDate).toUTCString(),
         reason,
         tripType,
+        accommodation,
         requestStatus: 'pending',
-        destination: Object.values(destinationData),
-        accommodation
+        destination: Object.values(destinationData)
       };
       const tripsResult = await Requests.create(tripsData);
       const locations = Object.keys(destinationData).join(', ');
@@ -124,13 +124,14 @@ class Trips {
       if (tripsResult) {
         const resultObject = {
           userId,
-          destinationID: Object.values(destinationData)[0],
-          currentOfficeLocation: Object.keys(currentOfficeLocationData)[0],
-          destination: Object.keys(destinationData)[0],
+          destinationIDs: Object.values(destinationData),
+          currentOfficeLocation: Object.keys(currentOfficeLocationData),
+          destination: Object.keys(destinationData),
           departureDate: new Date(departureDate).toUTCString(),
-          accommodation,
+          returnDate: '',
           reason,
           tripType,
+          accommodation,
           requestStatus: 'pending'
         };
         return serverResponse(res, 201, ...['success, an email has been sent to you', 'data', resultObject]);

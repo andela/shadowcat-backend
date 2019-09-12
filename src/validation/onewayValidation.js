@@ -30,25 +30,34 @@ class Validation {
     const errors = {};
     if (!value) {
       if (!errors[`${field}`]) errors[`${field}`] = [field === 'currentOfficeLocation' ? 'Current Office Location is required' : 'Destination is required'];
-      else errors[`${field}`].push(field === 'currentOfficeLocation' ? 'Current Office Location is required' : 'Destination is required');
     }
-    if (!/^\d+$/.test(value)) {
-      if (!errors[`${field}`]) errors[`${field}`] = [field === 'currentOfficeLocation' ? 'Current Office Location must be a number' : 'Destination must be a number'];
-      else errors[`${field}`].push(field === 'currentOfficeLocation' ? 'Current Office Location must be a number' : 'Destination must be a number');
+    if (field === 'destination' && !Array.isArray(value)) {
+      req.body.destination = [value];
+      value = [value];
     }
-    if (req.body.currentOfficeLocation !== '' && req.body.destination !== '' && req.body.currentOfficeLocation === req.body.destination) {
+    if (field === 'destination' && value.length > 1) {
+      if (!errors[`${field}`]) errors[`${field}`] = ['Multiple destinations is not allowed'];
+    }
+    if (field === 'currentOfficeLocation') {
+      if (!/^\d+$/.test(value)) {
+        if (!errors[`${field}`]) errors[`${field}`] = ['Current Office Location must be a number'];
+      }
+    } else if (!/^\d+$/.test(value[0])) {
+      if (!errors.destination) {
+        errors.destination = ['Destination must be a number'];
+      }
+    }
+    if (req.body.currentOfficeLocation !== '' && req.body.destination !== '' && req.body.currentOfficeLocation === req.body.destination[0]) {
       if (!errors[`${field}`]) errors[`${field}`] = [field === 'currentOfficeLocation' ? 'Current Office Location and Destination cannot be the same' : 'Destination and Current Office Location cannot be the same'];
-      else errors[`${field}`].push(field === 'currentOfficeLocation' ? 'Current Office Location and Destination cannot be the same' : 'Destination and Current Office Location cannot be the same');
     }
     if (!errors[`${field}`]) {
       const locationsData = await Locations.findAll({
         attributes: ['id', 'locationName'],
-        where: { id: value },
+        where: { id: field === 'currentOfficeLocation' ? value : value[0] },
         raw: true
       });
       if (!locationsData.length) {
         if (!errors[`${field}`]) errors[`${field}`] = [field === 'currentOfficeLocation' ? 'Current Office Location does not match Andela\'s location' : 'Destination does not match Andela\'s location'];
-        else errors[`${field}`].push(field === 'currentOfficeLocation' ? 'Current Office Location does not match Andela\'s location' : 'Destination does not match Andela\'s location');
       }
       if (locationsData.length) {
         const fielData = {};
@@ -71,11 +80,9 @@ class Validation {
     const { accommodation, destination } = req.body;
     if (!accommodation) {
       if (!errors.accommodation) errors.accommodation = ['Accommodation is required'];
-      else errors.accommodation.push('Accommodation is required');
     }
     if (!/^\d+$/.test(accommodation)) {
       if (!errors.accommodation) errors.accommodation = ['Accommodation must be a number'];
-      else errors.accommodation.push('Accommodation must be a number');
     }
     if (!errors.accommodation && accommodation && destination && typeof destination === 'number') {
       const accommodationData = await Accommodation.findAll({
@@ -85,7 +92,6 @@ class Validation {
       });
       if (!accommodationData.length) {
         if (!errors.accommodation) errors.accommodation = ['This accommodation does not exist in the chosen destination'];
-        else errors.accommodation.push('This accommodation does not exist in the chosen destination');
       }
       if (accommodationData.length) {
         const accommodationReqData = {};
@@ -117,8 +123,11 @@ class Validation {
     if (!errors.isEmpty()
       || validateOriginKey.length
       || validateDestinationKey.length || validateAccommodationKey.length) {
-      // eslint-disable-next-line max-len
-      const errorObj = { ...validateOriginError, ...validateDestinationError, ...validateAccommodationError };
+      const errorObj = {
+        ...validateOriginError,
+        ...validateDestinationError,
+        ...validateAccommodationError
+      };
       errors.array().map(err => {
         if (errorObj[err.param]) return errorObj[err.param].push(err.msg);
         errorObj[err.param] = [err.msg];
