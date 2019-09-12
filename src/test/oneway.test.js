@@ -286,6 +286,29 @@ describe('TESTING ONE WAY REQUEST', () => {
         done();
       });
   });
+  it('should send an error 400 when current office location is not an Andelan location', (done) => {
+    chai.request(server)
+      .post('/api/v1/trips/request')
+      .set('Authorization', `Bearer ${testToken}`)
+      .send({
+        departureDate: '2019-10-10',
+        currentOfficeLocation: 20000000000,
+        reason: 'official',
+        tripType: 'one-way',
+        destination: 2,
+        accommodation: 2
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body).to.haveOwnProperty('status');
+        expect(res.status).to.equal(400);
+        expect((res.body)).to.have.all.keys('status', 'error');
+        expect((res.body.error)).to.be.an('object');
+        expect((res.body.status)).to.equals('error');
+        expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
+        done();
+      });
+  });
   it('should send an error 400 when destination is not an Andelan location', (done) => {
     chai.request(server)
       .post('/api/v1/trips/request')
@@ -296,6 +319,29 @@ describe('TESTING ONE WAY REQUEST', () => {
         reason: 'official',
         tripType: 'one-way',
         destination: 20000000000,
+        accommodation: 2
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body).to.haveOwnProperty('status');
+        expect(res.status).to.equal(400);
+        expect((res.body)).to.have.all.keys('status', 'error');
+        expect((res.body.error)).to.be.an('object');
+        expect((res.body.status)).to.equals('error');
+        expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
+        done();
+      });
+  });
+  it('should send an error 400 when destination is more than one', (done) => {
+    chai.request(server)
+      .post('/api/v1/trips/request')
+      .set('Authorization', `Bearer ${testToken}`)
+      .send({
+        departureDate: '2019-10-10',
+        currentOfficeLocation: 1,
+        reason: 'official',
+        tripType: 'one-way',
+        destination: [2, 3],
         accommodation: 2
       })
       .end((err, res) => {
@@ -387,6 +433,28 @@ describe('TESTING ONE WAY REQUEST', () => {
         tripType: 'one-way',
         destination: 1,
         accommodation: 'Mice'
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body).to.haveOwnProperty('status');
+        expect(res.status).to.equal(400);
+        expect((res.body.error)).to.be.an('object');
+        expect((res.body.status)).to.equals('error');
+        expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
+        done();
+      });
+  });
+  it('should send an error 400 when accommodation is not in the chosen location', (done) => {
+    chai.request(server)
+      .post('/api/v1/trips/request')
+      .set('Authorization', `Bearer ${testToken}`)
+      .send({
+        departureDate: '2019-10-10',
+        currentOfficeLocation: 1,
+        reason: 'official',
+        tripType: 'one-way',
+        destination: 1,
+        accommodation: 20000000,
       })
       .end((err, res) => {
         if (err) return done(err);
