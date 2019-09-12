@@ -286,12 +286,18 @@
       "x-swagger-router-controller": "TripsController",
       "post": {
         "description": "An endpoint for booking a multi-city trip request",
-        "tags": ["Trips"],
+        "tags": [
+          "Trips"
+        ],
         "summary": "Posts a trip request",
         "operationId": "Trips2Post",
         "deprecated": false,
-        "produces": ["application/json"],
-        "consumes": ["application/x-www-form-urlencoded"],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
         "parameters": [
           {
             "name": "Authorization",
@@ -370,6 +376,60 @@
           },
           "404": {
             "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "An endpoint getting history of user requests",
+        "tags": [
+          "Trips"
+        ],
+        "summary": "Get trip requests",
+        "operationId": "GetUserTrips",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/SignUpErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
