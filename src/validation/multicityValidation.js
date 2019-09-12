@@ -60,7 +60,7 @@ class Validation {
     const errors = {};
     const { currentOfficeLocation } = request.body;
     if (!currentOfficeLocation) {
-      if (!errors.currentOfficeLocation) errors.currentOfficeLocation = ['urrentOfficeLocation is required'];
+      if (!errors.currentOfficeLocation) errors.currentOfficeLocation = ['currentOfficeLocation is required'];
       else errors.currentOfficeLocation.push('currentOfficeLocation is required');
     }
     if (!/^\d+$/.test(currentOfficeLocation)) {
