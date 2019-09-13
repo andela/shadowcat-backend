@@ -56,6 +56,7 @@ class Trips {
     }
   }
 
+  
   static async returnTrip(req, res, next) {
     try {
       const { email } = req;
