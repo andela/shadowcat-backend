@@ -24,7 +24,7 @@ class ValidationHandler {
 
             const mappedErrors = errors.mapped();
 
-            let results = Object.keys(mappedErrors).map(function (key) {
+            let results = Object.keys(mappedErrors).map( (key) => {
                return [mappedErrors[key]];
             });
 
