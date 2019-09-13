@@ -2,6 +2,7 @@
 import uuidv4 from 'uuid/v4';
 import notifyUserService from '../services/notifyUserService';
 import response from '../utils/Response';
+import ResponseGenerator from '../utils/response.util';
 import passwordEmail from '../utils/Mailer';
 import userService from '../services/passwordResetService';
 import mailTemplate from '../utils/notifyUserEmailTemplate';
@@ -9,10 +10,9 @@ import htmlTemplate from '../utils/dummyIndex';
 import models from '../models';
 import socketEmission from '../services/socketEmission';
 import { getDetailedLocation } from '../utils/helpers';
-
 import constants from '../utils/constants/constants';
 
-
+const responsegen = new ResponseGenerator();
 const { serverResponse } = response;
 const { getUser } = userService;
 const { createNotification } = notifyUserService;
@@ -20,10 +20,139 @@ const { sendEmail } = passwordEmail;
 const { Requests } = models;
 
 /**
- *@description A class that handles multicity travel request by a user
+ *@description A class that handles travel request by a user
  * @class Trips
  */
 class Trips {
+  /**
+*@description A function that handles different trips request
+* @static
+* @param {Object} req
+* @param {Object} res
+* @param {Object} next
+* @returns {object} Details of booked trips
+* @memberof Trips
+*/
+  static async tripRequest(req, res, next) {
+    const { tripType } = req.body;
+    switch (tripType) {
+      case 'one-way':
+        await Trips.oneWay(req, res, next);
+        break;
+      case 'return':
+        await Trips.return(req, res, next);
+        break;
+      case 'Multi-city':
+        await Trips.multiCityRequest(req, res, next);
+        break;
+      default:
+        return responsegen.sendError(
+          res,
+          500,
+          'Something went wrong, please check type of request and try again'
+        );
+    }
+  }
+
+  /**
+ *@description A function that handles one-way travel request by a user
+ * @static
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Object} next
+ * @returns {object} Details of booked trips
+ * @memberof Trips
+ */
+  static async oneWay(req, res, next) {
+    try {
+      const { email } = req;
+      const aUser = await getUser(email);
+      if (!aUser) {
+        return serverResponse(res, 404, ...['error', 'message', `Cannot Find User With Email: ${email}`]);
+      }
+      const {
+        userId,
+        linemanager: lineManagerUser,
+        firstname: firstName,
+        lastname: lastName,
+        notifyemail: notifyEmail
+      } = aUser;
+      if (!lineManagerUser) {
+        return serverResponse(res, 400, ...['error', 'message', 'You must be assigned to a Line Manager to continue this process']);
+      }
+      const {
+        currentOfficeLocation, reason, tripType, accommodation, departureDate
+      } = req.body;
+      const { currentOfficeLocationData } = req;
+      const { destinationData } = req;
+      const tripsData = {
+        currentOfficeLocation: Number(currentOfficeLocation),
+        tripId: uuidv4(),
+        userId,
+        departureDate: new Date(departureDate).toUTCString(),
+        reason,
+        tripType,
+        accommodation,
+        requestStatus: 'pending',
+        destination: Object.values(destinationData)
+      };
+      const tripsResult = await Requests.create(tripsData);
+      const locations = Object.keys(destinationData).join(', ');
+      const tripDetailsEmail = {
+        locations,
+        departureDate: new Date(departureDate).toUTCString(),
+      };
+      if (notifyEmail) {
+        const templateFile = mailTemplate(aUser, tripDetailsEmail);
+        await sendEmail(email, templateFile, 'Trip Confirmation');
+      }
+      const newNotification = {
+        tripId: tripsResult.tripId,
+        lineManager: lineManagerUser,
+        userId,
+        content: 'Created',
+        isViewed: false,
+        type: 'Trip',
+        createdAt: tripsResult.createdAt,
+        updatedAt: tripsResult.createdAt
+      };
+      await createNotification(newNotification);
+      const emitMessage = `${firstName} ${lastName}
+      Just Booked a trip to ${locations} on
+       ${tripsResult.createdAt}`;
+      socketEmission.emission(`${lineManagerUser}`, emitMessage);
+      if (tripsResult) {
+        const resultObject = {
+          userId,
+          destinationIDs: Object.values(destinationData),
+          currentOfficeLocation: Object.keys(currentOfficeLocationData),
+          destination: Object.keys(destinationData),
+          departureDate: new Date(departureDate).toUTCString(),
+          returnDate: '',
+          reason,
+          tripType,
+          accommodation,
+          requestStatus: 'pending'
+        };
+        return serverResponse(res, 201, ...['success, an email has been sent to you', 'data', resultObject]);
+      }
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  /**
+  *@description A function that handles return travel request by a user
+  * @static
+  * @param {Object} req
+  * @param {Object} res
+  * @param {Object} next
+  * @returns {object} Details of booked trips
+  * @memberof Trips
+  */
+  static async return(req, res, next) {
+  }
+
   /**
  *@description A function that handles multicity travel request by a user
  * @static
@@ -48,7 +177,7 @@ class Trips {
         notifyemail: notifyEmail
       } = aUser;
       if (!lineManagerUser) {
-        return serverResponse(res, 400, ...['error', 'message', 'Line Manager must be present to continue']);
+        return serverResponse(res, 400, ...['error', 'message', 'You must be assigned to a Line Manager to continue this process']);
       }
       const {
         departureDate,
@@ -158,6 +287,7 @@ class Trips {
           requestStatus,
           destination,
           createdAt,
+          accommodation,
           currentOfficeLocation
         } = request;
         const destinationList = [];
@@ -177,6 +307,7 @@ class Trips {
           destinations: destinationList,
           departureDate,
           returnDate,
+          accommodation,
           reason,
           requestStatus,
           createdAt
