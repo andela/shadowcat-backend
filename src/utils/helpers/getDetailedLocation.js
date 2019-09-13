@@ -11,7 +11,7 @@ const { Locations } = models;
 const getDetailedLocation = async (destination) => {
   try {
     const location = await Locations.findOne({
-      where: { id: destination }
+      where: { id: destination },
     });
     const { dataValues } = location;
     const { id, locationName, locationAddress } = dataValues;

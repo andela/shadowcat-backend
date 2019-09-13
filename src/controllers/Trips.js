@@ -13,7 +13,7 @@ import { getDetailedLocation } from '../utils/helpers';
 import constants from '../utils/constants/constants';
 
 
-const { serverResponse } = response;
+const { errorResponse, serverResponse } = response;
 const { getUser } = userService;
 const { createNotification } = notifyUserService;
 const { sendEmail } = passwordEmail;
@@ -108,6 +108,7 @@ class Trips {
           tripType,
           requestStatus: 'pending'
         };
+        // res.headers.hello = tripsResult.tripId;
         return serverResponse(res, 201, ...['success, an email has been sent to you', 'data', resultObject]);
       }
     } catch (error) {
@@ -210,6 +211,70 @@ class Trips {
         500,
         ...['error', 'error', 'Error fetching user trips history']
       );
+    }
+  }
+
+  /**
+   *
+   *
+   * @static
+   * @param {object } req
+   * @param {object} res
+   * @returns{message}json
+   * @memberof Trips
+   */
+  static async rejectTripRequest(req, res) {
+    try {
+      const { id: tripIdBody } = req.params;
+      console.log(tripIdBody, 'trip id in controller');
+      const { requestStatus: requestStatusBody } = req.body;
+      console.log(requestStatusBody, 'req status body in controller');
+
+      const tripUpdate = await Requests.update({
+        requestStatus: requestStatusBody
+      }, {
+        returning: true,
+        where: { tripId: tripIdBody },
+        raw: true
+      });
+      const {
+        tripId,
+        tripType,
+        departureDate,
+        returnDate,
+        reason,
+        requestStatus,
+        destination,
+        createdAt,
+        currentOfficeLocation
+      } = tripUpdate[1][0];
+      const destinationList = [];
+      const origin = await getDetailedLocation(currentOfficeLocation);
+      console.log(origin, 'origin from controller');
+
+      for (let j = 0; j < destination.length; j += 1) {
+        const currentDest = destination[j];
+        const detailedLocation = await getDetailedLocation(currentDest);
+        console.log(detailedLocation, `location ${j} from controller`);
+
+        destinationList.push(detailedLocation);
+      }
+      const subData = {
+        tripId,
+        tripType,
+        origin,
+        destinations: destinationList,
+        departureDate,
+        returnDate,
+        reason,
+        requestStatus,
+        createdAt
+      };
+      console.log(tripUpdate, 'trip update from controller');
+      console.log(origin, 'current office location trip update from controller');
+      return serverResponse(res, 200, ...['success, Trip Status Changed', 'data', subData]);
+    } catch (error) {
+      return res.status(500).json(errorResponse('Internal Server Error'));
     }
   }
 }

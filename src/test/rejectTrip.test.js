@@ -1,50 +1,40 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import multiTrip from './__MOCK__/multiTrip';
+import rejectTrip from './__MOCK__/rejectTrip';
 import server from '../index';
-import { authorizationErrors, userRequestHistoryErrors } from '../utils/constants/errorMessages';
-import constants from '../utils/constants/constants';
+
 
 chai.use(chaiHttp);
 
-const url = '/api/v1/trips/request';
-let createdMultiTrip = null;
-let testToken = null;
-const testUser3 = {
-  email: 'stephenibaba@andela.com',
-  password: 'Jennylove19',
-};
+const {
+  correctManager, correctManagerWrongTrip, correctRequester,
+  correctTripId, wrongTripId, status, invalidToken
+} = rejectTrip;
 
-describe('GET request route', () => {
+const tripUrl = '/api/v1/trips/manager/request/';
+const loginUrl = '/api/v1/auth/login';
+let correctTestToken = null;
+const correctTokenWrongTrip = null;
+
+
+describe('PUT request by manager', () => {
   // sign in a user
   before((done) => {
     chai.request(server)
       .post('/api/v1/auth/login')
-      .send(testUser3)
+      .send(correctManager)
       .end((err, res) => {
         if (err) return done(err);
-        testToken = res.body.data.token;
+        correctTestToken = res.body.data.token;
         return done();
       });
   });
-
-  // Create a trip for user
-  before(async () => {
-    const cloneTrip = { ...multiTrip };
-    const res = await chai
-      .request(server)
-      .post(`${url}`)
-      .set('Authorization', `Bearer ${testToken}`)
-      .send(cloneTrip);
-    createdMultiTrip = res.body.data;
-  });
-
-  it('should return 401 with undefined authorization token', done => {
+  it('should return 200 when trip has been rejected', done => {
     try {
       chai
         .request(server)
-        .get(`${url}`)
-        .send()
+        .put(`${tripUrl}/${correctTripId}`)
+        .send(status)
         .end((err, res) => {
           expect(res).to.have.property('status');
           expect(res).to.have.property('body');
