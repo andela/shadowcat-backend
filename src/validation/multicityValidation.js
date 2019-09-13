@@ -4,8 +4,7 @@ import models from '../models';
 import datecheck from '../utils/dateCheck';
 
 const { Locations } = models;
-
-const multicityCheck = [
+const multicityCheck = () => [
   body('departureDate').trim().not().isEmpty()
     .withMessage('Departure Date field is required')
     .matches(/^\d{4}([-./,:])\d{2}\1\d{2}$/, 'i')
@@ -16,10 +15,6 @@ const multicityCheck = [
     .withMessage('The date must follow date format YYYY-MM-DD'),
   body('reason').trim().not().isEmpty()
     .withMessage('Reason field is required'),
-  body('tripType').trim().not().isEmpty()
-    .withMessage('The trip type field is required')
-    .matches(/^Multi-city$/, 'i')
-    .withMessage('The trip type must match the type "Multi-city"')
 ];
 /**
  *@description A class that handles all validations
@@ -139,7 +134,10 @@ class Validation {
  * @returns {Function} next
  * @memberof Validation
  */
-  static async validateInput(req, res, next) {
+  static async multicityValidateInput(req, res, next) {
+    const { tripType } = req.body;
+    if (tripType !== 'Multi-city') return next();
+
     const errors = validationResult(req);
     const validateOriginError = await Validation.validateOrigin(req);
     const validateDestinationError = await Validation.validateDestination(req);
@@ -169,5 +167,5 @@ class Validation {
     return next();
   }
 }
-const { validateInput } = Validation;
-export { multicityCheck, validateInput };
+const { multicityValidateInput } = Validation;
+export { multicityCheck, multicityValidateInput };
