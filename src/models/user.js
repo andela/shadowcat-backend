@@ -68,7 +68,7 @@ export default (sequelize, DataTypes) => {
         required: false
       },
       role: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         required: false
       },
       department: {

@@ -2,7 +2,6 @@ import { body, validationResult } from 'express-validator';
 import { Op } from 'sequelize';
 import models from '../models';
 import datecheck from '../utils/dateCheck';
-import errorAssignment from '../utils/errorAssignment';
 
 const { Locations } = models;
 
@@ -35,12 +34,13 @@ class Validation {
  * @memberof Validation
  */
   static validateDate(request) {
-    let errors = {};
+    const errors = { departureDate: [] };
     const { departureDate, returnDate } = request.body;
     const duration = datecheck(departureDate, returnDate);
-    if (duration === 'negative value') errors = { ...errorAssignment('Departure date can not be less than Today\'s date', 'departureDate') };
+    if (duration === 'negative value') errors.departureDate.push('Departure date can not be less than Today\'s date');
 
-    if (!duration) errors = { ...errorAssignment('Departure date can not be above or the same as the return date', 'departureDate') };
+    if (!duration) errors.departureDate.push('Departure date can not be above or the same as the return date');
+    if (errors.departureDate.length === 0) delete errors.departureDate;
     return errors;
   }
 
@@ -52,26 +52,27 @@ class Validation {
  * @memberof Validation
  */
   static async validateOrigin(request) {
-    let errors = {};
+    const errors = { currentOfficeLocation: [] };
     const { currentOfficeLocation } = request.body;
-    if (!currentOfficeLocation) errors = { ...errorAssignment('currentOfficeLocation is required', 'currentOfficeLocation') };
+    if (!currentOfficeLocation) errors.currentOfficeLocation.push('currentOfficeLocation is required');
 
-    if (!/^\d+$/.test(currentOfficeLocation)) {
-      errors = { ...errorAssignment('currentOfficeLocation must be a number', 'currentOfficeLocation') };
-    }
-    if (!errors.currentOfficeLocation && currentOfficeLocation) {
+    if (!/^\d+$/.test(currentOfficeLocation)) errors.currentOfficeLocation.push('currentOfficeLocation must be a number');
+
+    if (!errors.currentOfficeLocation.length && currentOfficeLocation) {
       const locationsData = await Locations.findAll({
         attributes: ['id', 'locationName'],
         where: { id: currentOfficeLocation },
         raw: true
       });
-      if (!locationsData.length) errors = { ...errorAssignment('Current office location does not exist', 'currentOfficeLocation') };
+
+      if (!locationsData.length) errors.currentOfficeLocation.push('Current office location does not exist');
       if (locationsData.length) {
         const currentOfficeData = {};
         currentOfficeData[locationsData[0].locationName] = locationsData[0].id;
         request.currentOfficeData = currentOfficeData;
       }
     }
+    if (errors.currentOfficeLocation.length === 0) delete errors.currentOfficeLocation;
     return errors;
   }
 
@@ -83,37 +84,38 @@ class Validation {
  * @memberof Validation
  */
   static async validateDestination(request) {
-    let errors = {};
+    const errors = { destination: [] };
     let { destination } = request.body;
-    if (!destination) errors = { ...errorAssignment('Destination input must be an array', 'Mutiple office locations inputs are required', 'destination') };
+    if (!destination) errors.destination.push('Destination input must be an array', 'Mutiple office locations inputs are required');
 
-    if (!Array.isArray(destination)) errors = { ...errorAssignment('Destination field must be an array', 'destination') };
+    if (!Array.isArray(destination)) errors.destination.push('Destination field must be an array');
 
     if (destination && Array.isArray(destination)) {
-      if (destination.length === 0) errors = { ...errorAssignment('Destination field is required', 'destination') };
+      if (destination.length === 0) errors.destination.push('Destination field is required');
 
-      if (destination.length < 2) errors = { ...errorAssignment('Multi-city trip type must have one than one destinations', 'destination') };
+      if (destination.length < 2) errors.destination.push('Multi-city trip type must have one than one destinations');
 
       destination.map(value => {
-        if (!/^\d+$/.test(value)) errors = { ...errorAssignment(`${value} must be a number`, 'destination') };
+        if (!/^\d+$/.test(value)) errors.destination.push(`${value} must be a number`);
 
         return value;
       });
-      // eslint-disable-next-line
-    destination = destination.filter((value, index) => {
+
+      destination = destination.filter((value, index) => {
         if (destination.indexOf(value) === index) {
           return value;
         }
-        errors = { ...errorAssignment(`${value} must be unique to the request`, 'destination') };
+        return errors.destination.push(`${value} must be unique to the request`);
       });
     }
-    if (!errors.destination && destination) {
+    if (!errors.destination.length && destination) {
       const locationsData = await Locations.findAll({
         attributes: ['id', 'locationName'],
         where: { id: { [Op.or]: [...destination] } },
         raw: true
       });
-      if (!locationsData.length || (locationsData.length !== destination.length)) errors = { ...errorAssignment('One or more destinations do not match andela\'s office location', 'destination') };
+
+      if (!locationsData.length || (locationsData.length !== destination.length)) errors.destination.push('One or more destinations do not match andela\'s office location');
 
       if (locationsData.length === destination.length) {
         const destinationData = {};
@@ -124,6 +126,7 @@ class Validation {
         request.destinationData = destinationData;
       }
     }
+    if (errors.destination.length === 0) delete errors.destination;
     return errors;
   }
 
@@ -147,8 +150,12 @@ class Validation {
     if (!errors.isEmpty()
    || validateOriginKey.length
    || validateDestinationKey.length
-   || validateDateKey.length) { // eslint-disable-next-line
-      const errorObj = { ...validateOriginError, ...validateDestinationError, ...validateDateError };
+   || validateDateKey.length) {
+      const errorObj = {
+        ...validateOriginError,
+        ...validateDestinationError,
+        ...validateDateError
+      };
       errors.array().map(err => {
         if (errorObj[err.param]) return errorObj[err.param].push(err.msg);
         errorObj[err.param] = [err.msg];

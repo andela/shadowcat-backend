@@ -7,8 +7,8 @@ import server from '../index';
 const { expect } = chai;
 chai.use(chaiHttp);
 const testUser3 = {
-  email: 'sebastine.ekeneme@andela.com',
-  password: 'Qwertyuiop$'
+  email: 'chima.ekeneme@andela.com',
+  password: 'Qwertyuiop1!'
 };
 
 let testToken = null;
@@ -28,8 +28,8 @@ describe('TESTING ROLES ASSIGNMENT ENDPOINT', () => {
       .patch('/api/v1/users/role')
       .set('Authorization', `Bearer ${testToken}`)
       .send({
-        email: 'chima.ekeneme@andela.com',
-        newRole: 5
+        email: 'sebastine.ekeneme@andela.com',
+        newRole: 3
       })
       .end((err, res) => {
         if (err) return done(err);
@@ -42,8 +42,8 @@ describe('TESTING ROLES ASSIGNMENT ENDPOINT', () => {
         expect((res.body)).to.haveOwnProperty('data').that.is.an('object');
         expect((res.body.data)).to.be.an('object');
         expect((res.body.data.email)).to.be.a('string');
-        expect((res.body.data.oldRole)).to.be.a('number');
-        expect((res.body.data.newRole)).to.be.a('number');
+        expect((res.body.data.oldRole)).to.be.a('string');
+        expect((res.body.data.newRole)).to.be.a('string');
         expect((res.body.data.createdAt)).to.be.a('string');
         done();
       });

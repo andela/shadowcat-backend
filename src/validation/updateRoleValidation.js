@@ -1,6 +1,5 @@
 import { body, validationResult } from 'express-validator';
 import models from '../models';
-import errorAssignment from '../utils/errorAssignment';
 
 const { Users, roles } = models;
 
@@ -15,39 +14,41 @@ const roleCheck = [
 ];
 
 const validateEmail = async (request) => {
-  let errors = {};
+  const errors = { email: [] };
   const { email } = request.body;
-  if (!/@andela.com$/.test(email)) errors = { ...errorAssignment('email must be an andela email', 'email') };
+  if (!/@andela.com$/.test(email)) errors.email.push('Email must be an andela email');
 
-  if (!errors.email && email) {
+  if (!errors.email.length && email) {
     const userData = await Users.findOne({
       where: { email },
       raw: true
     });
     if (!userData) {
-      errors = { ...errorAssignment('Check email and try again', 'email') };
+      errors.email.push('Email does not exist');
     } else {
       request.staffId = userData.userId;
       request.oldRole = userData.role;
     }
   }
+  if (errors.email.length === 0) delete errors.email;
   return errors;
 };
 const validateRole = async (request) => {
-  let errors = {};
+  const errors = { newRole: [] };
   const { newRole } = request.body;
-  if (!/^\d+$/.test(newRole))errors = { ...errorAssignment('Role field must be a number', 'newRole') };
-  if (!errors.newRole && newRole) {
+  if (!/^\d+$/.test(newRole))errors.newRole.push('Role field must be a number');
+  if (!errors.newRole.length && newRole) {
     const userRole = await roles.findOne({
       where: { id: newRole },
       raw: true
     });
     if (!userRole) {
-      errors = { ...errorAssignment('Check role input and try again', 'newRole') };
+      errors.newRole.push('Check role input and try again');
     } else {
       request.userRole = userRole.id;
     }
   }
+  if (errors.newRole.length === 0) delete errors.newRole;
   return errors;
 };
 

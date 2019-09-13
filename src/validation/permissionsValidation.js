@@ -1,38 +1,40 @@
 import { validationResult } from 'express-validator';
 import models from '../models';
-import errorAssignment from '../utils/errorAssignment';
 
 const { roles } = models;
 
 const validateRole = async (request) => {
-  let errors = {};
+  const errors = { role: [] };
   const { role } = request.body;
-  if (!role) errors = { ...errorAssignment('Role input is compulsory', 'role') };
-  if (!/^\d+$/.test(role)) errors = { ...errorAssignment('Role input must be a number', 'role') };
+  if (!role) errors.role.push('Role input is compulsory');
+  if (!/^\d+$/.test(role)) errors.role.push('Role input must be a number');
 
-  if (!errors.role && role) {
+  if (!errors.role.length && role) {
     const userRole = await roles.findOne({
       where: { id: role },
       raw: true
     });
     if (!userRole) {
-      errors = { ...errorAssignment('Role is invalid', 'role') };
+      errors.role.push('Role is invalid');
     } else {
       request.userRole = userRole.id;
     }
   }
+  if (errors.role.length === 0) delete errors.role;
   return errors;
 };
 const validatePermissionField = async (request) => {
-  let errors = {};
+  const errors = { permission: [] };
   let { addPermission, removePermission } = request.body;
   addPermission = addPermission ? addPermission.trim() : null;
   removePermission = removePermission ? removePermission.trim() : null;
 
-  // eslint-disable-next-line
-  if (!request.body.hasOwnProperty('addPermission')&&!request.body.hasOwnProperty('removePermission')) errors = { ...errorAssignment('Permission field accepts keys \'addPermission\' OR \'removePermission\'', 'permission') };
+  if (!('addPermission' in request.body) && !('removePermission' in request.body)) errors.permission.push('Permission field must have either \'addPermission\' OR \'removePermission\'');
 
-  if (!/^\S{8,}$/i.test(removePermission || addPermission)) errors = { ...errorAssignment('Permission value is compulsory, must be atleast 8 characters with no spaces allowed', 'permission') };
+  if (addPermission && removePermission) errors.permission.push('\'addPermission\' AND \'removePermission\' fields cannot exist together');
+
+  if (!/^\S{8,}$/i.test(removePermission || addPermission))errors.permission.push('Permission value is compulsory, must be atleast 8 characters with no spaces allowed');
+  if (errors.permission.length === 0) delete errors.permission;
   return errors;
 };
 

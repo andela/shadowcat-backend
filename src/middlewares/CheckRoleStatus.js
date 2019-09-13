@@ -11,13 +11,11 @@ const { Users, roles } = models;
 class RoleStatus {
   /**
  *
- *
- * @param {Object} req
- * @param {Object} res
- * @param {Object} next
+ *@description A method that retrieves the permission assigned to a role
+ * @param {String} permission
  * @returns {Integer} userRole
  * @memberof RoleStatus
- */ // eslint-disable-next-line
+ */
   static getPermission(permission) {
     return async (req, res, next) => {
       const { id } = req;
@@ -31,10 +29,10 @@ class RoleStatus {
         where: { id: role },
         raw: true
       });
-      if (!roleData) return serverResponse(res, 400, ...['error', 'message', 'Unauthorized']);
+      if (!roleData) return serverResponse(res, 403, ...['error', 'message', 'Forbidden. You do not have authorization rights']);
       const { rolePermissions } = roleData;
       const checkPermission = rolePermissions.includes(permission);
-      if (!checkPermission) return serverResponse(res, 400, ...['error', 'message', 'You do not have authorization rights']);
+      if (!checkPermission) return serverResponse(res, 403, ...['error', 'message', 'Forbidden. You do not have authorization rights']);
       return next();
     };
   }
