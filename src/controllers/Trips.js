@@ -92,8 +92,8 @@ class Trips {
         updatedAt: tripsResult.createdAt
       };
       await createNotification(newNotification);
-      const emitMessage = `${firstName} ${lastName} 
-      Just Booked a trip to ${locations} on 
+      const emitMessage = `${firstName} ${lastName}
+      Just Booked a trip to ${locations} on
        ${tripsResult.createdAt}`;
       socketEmission.emission(`${lineManagerUser}`, emitMessage);
       if (tripsResult) {

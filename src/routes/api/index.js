@@ -1,6 +1,8 @@
 import express from 'express';
 import authRouter from './auth';
 import profileRoute from './profile';
+import rolesRouter from './roles.route';
+import permissionsRouter from './permissions.route';
 import multiCityTripsRouter from './trips.route';
 import passwordRouter from './passwordResetRoute';
 import commentRoute from './comment';
@@ -15,6 +17,8 @@ usersRouter.use('/v1/users', passwordRouter);
 
 usersRouter.use('/v1/trips', multiCityTripsRouter);
 usersRouter.use('/v1/trips/request', commentRoute);
+usersRouter.use('/v1/users', rolesRouter);
+usersRouter.use('/v1/users', permissionsRouter);
 
 usersRouter.use('/v1/users/profile', profileRoute);
 

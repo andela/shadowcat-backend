@@ -1,56 +1,45 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import user from './__MOCK__/user';
 import multiTrip from './__MOCK__/multiTrip';
 import server from '../index';
 import { authorizationErrors, userRequestHistoryErrors } from '../utils/constants/errorMessages';
 import constants from '../utils/constants/constants';
-import models from '../models';
 
 chai.use(chaiHttp);
 
 const url = '/api/v1/trips/request';
-const signupUrl = '/api/v1/auth/signup';
 let createdUser = null;
 let createdMultiTrip = null;
 
 describe('GET request route', () => {
   // Create a user
-  before(async () => {
-    const cloneUser = { ...user };
-    const res = await chai
-      .request(server)
-      .post(`${signupUrl}`)
-      .send(cloneUser);
-
-    createdUser = res.body.data;
+  before((done) => {
+    chai.request(server)
+      .post('/api/v1/auth/login')
+      .send({
+        email: 'chima.ekeneme@andela.com',
+        password: 'Qwertyuiop1!'
+      })
+      .end((err, res) => {
+        createdUser = res.body.data;
+        if (err) return done(err);
+        createdMultiTrip = res.body.data;
+        return done();
+      });
   });
 
   // Create a trip for user
-  before(async () => {
+  before((done) => {
     const cloneTrip = { ...multiTrip };
-    const res = await chai
-      .request(server)
+    chai.request(server)
       .post(`${url}`)
       .set('Authorization', `Bearer ${createdUser.token}`)
-      .send(cloneTrip);
-
-    createdMultiTrip = res.body.data;
-  });
-
-  // Code cleanup after tests
-  after(async () => {
-    const { Users, Requests } = models;
-    await Requests.destroy({
-      where: {
-        userId: createdUser.userId
-      }
-    });
-    await Users.destroy({
-      where: {
-        userId: createdUser.userId
-      }
-    });
+      .send(cloneTrip)
+      .end((err, res) => {
+        if (err) return done(err);
+        createdMultiTrip = res.body.data;
+        return done();
+      });
   });
 
   it('should return 401 with undefined authorization token', done => {
