@@ -29,23 +29,13 @@ class Validation {
  * @memberof Validation
  */
   static validateDate(request) {
-    const errors = {};
+    const errors = { departureDate: [] };
     const { departureDate, returnDate } = request.body;
     const duration = datecheck(departureDate, returnDate);
-    if (duration === 'negative value') {
-      if (!errors.departureDate) {
-        errors.departureDate = ['Departure date can not be less than Today\'s date'];
-      } else {
-        errors.departureDate.push('Departure date can not be less than Today\'s date');
-      }
-    }
-    if (!duration) {
-      if (!errors.departureDate) {
-        errors.departureDate = ['Departure date can not be above or the same as the return date'];
-      } else {
-        errors.departureDate.push('Departure date can not be above or the same as the return date');
-      }
-    }
+    if (duration === 'negative value') errors.departureDate.push('Departure date can not be less than Today\'s date');
+
+    if (!duration) errors.departureDate.push('Departure date can not be above or the same as the return date');
+    if (errors.departureDate.length === 0) delete errors.departureDate;
     return errors;
   }
 
@@ -57,32 +47,27 @@ class Validation {
  * @memberof Validation
  */
   static async validateOrigin(request) {
-    const errors = {};
+    const errors = { currentOfficeLocation: [] };
     const { currentOfficeLocation } = request.body;
-    if (!currentOfficeLocation) {
-      if (!errors.currentOfficeLocation) errors.currentOfficeLocation = ['currentOfficeLocation is required'];
-      else errors.currentOfficeLocation.push('currentOfficeLocation is required');
-    }
-    if (!/^\d+$/.test(currentOfficeLocation)) {
-      if (!errors.currentOfficeLocation) errors.currentOfficeLocation = ['currentOfficeLocation must be a number'];
-      else errors.currentOfficeLocation.push('currentOfficeLocation must be a number');
-    }
-    if (!errors.currentOfficeLocation && currentOfficeLocation) {
+    if (!currentOfficeLocation) errors.currentOfficeLocation.push('currentOfficeLocation is required');
+
+    if (!/^\d+$/.test(currentOfficeLocation)) errors.currentOfficeLocation.push('currentOfficeLocation must be a number');
+
+    if (!errors.currentOfficeLocation.length && currentOfficeLocation) {
       const locationsData = await Locations.findAll({
         attributes: ['id', 'locationName'],
         where: { id: currentOfficeLocation },
         raw: true
       });
-      if (!locationsData.length) {
-        if (!errors.currentOfficeLocation) errors.currentOfficeLocation = ['Current office location does not exist'];
-        else errors.currentOfficeLocation.push('Current office location does not exist');
-      }
+
+      if (!locationsData.length) errors.currentOfficeLocation.push('Current office location does not exist');
       if (locationsData.length) {
         const currentOfficeData = {};
         currentOfficeData[locationsData[0].locationName] = locationsData[0].id;
         request.currentOfficeData = currentOfficeData;
       }
     }
+    if (errors.currentOfficeLocation.length === 0) delete errors.currentOfficeLocation;
     return errors;
   }
 
@@ -94,57 +79,39 @@ class Validation {
  * @memberof Validation
  */
   static async validateDestination(request) {
-    const errors = {};
+    const errors = { destination: [] };
     let { destination } = request.body;
-    if (!destination) {
-      if (!errors.destination) errors.destination = ['Destination input must be an array', 'Mutiple office locations inputs are required'];
-      else errors.destination.push('Destination input must be an array', 'Mutiple office locations inputs are required');
-    }
-    if (!Array.isArray(destination)) {
-      if (!errors.destination) errors.destination = ['Destination field must be an array'];
-      else errors.destination.push('Destination field must be an array');
-    }
+    if (!destination) errors.destination.push('Destination input must be an array', 'Mutiple office locations inputs are required');
+
+    if (!Array.isArray(destination)) errors.destination.push('Destination field must be an array');
+
     if (destination && Array.isArray(destination)) {
-      if (destination.length === 0) {
-        if (!errors.destination) errors.destination = ['Destination field is required'];
-        else errors.destination.push('Destination field is required');
-      }
-      if (destination.length < 2) {
-        if (!errors.destination) errors.destination = ['Multi-city trip type must have one than one destinations'];
-        else errors.destination.push('Multi-city trip type must have more than one destinations');
-      }
+      if (destination.length === 0) errors.destination.push('Destination field is required');
+
+      if (destination.length < 2) errors.destination.push('Multi-city trip type must have one than one destinations');
+
       destination.map(value => {
-        if (!/^\d+$/.test(value)) {
-          if (!errors.destination) {
-            errors.destination = [`${value} must be a number`];
-          } else {
-            errors.destination.push(`${value} must be a number`);
-          }
-        }
+        if (!/^\d+$/.test(value)) errors.destination.push(`${value} must be a number`);
+
         return value;
       });
-      // eslint-disable-next-line
-    destination = destination.filter((value, index) => {
+
+      destination = destination.filter((value, index) => {
         if (destination.indexOf(value) === index) {
           return value;
         }
-        if (!errors.destination) {
-          errors.destination = [`${value} must be unique to the request`];
-        } else {
-          errors.destination.push(`${value} must be unique to the request`);
-        }
+        return errors.destination.push(`${value} must be unique to the request`);
       });
     }
-    if (!errors.destination && destination) {
+    if (!errors.destination.length && destination) {
       const locationsData = await Locations.findAll({
         attributes: ['id', 'locationName'],
         where: { id: { [Op.or]: [...destination] } },
         raw: true
       });
-      if (!locationsData.length || (locationsData.length !== destination.length)) {
-        if (!errors.destination) errors.destination = ['One or more destinations do not match andela\'s office location'];
-        else errors.destination.push('One or more destinations do not match andela\'s office location');
-      }
+
+      if (!locationsData.length || (locationsData.length !== destination.length)) errors.destination.push('One or more destinations do not match andela\'s office location');
+
       if (locationsData.length === destination.length) {
         const destinationData = {};
         locationsData.map(data => {
@@ -154,6 +121,7 @@ class Validation {
         request.destinationData = destinationData;
       }
     }
+    if (errors.destination.length === 0) delete errors.destination;
     return errors;
   }
 
@@ -178,10 +146,14 @@ class Validation {
     const validateOriginKey = Object.keys(validateOriginError);
     const validateDestinationKey = Object.keys(validateDestinationError);
     if (!errors.isEmpty()
-        || validateOriginKey.length
-        || validateDestinationKey.length
-        || validateDateKey.length) { // eslint-disable-next-line
-        const errorObj = { ...validateOriginError, ...validateDestinationError, ...validateDateError };
+   || validateOriginKey.length
+   || validateDestinationKey.length
+   || validateDateKey.length) {
+      const errorObj = {
+        ...validateOriginError,
+        ...validateDestinationError,
+        ...validateDateError
+      };
       errors.array().map(err => {
         if (errorObj[err.param]) return errorObj[err.param].push(err.msg);
         errorObj[err.param] = [err.msg];
