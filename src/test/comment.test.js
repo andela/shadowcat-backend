@@ -27,7 +27,7 @@ describe('Testing User Comment On Travel Request ', () => {
   });
   it('should return a 404 if your is not in the request database', (done) => {
     chai.request(server)
-      .post('/api/v1/trips/request/comment')
+      .post('/api/v1/trips/request/comment/1')
       .set('Authorization', `Bearer ${token}`)
       .send({
         comment: 'will be going to dubia on partner engagement'
@@ -77,7 +77,7 @@ describe('Testing User Comment On Travel Request ', () => {
   describe('Testing User Create Comment On Travel Request ', () => {
     it('should post a new comment on a trip request', (done) => {
       chai.request(server)
-        .post('/api/v1/trips/request/comment')
+        .post('/api/v1/trips/request/comment/1')
         .set('Authorization', `Bearer ${token}`)
         .send({
           comment: 'will be going to dubia on partner engagement'
@@ -97,7 +97,7 @@ describe('Testing User Comment On Travel Request ', () => {
     });
     it('should return a 400 When the comment body is empty', (done) => {
       chai.request(server)
-        .post('/api/v1/trips/request/comment')
+        .post('/api/v1/trips/request/comment/1')
         .set('Authorization', `Bearer ${token}`)
         .send({
           comment: ''
@@ -112,7 +112,7 @@ describe('Testing User Comment On Travel Request ', () => {
     });
     it('should return a 401 if the token is not a Bearer type token', (done) => {
       chai.request(server)
-        .post('/api/v1/trips/request/comment')
+        .post('/api/v1/trips/request/comment/1')
         .set('Authorization', `${token}`)
         .send({
           comment: 'will be going to dubia on partner engagement'
@@ -130,7 +130,7 @@ describe('Testing User Comment On Travel Request ', () => {
     });
     it('should return a 404 for an invalid route', (done) => {
       chai.request(server)
-        .post('/api/v1/trips/request/comments')
+        .post('/api/v1/trips/request/comments/1')
         .set('Authorization', `Bearer ${token}`)
         .send({
           comment: 'will be going to dubia on partner engagement'

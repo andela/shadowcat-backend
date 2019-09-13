@@ -20,10 +20,11 @@ class Comment {
   */
   static async createComment(req, res, next) {
     try {
+      const { requestId } = req.params;
       const { comment } = req.body;
       const { id } = req;
       const getTrip = await Requests.findOne({
-        where: { userId: id }
+        where: { id: requestId, userId: id }
       });
       if (!getTrip) {
         return response.sendError(
