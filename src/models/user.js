@@ -68,12 +68,7 @@ export default (sequelize, DataTypes) => {
         required: false
       },
       role: {
-        type: DataTypes.ENUM,
-        values: [
-          'Developer',
-          'QA',
-          'Maintenance',
-        ],
+        type: DataTypes.BIGINT,
         required: false
       },
       department: {
