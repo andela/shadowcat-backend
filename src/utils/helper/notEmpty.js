@@ -4,7 +4,7 @@
  * @param {string} msg
  * @return {(error|bool)} returns error or true
  */
-  notEmpty = (value, msg) => {
+ const  notEmpty =  (value, msg) => {
     if (value === '') {
         throw new Error(msg);
     }
