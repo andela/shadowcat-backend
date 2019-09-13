@@ -23,6 +23,8 @@ const getDetailedLocation = async (destination) => {
 
     return returnDestination;
   } catch (err) {
+    console.log(err, 'error from habeeb');
+
     return {};
   }
 };

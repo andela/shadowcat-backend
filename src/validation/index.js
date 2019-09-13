@@ -1,8 +1,15 @@
-import { multicityCheck, validateInput } from './multicityValidation';
+import { multicityCheck, multicityValidateInput } from './multicityValidation';
+import { onewayCheck, onewayValidateInput } from './onewayValidation';
+import { userRequestHistory as userRequestHistoryValidator } from './userRequestHistory';
 import { roleCheck, validateRoleInput } from './updateRoleValidation';
 import validatePermissionInput from './permissionsValidation';
-import { userRequestHistory as userRequestHistoryValidator } from './userRequestHistory';
 
-export { // eslint-disable-next-line
-  multicityCheck, validateInput, roleCheck, validateRoleInput, validatePermissionInput, userRequestHistoryValidator
+export {
+  onewayCheck,
+  onewayValidateInput,
+  multicityCheck,
+  multicityValidateInput,
+  roleCheck, validateRoleInput,
+  validatePermissionInput,
+  userRequestHistoryValidator
 };

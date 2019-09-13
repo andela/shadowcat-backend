@@ -15,7 +15,7 @@ export default (sequelize, DataTypes) => {
     },
     returnDate: {
       type: DataTypes.DATE,
-      required: true
+      required: false
     },
     tripType: {
       type: DataTypes.STRING,
@@ -32,6 +32,10 @@ export default (sequelize, DataTypes) => {
     requestStatus: {
       type: DataTypes.STRING,
       required: true
+    },
+    accommodation: {
+      type: DataTypes.STRING,
+      required: false
     },
     destination: DataTypes.ARRAY(DataTypes.INTEGER)
   }, {});

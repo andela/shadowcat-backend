@@ -35,6 +35,7 @@ class tripAuthenticator {
       req.body.userId = userId;
       return next();
     } catch (error) {
+      console.log(error, 'error from middleware');
       return res.status(500).json(errorResponse('Internal Server Error'));
     }
   }
@@ -67,6 +68,8 @@ class tripAuthenticator {
       }
       return next();
     } catch (error) {
+      console.log(error, 'error from middleware');
+
       return res.status(500).json(errorResponse('Internal Server Error'));
     }
   }
