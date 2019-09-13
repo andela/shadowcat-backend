@@ -41,29 +41,29 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: 60000 },
-    resave: false,
-    saveUninitialized: false
-  })
+    session({
+        secret: process.env.SESSION_SECRET,
+        cookie: { maxAge: 60000 },
+        resave: false,
+        saveUninitialized: false
+    })
 );
 
 if (!isProduction) {
-  app.use(errorhandler());
+    app.use(errorhandler());
 }
 app.use(apiRoutes);
 
 
 // testing route
 app.get('/', (req, res) => {
-  res.send("Welcome to Barefoot Nomad Endpoints' Page");
+    res.send("Welcome to Barefoot Nomad Endpoints' Page");
 });
 // / catch 404 and forward to error handler
 app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // / error handlers
@@ -71,37 +71,37 @@ app.use((req, res, next) => {
 // development error handler
 // will print stacktrace
 if (!isProduction) {
-  app.use((err, req, res) => {
-    console.log(err.stack);
+    app.use((err, req, res) => {
+        console.log(err.stack);
 
-    res.status(err.status || 500);
+        res.status(err.status || 500);
 
-    res.json({
-      errors: {
-        message: err.message,
-        error: err
-      }
+        res.json({
+            errors: {
+                message: err.message,
+                error: err
+            }
+        });
     });
-  });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use((err, req, res) => {
-  res.status(err.status || 500);
-  res.json({
-    errors: {
-      message: err.message,
-      error: {}
-    }
-  });
+    res.status(err.status || 500);
+    res.json({
+        errors: {
+            message: err.message,
+            error: {}
+        }
+    });
 });
 
 const port = process.env.NODE_ENV === 'test' ? 3001 : 3000;
 
 // finally, let's start our server...
 const server = app.listen(process.env.PORT || port, () => {
-  console.log(`Listening on port ${server.address().port}`);
+    console.log(`Listening on port ${server.address().port}`);
 });
 export const io = SocketIO(server);
 // eslint-disable-next-line no-unused-vars
