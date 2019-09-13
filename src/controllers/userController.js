@@ -26,6 +26,7 @@ class UserController {
           email
         }
       });
+     
       if (user) {
         const bycrptResponse = GeneralUtils.validate(password, user.password);
         if (bycrptResponse) {

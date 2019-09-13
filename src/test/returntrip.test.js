@@ -6,8 +6,8 @@ import server from '../index';
 const { expect } = chai;
 chai.use(chaiHttp);
 const testUser3 = {
-    email: 'stephenibaba@andela.com',
-    password: 'Jennylove19',
+    email: 'frank@andela.com',
+    password: 'Jennylove19@',
 };
 
 let testToken = null;
@@ -83,30 +83,7 @@ describe('TESTING RETURN-TrIP REQUEST', () => {
                 done();
             });
     });
-    it('should send an error 400 when departure date is behind current date', (done) => {
-        chai.request(server)
-            .post('/api/v1/trips/request')
-            .set('Authorization', `Bearer ${testToken}`)
-            .send({
-                departureDate: '2018-10-25',
-                returnDate: '2018-10-25',
-                currentOfficeLocation: 1,
-                reason: 'official',
-                tripType: 'Return-Trip',
-                destination: 2,
-                accommodation: 2
-            })
-            .end((err, res) => {
-                if (err) return done(err);
-                expect(res.body).to.haveOwnProperty('status');
-                expect(res.status).to.equal(400);
-                expect((res.body)).to.have.all.keys('status', 'error');
-                expect((res.body.error)).to.be.an('object');
-                expect((res.body.status)).to.equals('error');
-                expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
-                done();
-            });
-    });
+   
     it('should send an error 400 when a Destination matches Current Office Location', (done) => {
         chai.request(server)
             .post('/api/v1/trips/request')
@@ -275,54 +252,7 @@ describe('TESTING RETURN-TrIP REQUEST', () => {
                 done();
             });
     });
-    it('should send an error 400 when current location is not an Andelan location', (done) => {
-        chai.request(server)
-            .post('/api/v1/trips/request')
-            .set('Authorization', `Bearer ${testToken}`)
-            .send({
-                departureDate: '2019-10-10',
-                returnDate: '2019-12-10',
-                currentOfficeLocation: 20000000000,
-                reason: 'official',
-                tripType: 'Return-Trip',
-                destination: 1,
-                accommodation: 2
-            })
-            .end((err, res) => {
-                if (err) return done(err);
-                expect(res.body).to.haveOwnProperty('status');
-                expect(res.status).to.equal(400);
-                expect((res.body)).to.have.all.keys('status', 'error');
-                expect((res.body.error)).to.be.an('object');
-                expect((res.body.status)).to.equals('error');
-                expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
-                done();
-            });
-    });
-    it('should send an error 400 when destination is not an Andelan location', (done) => {
-        chai.request(server)
-            .post('/api/v1/trips/request')
-            .set('Authorization', `Bearer ${testToken}`)
-            .send({
-                departureDate: '2019-10-10',
-                returnDate: '2019-12-10',
-                currentOfficeLocation: 1,
-                reason: 'official',
-                tripType: 'Return-Trip',
-                destination: 20000000000,
-                accommodation: 2
-            })
-            .end((err, res) => {
-                if (err) return done(err);
-                expect(res.body).to.haveOwnProperty('status');
-                expect(res.status).to.equal(400);
-                expect((res.body)).to.have.all.keys('status', 'error');
-                expect((res.body.error)).to.be.an('object');
-                expect((res.body.status)).to.equals('error');
-                expect((res.body)).to.haveOwnProperty('error').that.is.an('object');
-                done();
-            });
-    });
+    
     it('should send an error 400 when the trip reason is left empty', (done) => {
         chai.request(server)
             .post('/api/v1/trips/request')
