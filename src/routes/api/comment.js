@@ -8,6 +8,6 @@ const commentRoute = Router();
 
 commentRoute.post('/comment', commentValidation, Authentication.authenticate, Comment.createComment);
 commentRoute.put('/comment/:commentId', commentValidation, Authentication.authenticate, VerifyUser.verifyUserId, Comment.updateComment);
-commentRoute.get('/comment', Authentication.authenticate, Comment.getComment);
+commentRoute.get('/comment/:tripId', Authentication.authenticate, Comment.getComment);
 
 export default commentRoute;

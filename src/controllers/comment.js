@@ -2,7 +2,7 @@ import models from '../models';
 import ResponseGenerator from '../utils/response.util';
 
 const response = new ResponseGenerator();
-const { Requests, Comments } = models;
+const { Requests, Comments, Users } = models;
 
 /**
  * @description User comment on travel request
@@ -38,7 +38,7 @@ class Comment {
         res,
         201,
         {
-          id: createComment.id,
+          commentId: createComment.id,
           requestId: getTrip.id,
           tripId: getTrip.tripId,
           userId: getTrip.userId,
@@ -77,37 +77,35 @@ class Comment {
       const getComment = await Comments.findOne({
         where: { id: commentId }
       });
-      if (getComment === null) {
+      if (!getComment) {
         return response.sendError(
           res,
           404,
           'No comment has been made'
         );
       }
-      if (getRequest.userId === getComment.userId) {
-        const updateComment = await Comments.update({ comment: req.body.comment },
-          {
-            returning: true,
-            where: { id: commentId, userId: req.id }
-          });
-        return response.sendSuccess(
-          res,
-          200,
-          {
-            requestId: getRequest.id,
-            userId: getRequest.userId,
-            departureDate: getRequest.departureDate,
-            returnDate: getRequest.returnDate,
-            tripType: getRequest.tripType,
-            reason: getRequest.reason,
-            currentOfficeLocation: getRequest.currentOfficeLocation,
-            requestStatus: getRequest.requestStatus,
-            destination: getRequest.destination,
-            comment: updateComment[1]
-          },
-          'comment updated!'
-        );
-      }
+      const updateComment = await Comments.update({ comment: req.body.comment },
+        {
+          returning: true,
+          where: { id: commentId, userId: req.id }
+        });
+      return response.sendSuccess(
+        res,
+        200,
+        {
+          requestId: getRequest.id,
+          userId: getRequest.userId,
+          departureDate: getRequest.departureDate,
+          returnDate: getRequest.returnDate,
+          tripType: getRequest.tripType,
+          reason: getRequest.reason,
+          currentOfficeLocation: getRequest.currentOfficeLocation,
+          requestStatus: getRequest.requestStatus,
+          destination: getRequest.destination,
+          comment: updateComment[1]
+        },
+        'comment updated!'
+      );
     } catch (error) {
       return next(error);
     }
@@ -126,36 +124,52 @@ class Comment {
   static async getComment(req, res, next) {
     try {
       const { id } = req;
+      const allComments = await Comments.findAll({
+        where: { tripId: req.params.tripId }
+      });
       const getRequest = await Requests.findOne({
-        where: { userId: id }
+        where: { tripId: req.params.tripId }
       });
-      const getComments = await Comments.findAll({
-        where: { userId: id }
+      const { userId } = getRequest;
+      const getManager = await Users.findOne({
+        where: { userId }
       });
-      if (!getComments || !getRequest) {
+      const manager = getManager.linemanager;
+      const getManagerId = await Users.findOne({
+        where: { id: manager }
+      });
+      const getManagerUserId = getManagerId.userId;
+      if (!allComments || !getRequest) {
         return response.sendError(
           res,
           404,
           'No comment or request has been made'
         );
       }
-      return response.sendSuccess(
+      if ((getManagerUserId === id) || (id === getRequest.userId)) {
+        return response.sendSuccess(
+          res,
+          200,
+          {
+            requestId: getRequest.id,
+            tripId: getRequest.tripId,
+            userId: getRequest.userId,
+            departureDate: getRequest.departureDate,
+            returnDate: getRequest.returnDate,
+            tripType: getRequest.tripType,
+            reason: getRequest.reason,
+            currentOfficeLocation: getRequest.currentOfficeLocation,
+            requestStatus: getRequest.requestStatus,
+            destination: getRequest.destination,
+            comments: allComments
+          },
+          'success'
+        );
+      }
+      return response.sendError(
         res,
-        200,
-        {
-          requestId: getRequest.id,
-          tripId: getRequest.tripId,
-          userId: getRequest.userId,
-          departureDate: getRequest.departureDate,
-          returnDate: getRequest.returnDate,
-          tripType: getRequest.tripType,
-          reason: getRequest.reason,
-          currentOfficeLocation: getRequest.currentOfficeLocation,
-          requestStatus: getRequest.requestStatus,
-          destination: getRequest.destination,
-          comments: getComments
-        },
-        'success'
+        403,
+        'You can not view these comments'
       );
     } catch (error) {
       return next(error);

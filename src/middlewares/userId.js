@@ -23,12 +23,19 @@ class VerifyUser {
       const getUser = await Comments.findOne({
         where: { id: commentId }
       });
+      if (!getUser) {
+        return response.sendError(
+          res,
+          404,
+          'No comment has been made'
+        );
+      }
       const { id } = req;
       if (id !== getUser.userId) {
         return response.sendError(
           res,
           403,
-          'You can not update someone\'s comment'
+          'You can not update someone else comment'
         );
       }
       next();
