@@ -158,10 +158,9 @@ describe('Testing User Comment On Travel Request ', () => {
           expect((res.body)).to.be.an('object');
           expect((res.body)).to.have.all.keys('status', 'message', 'data');
           expect((res.body)).to.haveOwnProperty('status').that.equals(200);
-          expect((res.body)).to.haveOwnProperty('data').that.is.an('object');
-          expect((res.body.data.comment)).to.be.a('array');
-          expect((res.body.data.comment[0].requestId)).to.be.a('number');
-          expect((res.body.data.comment[0].comment)).to.be.a('string');
+          expect((res.body)).to.haveOwnProperty('data').that.is.an('array');
+          expect((res.body.data)).to.be.an('array');
+          expect((res.body.data[0].comment)).to.be.a('string');
           done();
         });
     });
@@ -209,10 +208,10 @@ describe('Testing User Comment On Travel Request ', () => {
           expect((res.body)).to.be.an('object');
           expect((res.body)).to.have.all.keys('status', 'message', 'data');
           expect((res.body)).to.haveOwnProperty('status').that.equals(200);
-          expect((res.body)).to.haveOwnProperty('data').that.is.an('object');
-          expect((res.body.data.comments[0].userId)).to.be.a('string');
-          expect((res.body.data.comments[0].requestId)).to.be.a('number');
-          expect((res.body.data.comments[0].comment)).to.be.a('string');
+          expect((res.body)).to.haveOwnProperty('data').that.is.an('array');
+          expect((res.body.data[0].userId)).to.be.a('string');
+          expect((res.body.data[0].requestId)).to.be.a('number');
+          expect((res.body.data[0].comment)).to.be.a('string');
           done();
         });
     });

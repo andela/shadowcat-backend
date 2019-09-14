@@ -70,10 +70,6 @@ class Comment {
   static async updateComment(req, res, next) {
     try {
       const { commentId } = req.params;
-      const { id } = req;
-      const getRequest = await Requests.findOne({
-        where: { userId: id }
-      });
       const getComment = await Comments.findOne({
         where: { id: commentId }
       });
@@ -92,18 +88,7 @@ class Comment {
       return response.sendSuccess(
         res,
         200,
-        {
-          tripId: getRequest.tripId,
-          userId: getRequest.userId,
-          departureDate: getRequest.departureDate,
-          returnDate: getRequest.returnDate,
-          tripType: getRequest.tripType,
-          reason: getRequest.reason,
-          currentOfficeLocation: getRequest.currentOfficeLocation,
-          requestStatus: getRequest.requestStatus,
-          destination: getRequest.destination,
-          comment: updateComment[1]
-        },
+        updateComment[1],
         'comment updated!'
       );
     } catch (error) {
@@ -127,17 +112,14 @@ class Comment {
       const allComments = await Comments.findAll({
         where: { requestId: req.params.requestId }
       });
-      const getRequest = await Requests.findOne({
-        where: { id: req.params.requestId }
-      });
-      if (!allComments || !getRequest) {
+      if (!allComments[0]) {
         return response.sendError(
           res,
           404,
-          'No comment or request has been made'
+          'No comment has been made'
         );
       }
-      const { userId } = getRequest;
+      const { userId } = allComments[0];
       const getManager = await Users.findOne({
         where: { userId }
       });
@@ -146,22 +128,11 @@ class Comment {
         where: { id: manager }
       });
       const getManagerUserId = getManagerId.userId;
-      if ((getManagerUserId === id) || (id === getRequest.userId)) {
+      if ((getManagerUserId === id) || (id === allComments[0].userId)) {
         return response.sendSuccess(
           res,
           200,
-          {
-            tripId: getRequest.tripId,
-            userId: getRequest.userId,
-            departureDate: getRequest.departureDate,
-            returnDate: getRequest.returnDate,
-            tripType: getRequest.tripType,
-            reason: getRequest.reason,
-            currentOfficeLocation: getRequest.currentOfficeLocation,
-            requestStatus: getRequest.requestStatus,
-            destination: getRequest.destination,
-            comments: allComments
-          },
+          allComments,
           'success'
         );
       }
