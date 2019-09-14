@@ -107,6 +107,7 @@ class Trips {
         await sendEmail(email, templateFile, 'Trip Confirmation');
       }
       const newNotification = {
+        id: tripsResult.id,
         tripId: tripsResult.tripId,
         lineManager: lineManagerUser,
         userId,
@@ -123,6 +124,7 @@ class Trips {
       socketEmission.emission(`${lineManagerUser}`, emitMessage);
       if (tripsResult) {
         const resultObject = {
+          id: tripsResult.id,
           userId,
           destinationIDs: Object.values(destinationData),
           currentOfficeLocation: Object.keys(currentOfficeLocationData),
@@ -211,6 +213,7 @@ class Trips {
         await sendEmail(email, templateFile, 'Trip Confirmation');
       }
       const newNotification = {
+        id: tripsResult.id,
         tripId: tripsResult.tripId,
         lineManager: lineManagerUser,
         userId,
@@ -227,6 +230,7 @@ class Trips {
       socketEmission.emission(`${lineManagerUser}`, emitMessage);
       if (tripsResult) {
         const resultObject = {
+          id: tripsResult.id,
           userId,
           destinationIDs: Object.values(destinationData),
           currentOfficeLocation: Object.keys(currentOfficeData),
