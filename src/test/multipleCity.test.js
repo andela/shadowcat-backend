@@ -250,7 +250,7 @@ describe('TESTING MULTI-CITY TRIPS REQUEST', () => {
   });
   it('should show trips created as a notification to manager in real time', (done) => {
     chai.request(server)
-      .get('/api/v1/trips/get_trips/1')
+      .get('/api/v1/trips/manager/request/1')
       .set('token', `Bearer ${testToken}`)
       .end((err, res) => {
         if (err) return done(err);

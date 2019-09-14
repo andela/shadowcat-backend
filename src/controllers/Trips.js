@@ -12,8 +12,9 @@ import socketEmission from '../services/socketEmission';
 import { getDetailedLocation } from '../utils/helpers';
 import constants from '../utils/constants/constants';
 
+
+const { errorResponse, serverResponse } = response;
 const responsegen = new ResponseGenerator();
-const { serverResponse } = response;
 const { getUser } = userService;
 const { createNotification } = notifyUserService;
 const { sendEmail } = passwordEmail;
@@ -142,18 +143,6 @@ class Trips {
   }
 
   /**
-  *@description A function that handles return travel request by a user
-  * @static
-  * @param {Object} req
-  * @param {Object} res
-  * @param {Object} next
-  * @returns {object} Details of booked trips
-  * @memberof Trips
-  */
-  static async return(req, res, next) {
-  }
-
-  /**
  *@description A function that handles multicity travel request by a user
  * @static
  * @param {Object} req
@@ -227,6 +216,7 @@ class Trips {
       socketEmission.emission(`${lineManagerUser}`, emitMessage);
       if (tripsResult) {
         const resultObject = {
+          tripId: tripsResult.tripId,
           userId,
           destinationIDs: Object.values(destinationData),
           currentOfficeLocation: Object.keys(currentOfficeData),
@@ -341,6 +331,62 @@ class Trips {
         500,
         ...['error', 'error', 'Error fetching user trips history']
       );
+    }
+  }
+
+  /**
+   *
+   *
+   * @static
+   * @param {object } req
+   * @param {object} res
+   * @returns{message}json
+   * @memberof Trips
+   */
+  static async rejectTripRequest(req, res) {
+    try {
+      const { id: tripIdBody } = req.params;
+      const { requestStatus: requestStatusBody } = req.body;
+      const tripUpdate = await Requests.update({
+        requestStatus: requestStatusBody
+      }, {
+        returning: true,
+        where: { tripId: tripIdBody },
+        raw: true
+      });
+      const {
+        tripId,
+        tripType,
+        departureDate,
+        returnDate,
+        reason,
+        requestStatus,
+        destination,
+        createdAt,
+        currentOfficeLocation
+      } = tripUpdate[1][0];
+      const destinationList = [];
+      const origin = await getDetailedLocation(currentOfficeLocation);
+
+      for (let j = 0; j < destination.length; j += 1) {
+        const currentDest = destination[j];
+        const detailedLocation = await getDetailedLocation(currentDest);
+        destinationList.push(detailedLocation);
+      }
+      const subData = {
+        tripId,
+        tripType,
+        origin,
+        destinations: destinationList,
+        departureDate,
+        returnDate,
+        reason,
+        requestStatus,
+        createdAt
+      };
+      return serverResponse(res, 200, ...['success, Trip Status Changed', 'data', subData]);
+    } catch (error) {
+      return res.status(500).json(errorResponse('Internal Server Error'));
     }
   }
 }

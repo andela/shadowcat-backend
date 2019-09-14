@@ -7,8 +7,8 @@ import server from '../index';
 const { expect } = chai;
 chai.use(chaiHttp);
 const testUser3 = {
-  email: 'chima.ekeneme@andela.com',
-  password: 'Qwertyuiop1!'
+  email: 'stephen_aribaba@andela.com',
+  password: 'Jennylove19'
 };
 
 let testToken = null;

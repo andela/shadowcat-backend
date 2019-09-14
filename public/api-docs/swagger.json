@@ -28,8 +28,16 @@
   ],
   "tags": [
     {
+      "name": "Auth",
+      "description": "api route for all authentication"
+    },
+    {
       "name": "Users",
       "description": "api route for all users"
+    },
+    {
+      "name": "Trips",
+      "description": "api route for all trips"
     }
   ],
   "paths": {
@@ -430,6 +438,65 @@
           },
           "500": {
             "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/trips/manager/request": {
+      "x-swagger-router-controller": "TripsController",
+      "put": {
+        "description": "An endpoint for rejecting a Trip Request By Manager",
+        "tags": [
+          "Trips"
+        ],
+        "summary": "Rejects a trip request",
+        "operationId": "Reject Trip Request",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "requestStatus",
+            "in": "formData",
+            "required": true,
+            "default": "rejected",
+            "type": "string",
+            "description": "status of the trip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {}
+          },
+          "403": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
