@@ -130,6 +130,13 @@ class Comment {
       const getRequest = await Requests.findOne({
         where: { id: req.params.requestId }
       });
+      if (!allComments || !getRequest) {
+        return response.sendError(
+          res,
+          404,
+          'No comment or request has been made'
+        );
+      }
       const { userId } = getRequest;
       const getManager = await Users.findOne({
         where: { userId }
@@ -139,13 +146,6 @@ class Comment {
         where: { id: manager }
       });
       const getManagerUserId = getManagerId.userId;
-      if (!allComments || !getRequest) {
-        return response.sendError(
-          res,
-          404,
-          'No comment or request has been made'
-        );
-      }
       if ((getManagerUserId === id) || (id === getRequest.userId)) {
         return response.sendSuccess(
           res,
