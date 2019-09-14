@@ -1,6 +1,7 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import rejectTrip from './__MOCK__/rejectTrip';
+import multiTrip from './__MOCK__/multiTrip';
 import server from '../index';
 
 
@@ -8,13 +9,14 @@ chai.use(chaiHttp);
 
 const {
   correctManager, correctManagerWrongTrip, correctRequester,
-  correctTripId, wrongTripId, status: statusReqBody, invalidToken
+  wrongTripId, status: statusReqBody, invalidToken
 } = rejectTrip;
 
 const tripUrl = '/api/v1/trips/manager/request';
 let correctTestToken = null;
 let wrongTestToken = null;
 let correctTokenWrongTrip = null;
+let correctTripId = null;
 
 
 describe('PUT Reject Trip request by Manager Endpoint', () => {
@@ -47,6 +49,18 @@ describe('PUT Reject Trip request by Manager Endpoint', () => {
       .end((err, res) => {
         if (err) return done(err);
         correctTokenWrongTrip = res.body.data.token;
+        return done();
+      });
+  });
+  before((done) => {
+    const cloneTrip = { ...multiTrip };
+    chai.request(server)
+      .post('/api/v1/trips/request')
+      .set('Authorization', `Bearer ${wrongTestToken}`)
+      .send(cloneTrip)
+      .end((err, res) => {
+        if (err) return done(err);
+        correctTripId = res.body.data.tripId;
         return done();
       });
   });

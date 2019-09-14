@@ -1,4 +1,4 @@
-const correctTripId = '0404e4b2-15d4-4b82-bec4-bb21a83ce6a2';
+
 const wrongTripId = '0404e4b2-15d4-4b82-bec4-bb21a83ce6a1';
 
 const correctRequester = {
@@ -21,7 +21,6 @@ export default {
   correctManager,
   correctManagerWrongTrip,
   correctRequester,
-  correctTripId,
   wrongTripId,
   status,
   invalidToken

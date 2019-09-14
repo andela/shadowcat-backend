@@ -216,6 +216,7 @@ class Trips {
       socketEmission.emission(`${lineManagerUser}`, emitMessage);
       if (tripsResult) {
         const resultObject = {
+          tripId: tripsResult.tripId,
           userId,
           destinationIDs: Object.values(destinationData),
           currentOfficeLocation: Object.keys(currentOfficeData),
