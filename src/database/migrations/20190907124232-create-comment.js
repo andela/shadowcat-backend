@@ -7,11 +7,11 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    tripId: {
-      type: Sequelize.STRING,
+    requestId: {
+      type: Sequelize.INTEGER,
       references: {
         model: 'Requests',
-        key: 'tripId'
+        key: 'id'
       }
     },
     comment: {

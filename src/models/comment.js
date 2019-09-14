@@ -1,8 +1,8 @@
 
 export default (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comments', {
-    tripId: {
-      type: DataTypes.STRING,
+    requestId: {
+      type: DataTypes.INTEGER,
       required: true
     },
     comment: {
@@ -17,8 +17,8 @@ export default (sequelize, DataTypes) => {
   Comment.associate = (models) => {
     // associations can be defined here
     Comment.belongsTo(models.Requests, {
-      foreignKey: 'tripId',
-      targetKey: 'tripId'
+      foreignKey: 'requestId',
+      targetKey: 'id'
     });
     Comment.belongsTo(models.Users, {
       foreignKey: 'userId'

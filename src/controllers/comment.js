@@ -33,8 +33,7 @@ class Comment {
           'No trip request has been made'
         );
       }
-      const { tripId } = getTrip;
-      const createComment = await Comments.create({ comment, tripId, userId: req.id });
+      const createComment = await Comments.create({ comment, requestId, userId: req.id });
       return response.sendSuccess(
         res,
         201,
@@ -94,7 +93,7 @@ class Comment {
         res,
         200,
         {
-          requestId: getRequest.id,
+          tripId: getRequest.tripId,
           userId: getRequest.userId,
           departureDate: getRequest.departureDate,
           returnDate: getRequest.returnDate,
@@ -126,10 +125,10 @@ class Comment {
     try {
       const { id } = req;
       const allComments = await Comments.findAll({
-        where: { tripId: req.params.tripId }
+        where: { requestId: req.params.requestId }
       });
       const getRequest = await Requests.findOne({
-        where: { tripId: req.params.tripId }
+        where: { id: req.params.requestId }
       });
       const { userId } = getRequest;
       const getManager = await Users.findOne({
@@ -152,7 +151,6 @@ class Comment {
           res,
           200,
           {
-            requestId: getRequest.id,
             tripId: getRequest.tripId,
             userId: getRequest.userId,
             departureDate: getRequest.departureDate,

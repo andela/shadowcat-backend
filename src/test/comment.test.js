@@ -5,7 +5,7 @@ import server from '../index';
 const { expect } = chai;
 chai.use(chaiHttp);
 let token = null;
-let tripId = null;
+let requestId = null;
 
 describe('Testing User Comment On Travel Request ', () => {
   it('should login a user account on /login POST ', (done) => {
@@ -161,7 +161,7 @@ describe('Testing User Comment On Travel Request ', () => {
           expect((res.body)).to.haveOwnProperty('status').that.equals(200);
           expect((res.body)).to.haveOwnProperty('data').that.is.an('object');
           expect((res.body.data.comment)).to.be.a('array');
-          expect((res.body.data.comment[0].tripId)).to.be.a('string');
+          expect((res.body.data.comment[0].requestId)).to.be.a('number');
           expect((res.body.data.comment[0].comment)).to.be.a('string');
           done();
         });
@@ -199,9 +199,27 @@ describe('Testing User Comment On Travel Request ', () => {
     });
   });
   describe('Testing User Fetch Comment On Travel Request ', () => {
+    it('should get comments on a trip request', (done) => {
+      chai.request(server)
+        .get(`/api/v1/trips/request/comment/${1}`)
+        .set('Authorization', `Bearer ${token}`)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.status).to.equal(200);
+          expect((res.body)).to.be.an('object');
+          expect((res.body)).to.have.all.keys('status', 'message', 'data');
+          expect((res.body)).to.haveOwnProperty('status').that.equals(200);
+          expect((res.body)).to.haveOwnProperty('data').that.is.an('object');
+          expect((res.body.data.comments[0].userId)).to.be.a('string');
+          expect((res.body.data.comments[0].requestId)).to.be.a('number');
+          expect((res.body.data.comments[0].comment)).to.be.a('string');
+          done();
+        });
+    });
     it('should return a 401 if the token is not a Bearer type token', (done) => {
       chai.request(server)
-        .get('/api/v1/trips/request/comment/:tripId')
+        .get('/api/v1/trips/request/comment/:requestId')
         .set('Authorization', `${token}`)
         .end((err, res) => {
           if (err) return done(err);
