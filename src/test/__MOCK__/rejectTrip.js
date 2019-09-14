@@ -1,10 +1,5 @@
-const correctTripId = {
-  tripId: '0404e4b2-15d4-4b82-bec4-bb21a83ce6a2',
-};
-
-const wrongTripId = {
-  tripId: '0404e4b2-15d4-4b82-bec4-bb21a83ce6a1',
-};
+const correctTripId = '0404e4b2-15d4-4b82-bec4-bb21a83ce6a2';
+const wrongTripId = '0404e4b2-15d4-4b82-bec4-bb21a83ce6a1';
 
 const correctRequester = {
   email: 'stephenibaba@andela.com',
@@ -21,7 +16,7 @@ const correctManagerWrongTrip = {
 const status = {
   requestStatus: 'rejected'
 };
-const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJva2Fmb3JjaGlkaW1tYS5jQGdtYWlsLmNvbSIsImlhdCI6MTU2NjUwMTQzMiwiZXhwIjoxNTY2NTg3ODMyfQ.aJup-PH8791qlOaCNsH8WAZed7L7W4_bGOTQWsQ';
+const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVhZGZiYzcxLWRlZDUtNDhiMi1hYjA5LTQzNjdiMjEzMmUyZSIsImlzQWRtaW4iOmZhbHNlLCJlbWFpbCI6ImNoaWRpbW1hLm9rYWZvckBhbmRlbGEuY29tIiwiaWF0IjoxNTY4NDEyMjQwLCJleHAiOjE1Njg0OTg2NDB9.vWOEoB0WqoqKDLGOSCmBgQVMYWhy2e-cPyVTPcwaHha';
 export default {
   correctManager,
   correctManagerWrongTrip,

@@ -53,6 +53,7 @@ class tripAuthenticator {
    */
   static async canManagerChangeTripStatus(req, res, next) {
     try {
+      const { id } = req.params;
       const { userId: userIdBody } = req.body;
       const { lineManagerId } = req;
       console.log(lineManagerId, 'id from req middleware');
@@ -64,7 +65,7 @@ class tripAuthenticator {
       const { linemanager } = theUser;
       console.log(linemanager, 'from db in middleware');
       if (linemanager !== lineManagerId) {
-        return res.status(403).json(errorResponse('Unauthorized Request, You cannot change the status of this trip'));
+        return res.status(403).json(errorResponse(`Unauthorized Request, You cannot change the status of this trip with id: ${id}`));
       }
       return next();
     } catch (error) {
