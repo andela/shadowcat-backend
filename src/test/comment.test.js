@@ -5,8 +5,8 @@ import server from '../index';
 const { expect } = chai;
 chai.use(chaiHttp);
 let token = null;
-const requestId = 1;
-const commentId = 1;
+let requestId = null;
+let commentId = null;
 
 describe('Testing User Comment On Travel Request ', () => {
   before((done) => {
@@ -40,6 +40,7 @@ describe('Testing User Comment On Travel Request ', () => {
       })
       .end((err, res) => {
         if (err) return done(err);
+        requestId = res.body.data.id;
         expect(res.body).to.haveOwnProperty('status');
         expect(res.status).to.equal(201);
         expect((res.body)).to.be.an('object');
@@ -71,6 +72,7 @@ describe('Testing User Comment On Travel Request ', () => {
         })
         .end((err, res) => {
           if (err) return done(err);
+          commentId = res.body.data.commentId;
           expect(res.body).to.haveOwnProperty('status');
           expect(res.status).to.equal(201);
           expect((res.body)).to.be.an('object');
