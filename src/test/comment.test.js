@@ -5,7 +5,6 @@ import server from '../index';
 const { expect } = chai;
 chai.use(chaiHttp);
 let token = null;
-let requestId = null;
 
 describe('Testing User Comment On Travel Request ', () => {
   it('should login a user account on /login POST ', (done) => {
@@ -229,6 +228,37 @@ describe('Testing User Comment On Travel Request ', () => {
           expect((res.body.error)).to.be.a('string');
           expect((res.body.status)).to.equals(401);
           expect((res.body)).to.haveOwnProperty('error').that.is.a('string');
+          done();
+        });
+    });
+    it('should login a user account on /login POST ', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send({
+          email: 'stepbaba@andela.com',
+          password: 'Chibyke7&'
+        })
+        .end((err, res) => {
+          if (err) return done(err);
+          token = res.body.data.token;
+          expect(res.status).to.equal(200);
+          expect(res.body.data).to.be.an('object');
+          expect(res.body).to.have.property('status');
+          expect(res.body.message).to.equal('User successfully logged in');
+          done();
+        });
+    });
+    it('should return a 403 when its not a user or a manager', (done) => {
+      chai.request(server)
+        .get(`/api/v1/trips/request/comment/${1}`)
+        .set('Authorization', `Bearer ${token}`)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(403);
+          expect((res.body)).to.be.an('object');
+          expect((res.body)).to.have.all.keys('status', 'error');
+          expect((res.body)).to.haveOwnProperty('error').that.is.a('string');
+          expect((res.body.error)).to.be.a('string');
           done();
         });
     });

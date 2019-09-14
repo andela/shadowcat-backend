@@ -26,6 +26,17 @@ export default {
         linemanager: 2,
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        userId: uuidv4(),
+        firstname: 'frank',
+        lastname: 'chidinma',
+        email: 'stepbaba@andela.com',
+        password: bcrypt.hashSync('Chibyke7&', 10),
+        role: '5',
+        linemanager: 5,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ],
     {},
