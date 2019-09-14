@@ -5,6 +5,8 @@ import server from '../index';
 const { expect } = chai;
 chai.use(chaiHttp);
 let token = null;
+const requestId = 1;
+const commentId = 1;
 
 describe('Testing User Comment On Travel Request ', () => {
   before((done) => {
@@ -62,7 +64,7 @@ describe('Testing User Comment On Travel Request ', () => {
   describe('Testing User Create Comment On Travel Request ', () => {
     it('should post a new comment on a trip request', (done) => {
       chai.request(server)
-        .post('/api/v1/trips/request/comment/1')
+        .post(`/api/v1/trips/request/comment/${requestId}`)
         .set('Authorization', `Bearer ${token}`)
         .send({
           comment: 'will be going to dubia on partner engagement'
@@ -82,7 +84,7 @@ describe('Testing User Comment On Travel Request ', () => {
     });
     it('should return a 400 When the comment body is empty', (done) => {
       chai.request(server)
-        .post('/api/v1/trips/request/comment/1')
+        .post(`/api/v1/trips/request/comment/${requestId}`)
         .set('Authorization', `Bearer ${token}`)
         .send({
           comment: ''
@@ -97,7 +99,7 @@ describe('Testing User Comment On Travel Request ', () => {
     });
     it('should return a 401 if the token is not a Bearer type token', (done) => {
       chai.request(server)
-        .post('/api/v1/trips/request/comment/1')
+        .post(`/api/v1/trips/request/comment/${requestId}`)
         .set('Authorization', `${token}`)
         .send({
           comment: 'will be going to dubia on partner engagement'
@@ -146,7 +148,7 @@ describe('Testing User Comment On Travel Request ', () => {
   describe('Testing User Update Comment On Travel Request ', () => {
     it('should update the comment on travel request', (done) => {
       chai.request(server)
-        .put(`/api/v1/trips/request/comment/${1}`)
+        .put(`/api/v1/trips/request/comment/${commentId}`)
         .set('Authorization', `Bearer ${token}`)
         .send({
           comment: 'will be going to dubia on partner engagement'
@@ -182,7 +184,7 @@ describe('Testing User Comment On Travel Request ', () => {
     });
     it('should return a 400 When the comment body is empty', (done) => {
       chai.request(server)
-        .put(`/api/v1/trips/request/comment/${1}`)
+        .put(`/api/v1/trips/request/comment/${commentId}`)
         .set('Authorization', `Bearer ${token}`)
         .send({
           comment: ''
@@ -199,7 +201,7 @@ describe('Testing User Comment On Travel Request ', () => {
   describe('Testing User Fetch Comment On Travel Request ', () => {
     it('should get comments on a trip request', (done) => {
       chai.request(server)
-        .get(`/api/v1/trips/request/comment/${1}`)
+        .get(`/api/v1/trips/request/comment/${requestId}`)
         .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           if (err) return done(err);
@@ -217,7 +219,7 @@ describe('Testing User Comment On Travel Request ', () => {
     });
     it('should return a 401 if the token is not a Bearer type token', (done) => {
       chai.request(server)
-        .get('/api/v1/trips/request/comment/:requestId')
+        .get(`/api/v1/trips/request/comment/${requestId}`)
         .set('Authorization', `${token}`)
         .end((err, res) => {
           if (err) return done(err);
