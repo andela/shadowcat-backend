@@ -23,15 +23,11 @@ class managerHelp {
   static async getManagerId(req, res, next) {
     try {
       const { id: idManager } = req;
-      console.log(idManager, 'id from req middleware');
       const theUser = await Users.findOne({
         where: { userId: idManager },
         raw: true
       });
-      console.log(theUser, 'manager User from middleware');
       const { id } = theUser;
-      console.log(id, 'from db in middleware');
-      console.log(id, 'from token in middleware');
       req.lineManagerId = id;
       return next();
     } catch (error) {

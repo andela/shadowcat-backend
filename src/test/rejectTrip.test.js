@@ -17,7 +17,7 @@ let wrongTestToken = null;
 let correctTokenWrongTrip = null;
 
 
-describe('PUT request by manager', () => {
+describe('PUT Reject Trip request by Manager Endpoint', () => {
   // sign in a user
   before((done) => {
     chai.request(server)
@@ -58,7 +58,6 @@ describe('PUT request by manager', () => {
         .set('Authorization', `Bearer ${correctTestToken}`)
         .send(statusReqBody)
         .end((err, res) => {
-          console.log(res, 'hello token');
           expect(res).to.have.property('status');
           expect(res).to.have.property('body');
           expect(res.status).to.deep.equal(200);
@@ -208,7 +207,7 @@ describe('PUT request by manager', () => {
           const { status, error } = body;
           expect(status).to.deep.equal('error');
           expect(status).to.be.a('string');
-          expect(error).to.deep.equal('Unauthorized Request, You cannot change the status of this trip');
+          expect(error).to.deep.equal(`Unauthorized Request, You cannot change the status of this trip with id: ${correctTripId}`);
           expect(error).to.be.a('string');
           done();
         });

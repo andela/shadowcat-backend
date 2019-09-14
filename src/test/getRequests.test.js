@@ -8,35 +8,38 @@ import constants from '../utils/constants/constants';
 chai.use(chaiHttp);
 
 const url = '/api/v1/trips/request';
+let createdUser = null;
 let createdMultiTrip = null;
-let testToken = null;
-const testUser3 = {
-  email: 'stephenibaba@andela.com',
-  password: 'Jennylove19',
-};
 
 describe('GET request route', () => {
-  // sign in a user
+  // Create a user
   before((done) => {
     chai.request(server)
       .post('/api/v1/auth/login')
-      .send(testUser3)
+      .send({
+        email: 'chima.ekeneme@andela.com',
+        password: 'Qwertyuiop1!'
+      })
       .end((err, res) => {
+        createdUser = res.body.data;
         if (err) return done(err);
-        testToken = res.body.data.token;
+        createdMultiTrip = res.body.data;
         return done();
       });
   });
 
   // Create a trip for user
-  before(async () => {
+  before((done) => {
     const cloneTrip = { ...multiTrip };
-    const res = await chai
-      .request(server)
+    chai.request(server)
       .post(`${url}`)
-      .set('Authorization', `Bearer ${testToken}`)
-      .send(cloneTrip);
-    createdMultiTrip = res.body.data;
+      .set('Authorization', `Bearer ${createdUser.token}`)
+      .send(cloneTrip)
+      .end((err, res) => {
+        if (err) return done(err);
+        createdMultiTrip = res.body.data;
+        return done();
+      });
   });
 
   it('should return 401 with undefined authorization token', done => {
@@ -95,7 +98,7 @@ describe('GET request route', () => {
       chai
         .request(server)
         .get(`${url}?limit=sh1&offset=121asd`)
-        .set('Authorization', `Bearer ${testToken}`)
+        .set('Authorization', `Bearer ${createdUser.token}`)
         .send()
         .end((err, res) => {
           expect(res).to.have.property('status');
@@ -126,7 +129,7 @@ describe('GET request route', () => {
       chai
         .request(server)
         .get(`${url}`)
-        .set('Authorization', `Bearer ${testToken}`)
+        .set('Authorization', `Bearer ${createdUser.token}`)
         .send()
         .end((err, res) => {
           expect(res).to.have.property('status');
@@ -134,6 +137,7 @@ describe('GET request route', () => {
           expect(res.status).to.deep.equal(200);
 
           const { body } = res;
+
           expect(body).to.have.property('status');
           expect(body).to.have.property('data');
           expect(body).to.have.property('message');

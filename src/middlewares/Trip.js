@@ -22,12 +22,10 @@ class tripAuthenticator {
   static async doesTripExist(req, res, next) {
     try {
       const { id } = req.params;
-      console.log(id, 'from params middleware');
       const theTrip = await Requests.findOne({
         where: { tripId: id },
         raw: true
       });
-      console.log(theTrip, 'from middleware');
       if (!theTrip) {
         return res.status(404).json(errorResponse(`Cannot Find Trip With Id: ${id}`));
       }
@@ -35,7 +33,6 @@ class tripAuthenticator {
       req.body.userId = userId;
       return next();
     } catch (error) {
-      console.log(error, 'error from middleware');
       return res.status(500).json(errorResponse('Internal Server Error'));
     }
   }
@@ -56,21 +53,16 @@ class tripAuthenticator {
       const { id } = req.params;
       const { userId: userIdBody } = req.body;
       const { lineManagerId } = req;
-      console.log(lineManagerId, 'id from req middleware');
       const theUser = await Users.findOne({
         where: { userId: userIdBody },
         raw: true
       });
-      console.log(theUser, 'User from middleware');
       const { linemanager } = theUser;
-      console.log(linemanager, 'from db in middleware');
       if (linemanager !== lineManagerId) {
         return res.status(403).json(errorResponse(`Unauthorized Request, You cannot change the status of this trip with id: ${id}`));
       }
       return next();
     } catch (error) {
-      console.log(error, 'error from middleware');
-
       return res.status(500).json(errorResponse('Internal Server Error'));
     }
   }

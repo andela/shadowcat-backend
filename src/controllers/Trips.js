@@ -226,7 +226,6 @@ class Trips {
           tripType,
           requestStatus: 'pending'
         };
-        // res.headers.hello = tripsResult.tripId;
         return serverResponse(res, 201, ...['success, an email has been sent to you', 'data', resultObject]);
       }
     } catch (error) {
@@ -346,10 +345,7 @@ class Trips {
   static async rejectTripRequest(req, res) {
     try {
       const { id: tripIdBody } = req.params;
-      console.log(tripIdBody, 'trip id in controller');
       const { requestStatus: requestStatusBody } = req.body;
-      console.log(requestStatusBody, 'req status body in controller');
-
       const tripUpdate = await Requests.update({
         requestStatus: requestStatusBody
       }, {
@@ -370,13 +366,10 @@ class Trips {
       } = tripUpdate[1][0];
       const destinationList = [];
       const origin = await getDetailedLocation(currentOfficeLocation);
-      console.log(origin, 'origin from controller');
 
       for (let j = 0; j < destination.length; j += 1) {
         const currentDest = destination[j];
         const detailedLocation = await getDetailedLocation(currentDest);
-        console.log(detailedLocation, `location ${j} from controller`);
-
         destinationList.push(detailedLocation);
       }
       const subData = {
@@ -390,11 +383,8 @@ class Trips {
         requestStatus,
         createdAt
       };
-      console.log(tripUpdate, 'trip update from controller');
-      console.log(origin, 'current office location trip update from controller');
       return serverResponse(res, 200, ...['success, Trip Status Changed', 'data', subData]);
     } catch (error) {
-      console.log(error, 'hello');
       return res.status(500).json(errorResponse('Internal Server Error'));
     }
   }
