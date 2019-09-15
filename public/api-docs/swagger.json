@@ -664,7 +664,7 @@
         }
       }
     },
-    "/trips/request/comment/:requestId": {
+    "/trips/request/:requestId/comment": {
       "x-swagger-router-controller": "TripsController",
       "post": {
         "description": "User can comment on travel request",
