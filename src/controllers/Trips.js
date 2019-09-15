@@ -213,9 +213,9 @@ class Trips {
       if (tripsResult) {
         const resultObject = {
           userId,
-          destinationID: Object.values(destinationData)[0],
-          currentOfficeLocation: Object.keys(currentOfficeLocationData)[0],
-          destination: Object.keys(destinationData)[0],
+          destinationID: Object.values(destinationData),
+          currentOfficeLocation: Object.keys(currentOfficeLocationData),
+          destination: Object.keys(destinationData),
           departureDate: new Date(departureDate).toUTCString(),
           returnDate: new Date(returnDate).toUTCString(),
           accommodation,
