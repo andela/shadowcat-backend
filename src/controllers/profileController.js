@@ -55,7 +55,7 @@ class ProfileController {
         'success',
       );
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 
@@ -134,7 +134,7 @@ class ProfileController {
         'user does not exist'
       );
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 }
