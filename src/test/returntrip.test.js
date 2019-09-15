@@ -51,6 +51,7 @@ describe('TESTING RETURN-TrIP REQUEST', () => {
                 expect((res.body.data.currentOfficeLocation)).to.be.a('string');
                 expect((res.body.data.destination)).to.be.a('string');
                 expect((res.body.data.departureDate)).to.be.a('string');
+                expect((res.body.data.returnDate)).to.be.a('string');
                 expect((res.body.data.reason)).to.be.a('string');
                 expect((res.body.data.tripType)).to.be.a('string');
                 expect((res.body.data.requestStatus)).to.be.a('string');

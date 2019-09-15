@@ -165,7 +165,7 @@ class Trips {
         notifyemail: notifyEmail
       } = aUser;
       if (!lineManagerUser) {
-        return serverResponse(res, 400, ...['error', 'message', 'Line Manager must be present to continue']);
+        return serverResponse(res, 400, ...['error', 'message', 'You must be assigned to a Line Manager to continue this process']);
       }
       const {
         currentOfficeLocation, reason, tripType, accommodation, departureDate, returnDate
@@ -177,7 +177,7 @@ class Trips {
         tripId: uuidv4(),
         userId,
         departureDate: new Date(departureDate).toUTCString(),
-        returnaDate: new Date(returnDate).toUTCString(),
+        returnDate: new Date(returnDate).toUTCString(),
         reason,
         tripType,
         requestStatus: 'pending',
@@ -189,7 +189,7 @@ class Trips {
       const tripDetailsEmail = {
         locations,
         departureDate: new Date(departureDate).toUTCString(),
-        returnaDate: new Date(returnDate).toUTCString(),
+        returnDate: new Date(returnDate).toUTCString(),
       };
       if (notifyEmail) {
         const templateFile = mailTemplate(aUser, tripDetailsEmail);
@@ -217,7 +217,7 @@ class Trips {
           currentOfficeLocation: Object.keys(currentOfficeLocationData)[0],
           destination: Object.keys(destinationData)[0],
           departureDate: new Date(departureDate).toUTCString(),
-          returnaDate: new Date(returnDate).toUTCString(),
+          returnDate: new Date(returnDate).toUTCString(),
           accommodation,
           reason,
           tripType,
