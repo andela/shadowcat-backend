@@ -17,7 +17,6 @@ describe('TESTING RETURN-TrIP REQUEST', () => {
             .post('/api/v1/auth/login')
             .send(testUser3)
             .end((err, res) => {
-                console.log(res.body, '===================================================================================================');
                 if (err) return done(err);
                 testToken = res.body.data.token;
                 return done();
