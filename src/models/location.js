@@ -8,6 +8,14 @@ export default (sequelize, DataTypes) => {
     locationAddress: {
       type: DataTypes.TEXT,
       required: true
+    },
+    state: {
+      type: DataTypes.STRING,
+      required: true
+    },
+    country: {
+      type: DataTypes.STRING,
+      required: true
     }
   }, {});
   Locations.associate = (models) => Locations.hasMany(models.Accommodation, { foreignKey: 'locationId', onUpdate: 'CASCADE', onDelete: 'SET NULL' });

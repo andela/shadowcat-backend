@@ -10,12 +10,29 @@ export default (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    accommodationName: {
+    name: {
+      type: DataTypes.STRING,
+      required: true,
+      unique: true
+    },
+    address: {
+      type: DataTypes.TEXT,
+      required: true,
+    },
+    description: {
       type: DataTypes.STRING,
       required: true,
     },
-    accommodationAddress: {
-      type: DataTypes.STRING,
+    services: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      required: true,
+    },
+    amenities: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      required: true,
+    },
+    images: {
+      type: DataTypes.ARRAY(DataTypes.TEXT),
       required: true,
     }
   }, {});
@@ -25,6 +42,7 @@ export default (sequelize, DataTypes) => {
       foreignKey: 'locationId',
       targetKey: 'id'
     });
+    Accommodation.hasMany(models.Rooms, { foreignKey: 'accomodationId', onUpdate: 'CASCADE', onDelete: 'CASCADE' });
   };
   return Accommodation;
 };

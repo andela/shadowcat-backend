@@ -3,6 +3,9 @@ import { onewayCheck, onewayValidateInput } from './onewayValidation';
 import { userRequestHistory as userRequestHistoryValidator } from './userRequestHistory';
 import { roleCheck, validateRoleInput } from './updateRoleValidation';
 import validatePermissionInput from './permissionsValidation';
+import { createRoleCheck, addUserCheck, validateCreateRoleInput } from './addRoleValidation';
+import { accommodationCheck, validateAccommodationInput } from './addAccommodationValidation';
+import { addRoomCheck, validateRoomInput } from './roomValidation';
 
 export {
   onewayCheck,
@@ -11,5 +14,12 @@ export {
   multicityValidateInput,
   roleCheck, validateRoleInput,
   validatePermissionInput,
-  userRequestHistoryValidator
+  userRequestHistoryValidator,
+  createRoleCheck,
+  addUserCheck,
+  validateCreateRoleInput,
+  accommodationCheck,
+  validateAccommodationInput,
+  addRoomCheck,
+  validateRoomInput
 };

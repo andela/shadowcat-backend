@@ -4,31 +4,31 @@ export default {
     'roles',
     [
       {
-        roleName: 'Requester',
+        roleName: 'requester',
         rolePermissions: ['makeRequest'],
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        roleName: 'Manager',
+        roleName: 'manager',
         rolePermissions: ['acceptRequest', 'rejectRequest', 'makeRequest'],
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        roleName: 'Travel Team Member',
+        roleName: 'travel_team_member',
         rolePermissions: ['acceptRequest', 'rejectRequest', 'makeRequest'],
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        roleName: 'Travel Administrator',
+        roleName: 'travel_administrator',
         rolePermissions: ['acceptRequest', 'rejectRequest', 'makeRequest'],
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        roleName: 'Super Administrator',
+        roleName: 'super_administrator',
         rolePermissions: ['acceptRequest', 'rejectRequest', 'updateRole', 'makeRequest', 'updatePermissions'],
         createdAt: new Date(),
         updatedAt: new Date()

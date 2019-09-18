@@ -142,18 +142,6 @@ class Trips {
   }
 
   /**
-  *@description A function that handles return travel request by a user
-  * @static
-  * @param {Object} req
-  * @param {Object} res
-  * @param {Object} next
-  * @returns {object} Details of booked trips
-  * @memberof Trips
-  */
-  static async return(req, res, next) {
-  }
-
-  /**
  *@description A function that handles multicity travel request by a user
  * @static
  * @param {Object} req
