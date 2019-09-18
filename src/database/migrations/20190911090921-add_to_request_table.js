@@ -6,6 +6,6 @@ export default {
     });
   },
   down: async (queryInterface) => {
-    queryInterface.removeColumn('Requests', 'accommodation');
+    await queryInterface.removeColumn('Requests', 'accommodation');
   }
 };

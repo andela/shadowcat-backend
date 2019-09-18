@@ -16,7 +16,6 @@ const roleCheck = [
 const validateEmail = async (request) => {
   const errors = { email: [] };
   const { email } = request.body;
-  if (!/@andela.com$/.test(email)) errors.email.push('Email must be an andela email');
 
   if (!errors.email.length && email) {
     const userData = await Users.findOne({
