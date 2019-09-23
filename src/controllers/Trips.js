@@ -39,8 +39,8 @@ class Trips {
       case 'one-way':
         await Trips.oneWay(req, res, next);
         break;
-      case 'return':
-        await Trips.return(req, res, next);
+      case 'Return-Trip':
+        await Trips.returnTrip(req, res, next);
         break;
       case 'Multi-city':
         await Trips.multiCityRequest(req, res, next);
@@ -150,7 +150,84 @@ class Trips {
   * @returns {object} Details of booked trips
   * @memberof Trips
   */
-  static async return(req, res, next) {
+  static async returnTrip(req, res, next) {
+    try {
+      const { email } = req;
+      const aUser = await getUser(email);
+      if (!aUser) {
+        return serverResponse(res, 404, ...['error', 'message', `Cannot Find User With Email: ${email}`]);
+      }
+      const {
+        userId,
+        linemanager: lineManagerUser,
+        firstname: firstName,
+        lastname: lastName,
+        notifyemail: notifyEmail
+      } = aUser;
+      if (!lineManagerUser) {
+        return serverResponse(res, 400, ...['error', 'message', 'You must be assigned to a Line Manager to continue this process']);
+      }
+      const {
+        currentOfficeLocation, reason, tripType, accommodation, departureDate, returnDate
+      } = req.body;
+      const { currentOfficeLocationData } = req;
+      const { destinationData } = req;
+      const tripsData = {
+        currentOfficeLocation: Number(currentOfficeLocation),
+        tripId: uuidv4(),
+        userId,
+        departureDate: new Date(departureDate).toUTCString(),
+        returnDate: new Date(returnDate).toUTCString(),
+        reason,
+        tripType,
+        requestStatus: 'pending',
+        destination: Object.values(destinationData),
+        accommodation
+      };
+      const tripsResult = await Requests.create(tripsData);
+      const locations = Object.keys(destinationData).join(', ');
+      const tripDetailsEmail = {
+        locations,
+        departureDate: new Date(departureDate).toUTCString(),
+        returnDate: new Date(returnDate).toUTCString(),
+      };
+      if (notifyEmail) {
+        const templateFile = mailTemplate(aUser, tripDetailsEmail);
+        await sendEmail(email, templateFile, 'Trip Confirmation');
+      }
+      const newNotification = {
+        tripId: tripsResult.tripId,
+        lineManager: lineManagerUser,
+        userId,
+        content: 'Created',
+        isViewed: false,
+        type: 'Trip',
+        createdAt: tripsResult.createdAt,
+        updatedAt: tripsResult.createdAt
+      };
+      await createNotification(newNotification);
+      const emitMessage = `${firstName} ${lastName}
+     Just Booked a trip to ${locations} on
+      ${tripsResult.createdAt}`;
+      socketEmission.emission(`${lineManagerUser}`, emitMessage);
+      if (tripsResult) {
+        const resultObject = {
+          userId,
+          destinationID: Object.values(destinationData),
+          currentOfficeLocation: Object.keys(currentOfficeLocationData),
+          destination: Object.keys(destinationData),
+          departureDate: new Date(departureDate).toUTCString(),
+          returnDate: new Date(returnDate).toUTCString(),
+          accommodation,
+          reason,
+          tripType,
+          requestStatus: 'pending'
+        };
+        return serverResponse(res, 201, ...['success, an email has been sent to you', 'data', resultObject]);
+      }
+    } catch (error) {
+      return next(error);
+    }
   }
 
   /**

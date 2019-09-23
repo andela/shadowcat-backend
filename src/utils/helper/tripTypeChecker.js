@@ -6,8 +6,8 @@ const validateRequestType = [
     .withMessage('Trip Type is required')
     .isString()
     .withMessage('Trip Type must be a string')
-    .matches(/^(one-way|return|Multi-city)$/)
-    .withMessage('Trip Type must be one of [one-way, return, Multi-city]'),
+    .matches(/^(one-way|return|Multi-city|return|Return-Trip)$/)
+    .withMessage('Trip Type must be one of [one-way, Multi-city, Return-Trip ]'),
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
